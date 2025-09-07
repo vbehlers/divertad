@@ -1,7 +1,257 @@
 /**
- * SOAR Bell Schedule - Custom Implementation
- * Handles SOAR's unique day-specific schedules without EnhancedBellScheduleManager
+ * SOAR High School - Standalone Bell Schedule Manager
+ * This file contains all SOAR-specific schedule logic and data
  */
+
+// SOAR Schedule Data - Standalone
+const soarSchedules = {
+    "school_name": "SOAR High School",
+    "school_code": "SOAR",
+    "display_info": {
+        "page_title": "Bell Schedule - SOAR High School",
+        "modal_title": "Complete Bell Schedule - SOAR High School",
+        "calendar_title": "Academic Calendar - SOAR High School"
+    },
+    "general_academic_info": {
+        "academic_year": "2025-2026",
+        "first_day_of_school": "2025-08-11",
+        "last_day_of_school": "2026-06-04",
+        "graduation_date": "TBD"
+    },
+    "campus_details": [
+        {
+            "campus_name": "Lancaster Campus",
+            "address": "3041 West Avenue K, Lancaster, CA 93536",
+            "phone": "(661) 722-6509"
+        },
+        {
+            "campus_name": "Palmdale Campus",
+            "address": "2270 East Avenue Q, Palmdale, CA 93550",
+            "phone": "(661) 274-4619"
+        }
+    ],
+    "bell_schedules": {
+        "monday_wednesday_schedule": [
+            {
+                "period_name": "Period 1M",
+                "start_time": "8:30",
+                "end_time": "10:05",
+                "duration_minutes": 95
+            },
+            {
+                "period_name": "Period 2M",
+                "start_time": "10:15",
+                "end_time": "11:50",
+                "duration_minutes": 95
+            },
+            {
+                "period_name": "Lunch",
+                "start_time": "11:50",
+                "end_time": "12:20",
+                "duration_minutes": 30
+            },
+            {
+                "period_name": "Period 3M",
+                "start_time": "12:30",
+                "end_time": "2:05",
+                "duration_minutes": 95
+            },
+            {
+                "period_name": "Period 4M",
+                "start_time": "2:15",
+                "end_time": "3:50",
+                "duration_minutes": 95
+            }
+        ],
+        "tuesday_thursday_schedule": [
+            {
+                "period_name": "Period 1T",
+                "start_time": "8:30",
+                "end_time": "10:05",
+                "duration_minutes": 95
+            },
+            {
+                "period_name": "Period 2T",
+                "start_time": "10:15",
+                "end_time": "11:50",
+                "duration_minutes": 95
+            },
+            {
+                "period_name": "Lunch",
+                "start_time": "11:50",
+                "end_time": "12:20",
+                "duration_minutes": 30
+            },
+            {
+                "period_name": "STAR Hour",
+                "start_time": "12:30",
+                "end_time": "1:20",
+                "duration_minutes": 50
+            },
+            {
+                "period_name": "Period 3T",
+                "start_time": "1:30",
+                "end_time": "3:05",
+                "duration_minutes": 95
+            },
+            {
+                "period_name": "Period 4T",
+                "start_time": "3:15",
+                "end_time": "4:50",
+                "duration_minutes": 95
+            }
+        ],
+        "friday_schedule": [
+            {
+                "period_name": "Period 1F",
+                "start_time": "8:30",
+                "end_time": "9:15",
+                "duration_minutes": 45
+            },
+            {
+                "period_name": "Period 2F",
+                "start_time": "9:20",
+                "end_time": "10:05",
+                "duration_minutes": 45
+            },
+            {
+                "period_name": "Period 3F",
+                "start_time": "10:10",
+                "end_time": "10:55",
+                "duration_minutes": 45
+            },
+            {
+                "period_name": "Break",
+                "start_time": "10:55",
+                "end_time": "11:05",
+                "duration_minutes": 10
+            },
+            {
+                "period_name": "Period 4F",
+                "start_time": "11:10",
+                "end_time": "11:55",
+                "duration_minutes": 45
+            },
+            {
+                "period_name": "Period 5F",
+                "start_time": "12:00",
+                "end_time": "12:45",
+                "duration_minutes": 45
+            },
+            {
+                "period_name": "Lunch",
+                "start_time": "12:45",
+                "end_time": "1:15",
+                "duration_minutes": 30
+            },
+            {
+                "period_name": "Period 6F",
+                "start_time": "1:20",
+                "end_time": "2:05",
+                "duration_minutes": 45
+            },
+            {
+                "period_name": "Period 7F",
+                "start_time": "2:10",
+                "end_time": "2:55",
+                "duration_minutes": 45
+            }
+        ]
+    },
+    "holidays_and_important_dates": {
+        "holidays": [
+            {
+                "name": "Labor Day",
+                "start_date": "2025-09-01",
+                "end_date": null
+            },
+            {
+                "name": "Veterans Day",
+                "start_date": "2025-11-11",
+                "end_date": null
+            },
+            {
+                "name": "Thanksgiving Break",
+                "start_date": "2025-11-24",
+                "end_date": "2025-11-28"
+            },
+            {
+                "name": "Winter Break",
+                "start_date": "2025-12-22",
+                "end_date": "2026-01-09"
+            },
+            {
+                "name": "Martin Luther King Jr. Day",
+                "start_date": "2026-01-19",
+                "end_date": null
+            },
+            {
+                "name": "Lincoln's Birthday",
+                "start_date": "2026-02-13",
+                "end_date": null
+            },
+            {
+                "name": "Presidents' Day",
+                "start_date": "2026-02-16",
+                "end_date": null
+            },
+            {
+                "name": "Spring Break",
+                "start_date": "2026-04-06",
+                "end_date": "2026-04-10"
+            },
+            {
+                "name": "Memorial Day",
+                "start_date": "2026-05-25",
+                "end_date": null
+            }
+        ],
+        "non_student_days": [
+            {
+                "date": "2025-10-24",
+                "description": "Student Free Day"
+            },
+            {
+                "date": "2026-03-27",
+                "description": "Student Free Day"
+            },
+            {
+                "date": "2026-06-04",
+                "description": "Student Free Day"
+            }
+        ],
+        "back_to_school_nights": [
+            {
+                "date": "2025-08-15",
+                "description": "LANC Back to School Night BBQ"
+            },
+            {
+                "date": "2025-08-22",
+                "description": "PALM Back to School Night BBQ"
+            },
+            {
+                "date": "2026-02-06",
+                "description": "Back to School Night"
+            }
+        ],
+        "other_minimum_days_with_activities": [
+            {
+                "date": "2025-10-10",
+                "description": "PSAT/Activity Day"
+            },
+            {
+                "date": "2025-12-19",
+                "description": "Student Activity Day"
+            },
+            {
+                "date": "2026-05-22",
+                "description": "Student Activity Day"
+            }
+        ]
+    },
+    "special_bell_schedule_notes": "Note: 9/5, 1/23, 2/20, 5/29 will follow a M-W schedule; 11/14 T-R schedule.",
+    "disclaimer": "All dates and times are subject to change."
+};
 
 // SOAR Calendar Modal Functions - Make them global
 window.openCalendarModal = function() {
@@ -13,12 +263,9 @@ window.openCalendarModal = function() {
     console.log('Modal elements found:', { modal: !!modal, content: !!content, schoolName: !!schoolName });
     
     if (modal && content) {
-               // Set school name from JSON data
-               if (schoolName && window.districtSchedules && window.districtSchedules.schools) {
-                   const soarSchool = window.districtSchedules.schools.find(school => school.school_code === 'SOAR');
-            if (soarSchool) {
-                schoolName.textContent = soarSchool.school_name;
-            }
+        // Set school name from standalone data
+        if (schoolName) {
+            schoolName.textContent = soarSchedules.school_name;
         }
         
         // Generate calendar content
@@ -42,13 +289,10 @@ window.closeCalendarModal = function() {
     }
 };
 
-// Generate calendar content for SOAR - matching eastside style exactly
+// Generate calendar content for SOAR - using standalone data
 window.generateSOARCalendarContent = function() {
-    // Get SOAR school data for dynamic content
-    let schoolData = null;
-    if (window.districtSchedules && window.districtSchedules.schools) {
-        schoolData = window.districtSchedules.schools.find(school => school.school_code === 'SOAR');
-    }
+    // Use standalone SOAR data
+    const schoolData = soarSchedules;
     
     // Format dates properly
     const formatDate = (dateStr) => {
@@ -180,11 +424,8 @@ window.generateSOARCalendarContent = function() {
 
 // Generate schedule modal content for SOAR
 window.generateSOARScheduleModalContent = function() {
-    // Get SOAR school data
-    let schoolData = null;
-    if (window.districtSchedules && window.districtSchedules.schools) {
-        schoolData = window.districtSchedules.schools.find(school => school.school_code === 'SOAR');
-    }
+    // Use standalone SOAR data
+    const schoolData = soarSchedules;
     
     if (!schoolData) {
         return '<p class="text-gray-500">Schedule data not available.</p>';
@@ -323,7 +564,57 @@ window.closeScheduleModal = function() {
 
 // School Hours Test Function - Make it global
 window.testSchoolHours = function() {
-    console.log('School Hours button clicked');
-    // For SOAR, just reload the current schedule
-    location.reload();
+    console.log('Testing regular day schedule for SOAR debugging');
+    
+    // Force a regular day schedule (Monday/Wednesday schedule for SOAR)
+    const scheduleData = soarSchedules.bell_schedules.monday_wednesday_schedule;
+    const scheduleName = 'Monday / Wednesday Schedule (Debug)';
+    
+    // Update the schedule type display
+    const scheduleDisplay = document.getElementById('schedule-type-display');
+    if (scheduleDisplay) {
+        scheduleDisplay.textContent = scheduleName;
+    }
+    
+    // Update the table
+    const tbody = document.getElementById('schedule-table-body');
+    const scheduleModule = tbody?.closest('.module-3');
+    
+    if (tbody) {
+        tbody.innerHTML = '';
+        
+        // Show schedule module for debugging
+        if (scheduleModule) {
+            scheduleModule.style.display = 'block';
+        }
+        
+        scheduleData.forEach((period, index) => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-100';
+            row.innerHTML = `
+                <td class="type-p5 p-4">${period.period_name}</td>
+                <td class="type-p5 p-4">${period.start_time} - ${period.end_time}</td>
+                <td class="type-p5 p-4">${period.duration_minutes} min</td>
+                <td class="type-p5 p-4"><span class="text-gray-400">Upcoming</span></td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+    
+    // Show feedback
+    const buttons = document.querySelectorAll('button[onclick^="test"]');
+    buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
+    
+    const activeButton = document.querySelector('button[onclick="testSchoolHours()"]');
+    if (activeButton) {
+        activeButton.classList.add('ring-2', 'ring-blue-500');
+    }
 };
+
+// Export for use in other files
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { soarSchedules };
+} else {
+    // Browser environment
+    window.soarSchedules = soarSchedules;
+}

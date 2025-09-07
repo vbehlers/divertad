@@ -1,0 +1,536 @@
+{
+  "school_name": "Desert Winds High School",
+  "school_code": "DWHS",
+  "display_info": {
+    "page_title": "Bell Schedule - Desert Winds High School",
+    "modal_title": "Complete Bell Schedule - Desert Winds High School",
+    "calendar_title": "Academic Calendar - Desert Winds High School"
+  },
+  "general_academic_info": {
+    "academic_year": "2024-2025",
+    "first_day_of_school": "2024-08-12",
+    "last_day_of_school": "2025-06-05",
+    "graduation_date": "2025-06-05",
+    "sb328_compliance_note": "California's SB328 went into effect July 1, 2022. The law requires public high schools to start no earlier than 8:30 am."
+  },
+  "campus_details": [
+    {
+      "campus_name": "Main Campus",
+      "address": "176 Holston Drive, Lancaster, CA 93535",
+      "phone": "(661) 948-7655"
+    }
+  ],
+  "bell_schedules": {
+    "regular_day": [
+      {
+        "period_name": "Period 1",
+        "start_time": "08:30",
+        "end_time": "09:15",
+        "duration_minutes": 45
+      },
+      {
+        "period_name": "Period 2",
+        "start_time": "09:17",
+        "end_time": "10:02",
+        "duration_minutes": 45
+      },
+      {
+        "period_name": "Break",
+        "start_time": "10:02",
+        "end_time": "10:12",
+        "duration_minutes": 10
+      },
+      {
+        "period_name": "Period 3",
+        "start_time": "10:14",
+        "end_time": "10:59",
+        "duration_minutes": 45
+      },
+      {
+        "period_name": "Period 4",
+        "start_time": "11:01",
+        "end_time": "11:46",
+        "duration_minutes": 45
+      },
+      {
+        "period_name": "Lunch",
+        "start_time": "11:46",
+        "end_time": "12:16",
+        "duration_minutes": 30
+      },
+      {
+        "period_name": "Period 5",
+        "start_time": "12:16",
+        "end_time": "13:01",
+        "duration_minutes": 45
+      },
+      {
+        "period_name": "Period 6",
+        "start_time": "13:03",
+        "end_time": "13:48",
+        "duration_minutes": 45
+      },
+      {
+        "period_name": "Period 7",
+        "start_time": "14:00",
+        "end_time": "14:45",
+        "duration_minutes": 45
+      },
+      {
+        "period_name": "Period 8",
+        "start_time": "14:47",
+        "end_time": "15:32",
+        "duration_minutes": 45
+      }
+    ],
+    "flex_day": [
+      {
+        "period_name": "Period 1",
+        "start_time": "08:30",
+        "end_time": "09:14",
+        "duration_minutes": 44
+      },
+      {
+        "period_name": "Period 2",
+        "start_time": "09:16",
+        "end_time": "10:00",
+        "duration_minutes": 44
+      },
+      {
+        "period_name": "Break",
+        "start_time": "10:00",
+        "end_time": "10:05",
+        "duration_minutes": 5
+      },
+      {
+        "period_name": "Period 3",
+        "start_time": "10:07",
+        "end_time": "10:51",
+        "duration_minutes": 44
+      },
+      {
+        "period_name": "Period 4",
+        "start_time": "10:53",
+        "end_time": "11:37",
+        "duration_minutes": 44
+      },
+      {
+        "period_name": "Lunch",
+        "start_time": "11:37",
+        "end_time": "12:07",
+        "duration_minutes": 30
+      },
+      {
+        "period_name": "Period 5",
+        "start_time": "12:07",
+        "end_time": "12:51",
+        "duration_minutes": 44
+      },
+      {
+        "period_name": "Period 6",
+        "start_time": "12:53",
+        "end_time": "13:37",
+        "duration_minutes": 44
+      },
+      {
+        "period_name": "Break",
+        "start_time": "13:37",
+        "end_time": "13:42",
+        "duration_minutes": 5
+      },
+      {
+        "period_name": "Period 7",
+        "start_time": "13:44",
+        "end_time": "14:28",
+        "duration_minutes": 44
+      },
+      {
+        "period_name": "Period 8",
+        "start_time": "14:30",
+        "end_time": "15:14",
+        "duration_minutes": 44
+      }
+    ],
+    "minimum_day": [
+      {
+        "period_name": "Period 1",
+        "start_time": "08:30",
+        "end_time": "09:00",
+        "duration_minutes": 30
+      },
+      {
+        "period_name": "Period 2",
+        "start_time": "09:02",
+        "end_time": "09:32",
+        "duration_minutes": 30
+      },
+      {
+        "period_name": "Period 3",
+        "start_time": "09:34",
+        "end_time": "10:04",
+        "duration_minutes": 30
+      },
+      {
+        "period_name": "Period 4",
+        "start_time": "10:06",
+        "end_time": "10:36",
+        "duration_minutes": 30
+      },
+      {
+        "period_name": "Period 5",
+        "start_time": "10:38",
+        "end_time": "11:08",
+        "duration_minutes": 30
+      },
+      {
+        "period_name": "Period 6",
+        "start_time": "11:10",
+        "end_time": "11:40",
+        "duration_minutes": 30
+      }
+    ]
+  },
+  "holidays_and_important_dates": {
+    "holidays": [
+      {
+        "date": "2024-11-11",
+        "name": "Veterans Day",
+        "type": "holiday"
+      },
+      {
+        "date": "2024-11-28",
+        "name": "Thanksgiving Day",
+        "type": "holiday"
+      },
+      {
+        "date": "2024-11-29",
+        "name": "Thanksgiving Break",
+        "type": "holiday"
+      },
+      {
+        "date": "2024-12-23",
+        "name": "Winter Break",
+        "type": "holiday"
+      },
+      {
+        "date": "2024-12-24",
+        "name": "Winter Break",
+        "type": "holiday"
+      },
+      {
+        "date": "2024-12-25",
+        "name": "Christmas Day",
+        "type": "holiday"
+      },
+      {
+        "date": "2024-12-26",
+        "name": "Winter Break",
+        "type": "holiday"
+      },
+      {
+        "date": "2024-12-27",
+        "name": "Winter Break",
+        "type": "holiday"
+      },
+      {
+        "date": "2024-12-30",
+        "name": "Winter Break",
+        "type": "holiday"
+      },
+      {
+        "date": "2024-12-31",
+        "name": "Winter Break",
+        "type": "holiday"
+      },
+      {
+        "date": "2025-01-01",
+        "name": "New Year's Day",
+        "type": "holiday"
+      },
+      {
+        "date": "2025-01-02",
+        "name": "Winter Break",
+        "type": "holiday"
+      },
+      {
+        "date": "2025-01-03",
+        "name": "Winter Break",
+        "type": "holiday"
+      },
+      {
+        "date": "2025-01-20",
+        "name": "Martin Luther King Jr. Day",
+        "type": "holiday"
+      },
+      {
+        "date": "2025-02-17",
+        "name": "Presidents' Day",
+        "type": "holiday"
+      },
+      {
+        "date": "2025-03-31",
+        "name": "Cesar Chavez Day",
+        "type": "holiday"
+      },
+      {
+        "date": "2025-04-18",
+        "name": "Good Friday",
+        "type": "holiday"
+      },
+      {
+        "date": "2025-05-26",
+        "name": "Memorial Day",
+        "type": "holiday"
+      }
+    ],
+    "non_student_days": [
+      {
+        "date": "2024-09-02",
+        "name": "Labor Day",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-10-14",
+        "name": "Columbus Day",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-11-25",
+        "name": "Thanksgiving Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-11-26",
+        "name": "Thanksgiving Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-11-27",
+        "name": "Thanksgiving Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-12-20",
+        "name": "Winter Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-12-23",
+        "name": "Winter Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-12-24",
+        "name": "Winter Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-12-25",
+        "name": "Winter Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-12-26",
+        "name": "Winter Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-12-27",
+        "name": "Winter Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-12-30",
+        "name": "Winter Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2024-12-31",
+        "name": "Winter Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2025-01-01",
+        "name": "Winter Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2025-01-02",
+        "name": "Winter Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2025-01-03",
+        "name": "Winter Break",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2025-01-20",
+        "name": "Martin Luther King Jr. Day",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2025-02-17",
+        "name": "Presidents' Day",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2025-03-31",
+        "name": "Cesar Chavez Day",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2025-04-18",
+        "name": "Good Friday",
+        "type": "non_student_day"
+      },
+      {
+        "date": "2025-05-26",
+        "name": "Memorial Day",
+        "type": "non_student_day"
+      }
+    ],
+    "back_to_school_nights": [
+      {
+        "date": "2024-09-12",
+        "name": "Back to School Night",
+        "type": "back_to_school_night"
+      }
+    ],
+    "end_of_quarter_semester_dates": [
+      {
+        "date": "2024-10-11",
+        "name": "End of Quarter 1",
+        "type": "end_of_quarter"
+      },
+      {
+        "date": "2024-12-20",
+        "name": "End of Semester 1",
+        "type": "end_of_semester"
+      },
+      {
+        "date": "2025-03-14",
+        "name": "End of Quarter 3",
+        "type": "end_of_quarter"
+      },
+      {
+        "date": "2025-06-05",
+        "name": "End of Semester 2",
+        "type": "end_of_semester"
+      }
+    ],
+    "semester_final_dates": [
+      {
+        "date": "2024-12-16",
+        "name": "Semester 1 Finals",
+        "type": "semester_finals"
+      },
+      {
+        "date": "2024-12-17",
+        "name": "Semester 1 Finals",
+        "type": "semester_finals"
+      },
+      {
+        "date": "2024-12-18",
+        "name": "Semester 1 Finals",
+        "type": "semester_finals"
+      },
+      {
+        "date": "2024-12-19",
+        "name": "Semester 1 Finals",
+        "type": "semester_finals"
+      },
+      {
+        "date": "2025-06-02",
+        "name": "Semester 2 Finals",
+        "type": "semester_finals"
+      },
+      {
+        "date": "2025-06-03",
+        "name": "Semester 2 Finals",
+        "type": "semester_finals"
+      },
+      {
+        "date": "2025-06-04",
+        "name": "Semester 2 Finals",
+        "type": "semester_finals"
+      },
+      {
+        "date": "2025-06-05",
+        "name": "Semester 2 Finals",
+        "type": "semester_finals"
+      }
+    ],
+    "testing_dates": [
+      {
+        "date": "2024-10-15",
+        "name": "PSAT Testing",
+        "type": "testing"
+      },
+      {
+        "date": "2024-10-16",
+        "name": "PSAT Testing",
+        "type": "testing"
+      },
+      {
+        "date": "2025-03-18",
+        "name": "CAASPP Testing",
+        "type": "testing"
+      },
+      {
+        "date": "2025-03-19",
+        "name": "CAASPP Testing",
+        "type": "testing"
+      },
+      {
+        "date": "2025-03-20",
+        "name": "CAASPP Testing",
+        "type": "testing"
+      },
+      {
+        "date": "2025-03-21",
+        "name": "CAASPP Testing",
+        "type": "testing"
+      }
+    ],
+    "other_minimum_days_with_activities": [
+      {
+        "date": "2024-09-27",
+        "name": "Homecoming Assembly",
+        "type": "minimum_day"
+      },
+      {
+        "date": "2024-10-25",
+        "name": "Halloween Assembly",
+        "type": "minimum_day"
+      },
+      {
+        "date": "2024-12-13",
+        "name": "Holiday Assembly",
+        "type": "minimum_day"
+      },
+      {
+        "date": "2025-02-14",
+        "name": "Valentine's Day Assembly",
+        "type": "minimum_day"
+      },
+      {
+        "date": "2025-03-17",
+        "name": "St. Patrick's Day Assembly",
+        "type": "minimum_day"
+      },
+      {
+        "date": "2025-04-25",
+        "name": "Spring Assembly",
+        "type": "minimum_day"
+      },
+      {
+        "date": "2025-05-23",
+        "name": "Senior Assembly",
+        "type": "minimum_day"
+      }
+    ]
+  },
+  "special_bell_schedule_notes": "Note: Special schedules may be implemented for testing days, assemblies, and other school events. Check with administration for updates.",
+  "disclaimer": "All dates and times are subject to change. Please check with the school administration for the most current information."
+}

@@ -261,301 +261,6 @@ const districtSchedules = {
       "disclaimer": "All dates and times are subject to change."
     },
     {
-      "school_name": "SOAR High School",
-      "school_code": "SOAR",
-      "display_info": {
-        "page_title": "Bell Schedule - SOAR High School",
-        "modal_title": "Complete Bell Schedule - SOAR High School",
-        "calendar_title": "Academic Calendar - SOAR High School"
-      },
-      "general_academic_info": {
-        "academic_year": "2025-2026",
-        "first_day_of_school": "2025-08-11",
-        "last_day_of_school": "2026-06-04",
-        "graduation_date": "TBD"
-      },
-      "campus_details": [
-        {
-          "campus_name": "Lancaster Campus",
-          "address": "3041 West Avenue K, Lancaster, CA 93536",
-          "phone": "(661) 722-6509"
-        },
-        {
-          "campus_name": "Palmdale Campus",
-          "address": "2270 East Avenue Q, Palmdale, CA 93550",
-          "phone": "(661) 274-4619"
-        }
-      ],
-      "bell_schedules": {
-        "monday_wednesday_schedule": [
-          {
-            "period_name": "Period 1M",
-            "start_time": "8:30",
-            "end_time": "10:05",
-            "duration_minutes": 95
-          },
-          {
-            "period_name": "Period 2M",
-            "start_time": "10:15",
-            "end_time": "11:50",
-            "duration_minutes": 95
-          },
-          {
-            "period_name": "Lunch",
-            "start_time": "11:50",
-            "end_time": "12:20",
-            "duration_minutes": 30
-          },
-          {
-            "period_name": "Period 3M",
-            "start_time": "12:30",
-            "end_time": "2:05",
-            "duration_minutes": 95
-          },
-          {
-            "period_name": "Period 4M",
-            "start_time": "2:15",
-            "end_time": "3:50",
-            "duration_minutes": 95
-          }
-        ],
-        "tuesday_thursday_schedule": [
-          {
-            "period_name": "Period 5T",
-            "start_time": "8:30",
-            "end_time": "10:05",
-            "duration_minutes": 95
-          },
-          {
-            "period_name": "STAR Hour",
-            "start_time": "10:05",
-            "end_time": "11:05",
-            "duration_minutes": 60
-          },
-          {
-            "period_name": "Lunch",
-            "start_time": "11:05",
-            "end_time": "11:45",
-            "duration_minutes": 40
-          },
-          {
-            "period_name": "Period 6T",
-            "start_time": "11:55",
-            "end_time": "1:30",
-            "duration_minutes": 95
-          },
-          {
-            "period_name": "Period 7T",
-            "start_time": "1:40",
-            "end_time": "3:25",
-            "duration_minutes": 105
-          }
-        ],
-        "friday_schedule": [
-          {
-            "period_name": "Period 1M",
-            "start_time": "8:30",
-            "end_time": "9:20",
-            "duration_minutes": 50
-          },
-          {
-            "period_name": "Period 2M",
-            "start_time": "9:25",
-            "end_time": "10:15",
-            "duration_minutes": 50
-          },
-          {
-            "period_name": "Period 3M",
-            "start_time": "10:20",
-            "end_time": "11:10",
-            "duration_minutes": 50
-          },
-          {
-            "period_name": "Period 4M",
-            "start_time": "11:15",
-            "end_time": "12:05",
-            "duration_minutes": 50
-          },
-          {
-            "period_name": "Lunch",
-            "start_time": "12:05",
-            "end_time": "12:40",
-            "duration_minutes": 35
-          },
-          {
-            "period_name": "Period 5T",
-            "start_time": "12:45",
-            "end_time": "1:35",
-            "duration_minutes": 50
-          },
-          {
-            "period_name": "Period 6T",
-            "start_time": "1:40",
-            "end_time": "2:30",
-            "duration_minutes": 50
-          },
-          {
-            "period_name": "Period 7T",
-            "start_time": "2:35",
-            "end_time": "3:25",
-            "duration_minutes": 50
-          }
-        ],
-        "minimum_day": [
-          {
-            "period_name": "Period 1M",
-            "start_time": "8:30",
-            "end_time": "9:05",
-            "duration_minutes": 35
-          },
-          {
-            "period_name": "Period 2M",
-            "start_time": "9:10",
-            "end_time": "9:45",
-            "duration_minutes": 35
-          },
-          {
-            "period_name": "Period 3M",
-            "start_time": "9:50",
-            "end_time": "10:25",
-            "duration_minutes": 35
-          },
-          {
-            "period_name": "Period 4M",
-            "start_time": "10:30",
-            "end_time": "11:05",
-            "duration_minutes": 35
-          },
-          {
-            "period_name": "Lunch",
-            "start_time": "11:05",
-            "end_time": "11:40",
-            "duration_minutes": 35
-          },
-          {
-            "period_name": "Period 5T",
-            "start_time": "11:45",
-            "end_time": "12:20",
-            "duration_minutes": 35
-          },
-          {
-            "period_name": "Period 6T",
-            "start_time": "12:25",
-            "end_time": "1:00",
-            "duration_minutes": 35
-          },
-          {
-            "period_name": "Period 7T",
-            "start_time": "1:05",
-            "end_time": "1:40",
-            "duration_minutes": 35
-          }
-        ]
-      },
-      "lunch_formats": {
-        "has_split_lunches": false,
-        "split_lunch_types": [],
-        "split_lunch_criteria": null,
-        "a_lunch_departments": [],
-        "b_lunch_departments": [],
-        "has_area_based_lunches": false,
-        "area_based_lunch_names": []
-      },
-      "holidays_and_important_dates": {
-        "holidays": [
-          {
-            "name": "Labor Day",
-            "start_date": "2025-09-01",
-            "end_date": null
-          },
-          {
-            "name": "Veterans Day",
-            "start_date": "2025-11-11",
-            "end_date": null
-          },
-          {
-            "name": "Thanksgiving Break",
-            "start_date": "2025-11-24",
-            "end_date": "2025-11-28"
-          },
-          {
-            "name": "Winter Break",
-            "start_date": "2025-12-22",
-            "end_date": "2026-01-09"
-          },
-          {
-            "name": "Martin Luther King Jr. Day",
-            "start_date": "2026-01-19",
-            "end_date": null
-          },
-          {
-            "name": "Lincoln's Birthday",
-            "start_date": "2026-02-13",
-            "end_date": null
-          },
-          {
-            "name": "Presidents' Day",
-            "start_date": "2026-02-16",
-            "end_date": null
-          },
-          {
-            "name": "Spring Break",
-            "start_date": "2026-04-06",
-            "end_date": "2026-04-10"
-          },
-          {
-            "name": "Memorial Day",
-            "start_date": "2026-05-25",
-            "end_date": null
-          }
-        ],
-        "non_student_days": [
-          {
-            "date": "2025-10-24",
-            "description": "Student Free Day"
-          },
-          {
-            "date": "2026-03-27",
-            "description": "Student Free Day"
-          },
-          {
-            "date": "2026-06-04",
-            "description": "Student Free Day"
-          }
-        ],
-        "back_to_school_nights": [
-          {
-            "date": "2025-08-15",
-            "description": "LANC Back to School Night BBQ"
-          },
-          {
-            "date": "2025-08-22",
-            "description": "PALM Back to School Night BBQ"
-          },
-          {
-            "date": "2026-02-06",
-            "description": "Back to School Night"
-          }
-        ],
-        "other_minimum_days_with_activities": [
-          {
-            "date": "2025-10-10",
-            "description": "PSAT/Activity Day"
-          },
-          {
-            "date": "2025-12-19",
-            "description": "Student Activity Day"
-          },
-          {
-            "date": "2026-05-22",
-            "description": "Student Activity Day"
-          }
-        ]
-      },
-      "special_bell_schedule_notes": "Note: 9/5, 1/23, 2/20, 5/29 will follow a M-W schedule; 11/14 T-R schedule.",
-      "disclaimer": "All dates and times are subject to change."
-    },
-    {
       "school_name": "Desert Winds High School",
       "school_code": "DWHS",
       "display_info": {
@@ -1942,6 +1647,514 @@ const districtSchedules = {
         "other_minimum_days_with_activities": []
       },
       "special_bell_schedule_notes": "Detailed bell schedule information for Knight Prep Academy is not available in the provided sources."
+    },
+
+    // Littlerock High School (LRHS)
+    {
+      "school_name": "Littlerock High School",
+      "school_code": "LRHS",
+      "display_info": {
+        "page_title": "Bell Schedule - Littlerock High School",
+        "modal_title": "Complete Bell Schedule - Littlerock High School",
+        "calendar_title": "Academic Calendar - Littlerock High School"
+      },
+      "general_academic_info": {
+        "academic_year": "2025-2026",
+        "first_day_of_school": "Not explicitly stated in sources, but bell schedules begin August 2025",
+        "last_day_of_school": "2026-06-04",
+        "graduation_date": "June - 3 (specific day not confirmed for 2026)",
+        "sb328_compliance_note": "California's SB328 requires public high schools to start no earlier than 8:30 am. Littlerock High School's Period 0 begins at 7:45 AM, and Period 1 at 8:45 AM."
+      },
+      "campus_details": [
+        {
+          "campus_name": "Main Campus",
+          "address": "176 Holston Drive, Lancaster, CA 93535",
+          "phone": "(661) 948-7655"
+        }
+      ],
+      "bell_schedules": {
+        "regular_day": [
+          { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
+          { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:42", "duration_minutes": 57 },
+          { "period_name": "Break", "start_time": "09:42", "end_time": "09:52", "duration_minutes": 10 },
+          { "period_name": "Period 2", "start_time": "09:58", "end_time": "10:58", "duration_minutes": 60 },
+          { "period_name": "Period 3", "start_time": "11:04", "end_time": "12:01", "duration_minutes": 57 },
+          { "period_name": "Lunch", "start_time": "12:01", "end_time": "12:31", "duration_minutes": 30 },
+          { "period_name": "Period 4", "start_time": "12:37", "end_time": "13:34", "duration_minutes": 57 },
+          { "period_name": "Period 5", "start_time": "13:40", "end_time": "14:37", "duration_minutes": 57 },
+          { "period_name": "Period 6", "start_time": "14:43", "end_time": "15:40", "duration_minutes": 57 }
+        ],
+        "flex_day": [
+          { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
+          { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:34", "duration_minutes": 49 },
+          { "period_name": "Break", "start_time": "09:34", "end_time": "09:44", "duration_minutes": 10 },
+          { "period_name": "Period 2", "start_time": "09:50", "end_time": "10:39", "duration_minutes": 49 },
+          { "period_name": "Period 3", "start_time": "10:45", "end_time": "11:35", "duration_minutes": 50 },
+          { "period_name": "Lunch", "start_time": "11:35", "end_time": "12:05", "duration_minutes": 30 },
+          { "period_name": "Period 4", "start_time": "12:11", "end_time": "13:00", "duration_minutes": 49 },
+          { "period_name": "Period 5", "start_time": "13:06", "end_time": "13:55", "duration_minutes": 49 },
+          { "period_name": "Period 6", "start_time": "14:01", "end_time": "14:50", "duration_minutes": 49 }
+        ],
+        "minimum_day": [
+          { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
+          { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:22", "duration_minutes": 37 },
+          { "period_name": "Break", "start_time": "09:22", "end_time": "09:32", "duration_minutes": 10 },
+          { "period_name": "Period 2", "start_time": "09:38", "end_time": "10:15", "duration_minutes": 37 },
+          { "period_name": "Period 3", "start_time": "10:21", "end_time": "10:58", "duration_minutes": 37 },
+          { "period_name": "Lunch", "start_time": "10:58", "end_time": "11:28", "duration_minutes": 30 },
+          { "period_name": "Period 4", "start_time": "11:34", "end_time": "12:11", "duration_minutes": 37 },
+          { "period_name": "Period 5", "start_time": "12:17", "end_time": "12:54", "duration_minutes": 37 },
+          { "period_name": "Period 6", "start_time": "13:00", "end_time": "13:37", "duration_minutes": 37 }
+        ]
+      },
+      "holidays_and_important_dates": {
+        "holidays": [
+          { "name": "Labor Day", "start_date": "2025-09-01", "end_date": null },
+          { "name": "Veteran's Day", "start_date": "2025-11-11", "end_date": null },
+          { "name": "Thanksgiving Break", "start_date": "2025-11-24", "end_date": "2025-11-28" },
+          { "name": "Winter Break", "start_date": "2025-12-22", "end_date": "2026-01-09" },
+          { "name": "Martin Luther King Jr Day", "start_date": "2026-01-19", "end_date": null },
+          { "name": "Lincoln's Birthday", "start_date": "2026-02-13", "end_date": null },
+          { "name": "Presidents Day", "start_date": "2026-02-16", "end_date": null },
+          { "name": "Spring Break", "start_date": "2026-03-23", "end_date": "2026-03-27" },
+          { "name": "Memorial Day", "start_date": "2026-05-25", "end_date": null },
+          { "name": "Juneteenth", "start_date": "2026-06-19", "end_date": null }
+        ],
+        "non_student_days": [
+          { "date": "2025-10-22", "description": "Non-student Day (PD Day)" },
+          { "date": "2026-02-04", "description": "Non-student Day (PD Day)" },
+          { "date": "2026-04-08", "description": "Non-student Day (PD Day)" }
+        ],
+        "back_to_school_nights": [
+          { "date": "2025-09-03", "description": "September Back-to-School Night" },
+          { "date": "2026-01-28", "description": "January Back-to-School Night" }
+        ],
+        "end_of_quarter_semester_dates": [
+          { "name": "End of Quarter 1", "date": "2025-10-10" },
+          { "name": "End of Quarter 2 / Semester 1", "date": "2025-12-19" },
+          { "name": "End of Quarter 3", "date": "2026-03-20" },
+          { "name": "End of Quarter 4 / Semester 2", "date": "2026-06-04" }
+        ],
+        "semester_final_dates": [
+          { "date": "2025-12-18", "description": "First Semester Finals" },
+          { "date": "2025-12-19", "description": "First Semester Finals" },
+          { "date": "2026-06-03", "description": "Second Semester Finals" },
+          { "date": "2026-06-04", "description": "Second Semester Finals" }
+        ],
+        "testing_dates": [
+          { "date": "2025-10-13", "description": "PSAT" },
+          { "date": "2025-10-14", "description": "PSAT" },
+          { "date": "2025-10-15", "description": "PSAT" },
+          { "date": "2025-10-16", "description": "PSAT" },
+          { "date": "2025-10-17", "description": "PSAT" },
+          { "date": "2026-03-02", "description": "SAT" },
+          { "date": "2026-03-03", "description": "SAT" },
+          { "date": "2026-03-04", "description": "SAT" },
+          { "date": "2026-03-05", "description": "SAT" },
+          { "date": "2026-03-06", "description": "SAT" }
+        ],
+        "other_minimum_days_with_activities": []
+      },
+      "special_bell_schedule_notes": "Flex Day occurs on Tuesdays. Minimum Days are for Back-to-School Nights.",
+      "disclaimer": "All dates and times are subject to change. Please check our website and daily bulletin board in PowerSchool for updates."
+    },
+
+    // Palmdale High School (PHS)
+    {
+      "school_name": "Palmdale High School",
+      "school_code": "PHS",
+      "display_info": {
+        "page_title": "Bell Schedule - Palmdale High School",
+        "modal_title": "Complete Bell Schedule - Palmdale High School",
+        "calendar_title": "Academic Calendar - Palmdale High School"
+      },
+      "general_academic_info": {
+        "academic_year": "Not specified for 2025-2026 in sources, schedules appear generic.",
+        "first_day_of_school": "Not available in sources.",
+        "last_day_of_school": "Not available in sources.",
+        "graduation_date": "Not available in sources.",
+        "sb328_compliance_note": "California's SB328 went into effect July 1, 2022. The law requires public high schools to start no earlier than 8:30 am. Palmdale High School's First Bell is 7:40 AM and Period 0 starts at 7:45 AM, followed by Period 1 at 8:45 AM."
+      },
+      "campus_details": [
+        {
+          "campus_name": "Main Campus",
+          "address": "176 Holston Drive, Lancaster, CA 93535",
+          "phone": "(661) 948-7655"
+        }
+      ],
+      "bell_schedules": {
+        "regular_day": [
+          { "period_name": "First Bell", "start_time": "07:40", "end_time": "N/A", "duration_minutes": "N/A" },
+          { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
+          { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:42", "duration_minutes": 57 },
+          { "period_name": "Break", "start_time": "09:42", "end_time": "09:52", "duration_minutes": 10 },
+          { "period_name": "Period 2", "start_time": "09:58", "end_time": "10:58", "duration_minutes": 60 },
+          { "period_name": "Period 3", "start_time": "11:04", "end_time": "12:01", "duration_minutes": 57 },
+          { "period_name": "Lunch", "start_time": "12:01", "end_time": "12:31", "duration_minutes": 30 },
+          { "period_name": "Period 4", "start_time": "12:37", "end_time": "13:34", "duration_minutes": 57 },
+          { "period_name": "Period 5", "start_time": "13:40", "end_time": "14:37", "duration_minutes": 57 },
+          { "period_name": "Period 6", "start_time": "14:43", "end_time": "15:40", "duration_minutes": 57 }
+        ],
+        "flex_day": [
+          { "period_name": "First Bell", "start_time": "07:40", "end_time": "N/A", "duration_minutes": "N/A" },
+          { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
+          { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:34", "duration_minutes": 49 },
+          { "period_name": "Break", "start_time": "09:34", "end_time": "09:44", "duration_minutes": 10 },
+          { "period_name": "Period 2", "start_time": "09:50", "end_time": "10:39", "duration_minutes": 50 },
+          { "period_name": "Period 3", "start_time": "10:45", "end_time": "11:35", "duration_minutes": 49 },
+          { "period_name": "Lunch", "start_time": "11:35", "end_time": "12:05", "duration_minutes": 30 },
+          { "period_name": "Period 4", "start_time": "12:11", "end_time": "13:00", "duration_minutes": 49 },
+          { "period_name": "Period 5", "start_time": "13:06", "end_time": "13:55", "duration_minutes": 49 },
+          { "period_name": "Period 6", "start_time": "14:01", "end_time": "14:50", "duration_minutes": 49 }
+        ],
+        "minimum_day": [
+          { "period_name": "First Bell", "start_time": "07:40", "end_time": "N/A", "duration_minutes": "N/A" },
+          { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
+          { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:22", "duration_minutes": 37 },
+          { "period_name": "Break", "start_time": "09:22", "end_time": "09:32", "duration_minutes": 10 },
+          { "period_name": "Period 2", "start_time": "09:38", "end_time": "10:15", "duration_minutes": 37 },
+          { "period_name": "Period 3", "start_time": "10:21", "end_time": "10:58", "duration_minutes": 37 },
+          { "period_name": "Lunch", "start_time": "10:58", "end_time": "11:28", "duration_minutes": 30 },
+          { "period_name": "Period 4", "start_time": "11:34", "end_time": "12:11", "duration_minutes": 37 },
+          { "period_name": "Period 5", "start_time": "12:17", "end_time": "12:54", "duration_minutes": 37 },
+          { "period_name": "Period 6", "start_time": "13:00", "end_time": "13:37", "duration_minutes": 37 }
+        ],
+        "Continuation School": [
+          { "period_name": "AM Session", "start_time": "08:30", "end_time": "11:46", "duration_minutes": 196 },
+          { "period_name": "PM Session", "start_time": "12:16", "end_time": "15:32", "duration_minutes": 196 }
+        ]
+      },
+      "holidays_and_important_dates": {
+        "holidays": [],
+        "non_student_days": [],
+        "back_to_school_nights": [],
+        "end_of_quarter_semester_dates": [],
+        "semester_final_dates": [],
+        "testing_dates": [],
+        "other_minimum_days_with_activities": []
+      },
+      "special_bell_schedule_notes": "The bell schedules are provided based on Regular Day, Flex Day, Minimum Day, and a separate schedule for Continuation School.",
+      "disclaimer": "All dates and times are subject to change. Please check with the school administration for the most current information."
+    },
+
+    // Quartz Hill High School (QHHS)
+    {
+      "school_name": "Quartz Hill High School",
+      "school_code": "QHHS",
+      "display_info": {
+        "page_title": "Bell Schedule - Quartz Hill High School",
+        "modal_title": "Complete Bell Schedule - Quartz Hill High School",
+        "calendar_title": "Academic Calendar - Quartz Hill High School"
+      },
+      "general_academic_info": {
+        "academic_year": "2024-2025",
+        "first_day_of_school": "Not available in sources.",
+        "last_day_of_school": "Not available in sources.",
+        "graduation_date": "Not available in sources.",
+        "sb328_compliance_note": "California's SB328 requires public high schools to start no earlier than 8:30 am. Quartz Hill High School's Period 0 begins at 7:45 AM, and Period 1 at 8:45 AM."
+      },
+      "campus_details": [
+        {
+          "campus_name": "Main Campus",
+          "address": "176 Holston Drive, Lancaster, CA 93535",
+          "phone": "(661) 948-7655"
+        }
+      ],
+      "bell_schedules": {
+        "regular_day": [
+          { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
+          { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:42", "duration_minutes": 57 },
+          { "period_name": "Snack", "start_time": "09:42", "end_time": "09:52", "duration_minutes": 10 },
+          { "period_name": "Period 2", "start_time": "09:58", "end_time": "10:58", "duration_minutes": 60 },
+          { "period_name": "Period 3", "start_time": "11:04", "end_time": "12:01", "duration_minutes": 57 },
+          { "period_name": "4A Lunch", "start_time": "12:01", "end_time": "12:31", "duration_minutes": 30 },
+          { "period_name": "4A", "start_time": "12:01", "end_time": "12:37", "duration_minutes": 37 },
+          { "period_name": "4B", "start_time": "12:07", "end_time": "13:04", "duration_minutes": 57 },
+          { "period_name": "4B Lunch", "start_time": "13:04", "end_time": "13:34", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "13:40", "end_time": "14:37", "duration_minutes": 57 },
+          { "period_name": "Period 6", "start_time": "14:43", "end_time": "15:40", "duration_minutes": 57 }
+        ],
+        "flex_day": [
+          { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
+          { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:34", "duration_minutes": 49 },
+          { "period_name": "Snack", "start_time": "09:34", "end_time": "09:44", "duration_minutes": 10 },
+          { "period_name": "Period 2", "start_time": "09:50", "end_time": "10:39", "duration_minutes": 50 },
+          { "period_name": "Period 3", "start_time": "10:45", "end_time": "11:35", "duration_minutes": 50 },
+          { "period_name": "4A Lunch", "start_time": "11:35", "end_time": "12:05", "duration_minutes": 30 },
+          { "period_name": "4A", "start_time": "11:35", "end_time": "12:11", "duration_minutes": 40 },
+          { "period_name": "4B", "start_time": "12:11", "end_time": "12:50", "duration_minutes": 40 },
+          { "period_name": "4B Lunch", "start_time": "12:50", "end_time": "13:20", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "13:06", "end_time": "13:55", "duration_minutes": 49 },
+          { "period_name": "Period 6", "start_time": "14:01", "end_time": "14:50", "duration_minutes": 49 }
+        ],
+        "minimum_day": [
+          { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
+          { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:22", "duration_minutes": 37 },
+          { "period_name": "Snack", "start_time": "09:22", "end_time": "09:32", "duration_minutes": 10 },
+          { "period_name": "Period 2", "start_time": "09:38", "end_time": "10:15", "duration_minutes": 37 },
+          { "period_name": "Period 3", "start_time": "10:21", "end_time": "10:58", "duration_minutes": 37 },
+          { "period_name": "4A Lunch", "start_time": "10:58", "end_time": "11:28", "duration_minutes": 30 },
+          { "period_name": "4A", "start_time": "11:34", "end_time": "12:11", "duration_minutes": 37 },
+          { "period_name": "4B", "start_time": "11:04", "end_time": "11:41", "duration_minutes": 37 },
+          { "period_name": "4B Lunch", "start_time": "11:41", "end_time": "12:11", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "12:17", "end_time": "12:54", "duration_minutes": 37 },
+          { "period_name": "Period 6", "start_time": "13:00", "end_time": "13:37", "duration_minutes": 37 }
+        ],
+        "OSC Schedule": [
+          { "period_name": "Session 1", "start_time": "08:30", "end_time": "11:46", "duration_minutes": 196 },
+          { "period_name": "Lunch", "start_time": "11:46", "end_time": "12:16", "duration_minutes": 30 },
+          { "period_name": "Session 2", "start_time": "12:16", "end_time": "15:32", "duration_minutes": 196 }
+        ]
+      },
+      "holidays_and_important_dates": {
+        "holidays": [
+          { "name": "Labor Day", "start_date": "2024-09-02", "end_date": null },
+          { "name": "Veteran's Day", "start_date": "2024-11-11", "end_date": null },
+          { "name": "Thanksgiving Week", "start_date": "2024-11-25", "end_date": null },
+          { "name": "Winter Break", "start_date": "2024-12-23", "end_date": null },
+          { "name": "Martin Luther King Jr Day", "start_date": "2025-01-20", "end_date": null },
+          { "name": "Lincoln's Birthday", "start_date": "2025-02-12", "end_date": null },
+          { "name": "President's Day", "start_date": "2025-02-17", "end_date": null },
+          { "name": "Spring Break", "start_date": "2025-03-24", "end_date": null },
+          { "name": "Memorial Day", "start_date": "2025-05-26", "end_date": null }
+        ],
+        "non_student_days": [
+          { "date": "2025-02-05", "description": "Student Free Day" },
+          { "date": "2025-04-09", "description": "Student Free Day" }
+        ],
+        "back_to_school_nights": [
+          { "date": "N/A", "description": "Back to School Night q/4 & 3/20/25 (Minimum Day)" }
+        ],
+        "end_of_quarter_semester_dates": [],
+        "semester_final_dates": [],
+        "testing_dates": [],
+        "other_minimum_days_with_activities": []
+      },
+      "special_bell_schedule_notes": "Lunches at QHHS are assigned to specific areas: 100 quad, 200 quad, 300 quad, 400's, PE, and Village.",
+      "disclaimer": "All dates and times are subject to change. Please check with the school administration for the most current information."
+    },
+
+    // R. Rex Parris High School (RRPHS)
+    {
+      "school_name": "R. Rex Parris High School",
+      "school_code": "RRPHS",
+      "display_info": {
+        "page_title": "Bell Schedule - R. Rex Parris High School",
+        "modal_title": "Complete Bell Schedule - R. Rex Parris High School",
+        "calendar_title": "Academic Calendar - R. Rex Parris High School"
+      },
+      "general_academic_info": {
+        "academic_year": "2025-2026",
+        "first_day_of_school": "Not available in sources.",
+        "last_day_of_school": "Not available in sources.",
+        "graduation_date": "Not available in sources.",
+        "sb328_compliance_note": "California's SB328 requires public high schools to start no earlier than 8:30 am. R. Rex Parris High School's Period 1 begins at 8:30 AM, consistent with SB328 requirements."
+      },
+      "campus_details": [
+        {
+          "campus_name": "Main Campus",
+          "address": "176 Holston Drive, Lancaster, CA 93535",
+          "phone": "(661) 948-7655"
+        }
+      ],
+      "bell_schedules": {
+        "regular_day": [
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:15", "duration_minutes": 45 },
+          { "period_name": "Period 2", "start_time": "09:17", "end_time": "10:02", "duration_minutes": 45 },
+          { "period_name": "Break", "start_time": "10:02", "end_time": "10:12", "duration_minutes": 10 },
+          { "period_name": "Period 3", "start_time": "10:14", "end_time": "10:59", "duration_minutes": 45 },
+          { "period_name": "Period 4", "start_time": "11:01", "end_time": "11:46", "duration_minutes": 45 },
+          { "period_name": "Lunch", "start_time": "11:46", "end_time": "12:16", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "12:16", "end_time": "13:01", "duration_minutes": 45 },
+          { "period_name": "Period 6", "start_time": "13:03", "end_time": "13:48", "duration_minutes": 45 },
+          { "period_name": "Break", "start_time": "13:48", "end_time": "13:58", "duration_minutes": 10 },
+          { "period_name": "Period 7", "start_time": "14:00", "end_time": "14:45", "duration_minutes": 45 },
+          { "period_name": "Period 8", "start_time": "14:47", "end_time": "15:32", "duration_minutes": 45 }
+        ],
+        "flex_day": [
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:14", "duration_minutes": 44 },
+          { "period_name": "Period 2", "start_time": "09:16", "end_time": "10:00", "duration_minutes": 44 },
+          { "period_name": "Break", "start_time": "10:00", "end_time": "10:05", "duration_minutes": 5 },
+          { "period_name": "Period 3", "start_time": "10:07", "end_time": "10:51", "duration_minutes": 44 },
+          { "period_name": "Period 4", "start_time": "10:53", "end_time": "11:37", "duration_minutes": 44 },
+          { "period_name": "Lunch", "start_time": "11:37", "end_time": "12:07", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "12:07", "end_time": "12:51", "duration_minutes": 44 },
+          { "period_name": "Period 6", "start_time": "12:53", "end_time": "13:37", "duration_minutes": 44 },
+          { "period_name": "Break", "start_time": "13:37", "end_time": "13:42", "duration_minutes": 5 },
+          { "period_name": "Period 7", "start_time": "13:44", "end_time": "14:28", "duration_minutes": 44 },
+          { "period_name": "Period 8", "start_time": "14:30", "end_time": "15:14", "duration_minutes": 44 }
+        ],
+        "MTSS Day": [
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:11", "duration_minutes": 41 },
+          { "period_name": "Period 2", "start_time": "09:13", "end_time": "09:54", "duration_minutes": 41 },
+          { "period_name": "Break", "start_time": "09:54", "end_time": "10:04", "duration_minutes": 10 },
+          { "period_name": "Period 3", "start_time": "10:06", "end_time": "10:47", "duration_minutes": 41 },
+          { "period_name": "MTSS", "start_time": "10:47", "end_time": "11:03", "duration_minutes": 16 },
+          { "period_name": "Period 4", "start_time": "11:05", "end_time": "11:46", "duration_minutes": 41 },
+          { "period_name": "Lunch", "start_time": "11:46", "end_time": "12:16", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "12:16", "end_time": "12:57", "duration_minutes": 41 },
+          { "period_name": "Period 6", "start_time": "12:59", "end_time": "13:40", "duration_minutes": 41 },
+          { "period_name": "Break", "start_time": "13:40", "end_time": "13:50", "duration_minutes": 10 },
+          { "period_name": "Period 7", "start_time": "13:52", "end_time": "14:33", "duration_minutes": 41 },
+          { "period_name": "MTSS", "start_time": "14:33", "end_time": "14:49", "duration_minutes": 16 },
+          { "period_name": "Period 8", "start_time": "14:51", "end_time": "15:32", "duration_minutes": 41 }
+        ]
+      },
+      "holidays_and_important_dates": {
+        "holidays": [],
+        "non_student_days": [],
+        "back_to_school_nights": [],
+        "end_of_quarter_semester_dates": [],
+        "semester_final_dates": [],
+        "testing_dates": [],
+        "other_minimum_days_with_activities": []
+      },
+      "special_bell_schedule_notes": "R. Rex Parris High School provides schedules for Regular Day, Flex Day, and MTSS Day.",
+      "disclaimer": "All dates and times are subject to change. Please check with the school administration for the most current information."
+    },
+
+    // Academy Prep Junior High School (APJHS)
+    {
+      "school_name": "Academy Prep Junior High School",
+      "school_code": "APJHS",
+      "display_info": {
+        "page_title": "Bell Schedule - Academy Prep Junior High School",
+        "modal_title": "Complete Bell Schedule - Academy Prep Junior High School",
+        "calendar_title": "Academic Calendar - Academy Prep Junior High School"
+      },
+      "general_academic_info": {
+        "academic_year": "Not available in sources.",
+        "first_day_of_school": "Not available in sources.",
+        "last_day_of_school": "Not available in sources.",
+        "graduation_date": "Not available in sources.",
+        "sb328_compliance_note": "Not available in sources."
+      },
+      "campus_details": [
+        {
+          "campus_name": "Main Campus",
+          "address": "176 Holston Drive, Lancaster, CA 93535",
+          "phone": "(661) 948-7655"
+        }
+      ],
+      "bell_schedules": {
+        "regular_day": [],
+        "flex_day": [],
+        "minimum_day": []
+      },
+      "holidays_and_important_dates": {
+        "holidays": [],
+        "non_student_days": [],
+        "back_to_school_nights": [],
+        "end_of_quarter_semester_dates": [],
+        "semester_final_dates": [],
+        "testing_dates": [],
+        "other_minimum_days_with_activities": []
+      },
+      "special_bell_schedule_notes": "The sources for Academy Prep Junior High School list titles for 'Knight Prep Academy Bell Schedule' and 'SAAV Bell Schedule' but do not include the actual period times or durations.",
+      "disclaimer": "All dates and times are subject to change. Please check with the school administration for the most current information."
+    },
+
+    // Soar Prep Academy (SPA)
+    {
+      "school_name": "Soar Prep Academy",
+      "school_code": "SPA",
+      "display_info": {
+        "page_title": "Bell Schedule - SOAR Prep Academy",
+        "modal_title": "Complete Bell Schedule - Soar Prep Academy",
+        "calendar_title": "Academic Calendar - Soar Prep Academy"
+      },
+      "general_academic_info": {
+        "academic_year": "Not available in sources.",
+        "first_day_of_school": "Not available in sources.",
+        "last_day_of_school": "Not available in sources.",
+        "graduation_date": "Not available in sources.",
+        "sb328_compliance_note": "Not available in sources."
+      },
+      "campus_details": [
+        {
+          "campus_name": "Main Campus",
+          "address": "Not available in sources.",
+          "phone": "Not available in sources."
+        }
+      ],
+      "bell_schedules": {
+        "regular_day": [
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:15", "duration_minutes": 45 },
+          { "period_name": "Period 2", "start_time": "09:17", "end_time": "10:02", "duration_minutes": 45 },
+          { "period_name": "Break", "start_time": "10:02", "end_time": "10:12", "duration_minutes": 10 },
+          { "period_name": "Period 3", "start_time": "10:14", "end_time": "10:59", "duration_minutes": 45 },
+          { "period_name": "Period 4", "start_time": "11:01", "end_time": "11:46", "duration_minutes": 45 },
+          { "period_name": "Lunch", "start_time": "11:46", "end_time": "12:16", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "12:16", "end_time": "13:01", "duration_minutes": 45 },
+          { "period_name": "Period 6", "start_time": "13:03", "end_time": "13:48", "duration_minutes": 45 }
+        ],
+        "flex_day": [
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:14", "duration_minutes": 44 },
+          { "period_name": "Period 2", "start_time": "09:16", "end_time": "10:00", "duration_minutes": 44 },
+          { "period_name": "Break", "start_time": "10:00", "end_time": "10:05", "duration_minutes": 5 },
+          { "period_name": "Period 3", "start_time": "10:07", "end_time": "10:51", "duration_minutes": 44 },
+          { "period_name": "Period 4", "start_time": "10:53", "end_time": "11:37", "duration_minutes": 44 },
+          { "period_name": "Lunch", "start_time": "11:37", "end_time": "12:07", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "12:07", "end_time": "12:51", "duration_minutes": 44 },
+          { "period_name": "Period 6", "start_time": "12:53", "end_time": "13:37", "duration_minutes": 44 }
+        ],
+        "minimum_day": [
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:00", "duration_minutes": 30 },
+          { "period_name": "Period 2", "start_time": "09:02", "end_time": "09:32", "duration_minutes": 30 },
+          { "period_name": "Period 3", "start_time": "09:34", "end_time": "10:04", "duration_minutes": 30 },
+          { "period_name": "Period 4", "start_time": "10:06", "end_time": "10:36", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "10:38", "end_time": "11:08", "duration_minutes": 30 },
+          { "period_name": "Period 6", "start_time": "11:10", "end_time": "11:40", "duration_minutes": 30 }
+        ]
+      },
+      "holidays_and_important_dates": {
+        "holidays": [
+          { "name": "Labor Day", "start_date": "2025-09-01", "end_date": null },
+          { "name": "Veteran's Day", "start_date": "2025-11-11", "end_date": null },
+          { "name": "Thanksgiving Break", "start_date": "2025-11-24", "end_date": "2025-11-28" },
+          { "name": "Winter Break", "start_date": "2025-12-22", "end_date": "2026-01-09" },
+          { "name": "Martin Luther King Jr Day", "start_date": "2026-01-19", "end_date": null },
+          { "name": "Presidents Day", "start_date": "2026-02-16", "end_date": null },
+          { "name": "Spring Break", "start_date": "2026-03-23", "end_date": "2026-03-27" },
+          { "name": "Memorial Day", "start_date": "2026-05-25", "end_date": null }
+        ],
+        "non_student_days": [
+          { "date": "2025-10-22", "description": "Non-student Day (PD Day)" },
+          { "date": "2026-02-04", "description": "Non-student Day (PD Day)" },
+          { "date": "2026-04-08", "description": "Non-student Day (PD Day)" }
+        ],
+        "back_to_school_nights": [
+          { "date": "2025-09-03", "description": "September Back-to-School Night" },
+          { "date": "2026-01-28", "description": "January Back-to-School Night" }
+        ],
+        "end_of_quarter_semester_dates": [
+          { "name": "End of Quarter 1", "date": "2025-10-10" },
+          { "name": "End of Quarter 2 / Semester 1", "date": "2025-12-19" },
+          { "name": "End of Quarter 3", "date": "2026-03-20" },
+          { "name": "End of Quarter 4 / Semester 2", "date": "2026-06-04" }
+        ],
+        "semester_final_dates": [
+          { "date": "2025-12-18", "description": "First Semester Finals" },
+          { "date": "2025-12-19", "description": "First Semester Finals" },
+          { "date": "2026-06-03", "description": "Second Semester Finals" },
+          { "date": "2026-06-04", "description": "Second Semester Finals" }
+        ],
+        "testing_dates": [
+          { "date": "2025-10-13", "description": "PSAT" },
+          { "date": "2025-10-14", "description": "PSAT" },
+          { "date": "2025-10-15", "description": "PSAT" },
+          { "date": "2025-10-16", "description": "PSAT" },
+          { "date": "2025-10-17", "description": "PSAT" },
+          { "date": "2026-03-02", "description": "SAT" },
+          { "date": "2026-03-03", "description": "SAT" },
+          { "date": "2026-03-04", "description": "SAT" },
+          { "date": "2026-03-05", "description": "SAT" },
+          { "date": "2026-03-06", "description": "SAT" }
+        ],
+        "other_minimum_days_with_activities": []
+      },
+      "special_bell_schedule_notes": "Soar Prep Academy follows a standard 6-period schedule with regular, flex, and minimum day variations.",
+      "disclaimer": "Not available in sources."
     }
   ]
 };

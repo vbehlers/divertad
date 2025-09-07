@@ -141,7 +141,10 @@ function testAfterHours() {
 
 function testSchoolHours() {
     if (window.bellManager) {
-        console.log('Testing school hours scenario');
+        console.log('Testing regular day schedule for debugging');
+        
+        // Force a regular day schedule (override any weekend/holiday logic)
+        window.bellManager.scheduleTypeOverride = 'regular_day';
         
         // Set a time that's during school hours (e.g., 10:30 AM - between Period 2 and 3)
         const schoolHoursDate = new Date();
@@ -153,7 +156,7 @@ function testSchoolHours() {
         
         // Debug: Check what the current period is
         const kpiData = window.bellManager.getKPIData();
-        console.log('School hours KPI data:', kpiData);
+        console.log('Regular day KPI data:', kpiData);
         console.log('Current period:', kpiData.currentPeriod);
         
         // Show feedback
@@ -454,12 +457,6 @@ function updateCurrentDate() {
     }
 }
 
-// Test School Hours function
-function testSchoolHours() {
-    console.log('School Hours button clicked');
-    // Reload the page to refresh the schedule
-    location.reload();
-}
 
 // Schedule Modal Functions
 function openScheduleModal() {

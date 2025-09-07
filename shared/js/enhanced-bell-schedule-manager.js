@@ -175,6 +175,16 @@ class EnhancedBellScheduleManager {
         if (this.currentSchool.school_code === 'SOAR') {
             return this.getSOARScheduleForDay(dayOfWeek);
         } else {
+            // Check for weekends first
+            if (dayOfWeek === 0 || dayOfWeek === 6) { // Sunday or Saturday
+                return {
+                    type: 'weekend',
+                    name: 'Weekend',
+                    periods: [],
+                    isSchoolDay: false
+                };
+            }
+            
             // Check for flex days
             if (this.isFlexDay(targetDate)) {
                 return {
@@ -358,7 +368,7 @@ class EnhancedBellScheduleManager {
     getNextBell(schedule) {
         if (!schedule || !schedule.periods || schedule.periods.length === 0) {
             return {
-                time: 'No More Bells',
+                time: 'After Hours',
                 countdown: '<span class="sleeping-emoji">(ᴗ˳ᴗ)<span class="z1">ᶻ</span><span class="z2">𝗓</span><span class="z3">𐰁</span></span>',
                 period: 'School Day Complete'
             };
@@ -537,9 +547,24 @@ class EnhancedBellScheduleManager {
      */
     updateScheduleTable(schedule) {
         const tbody = document.getElementById('schedule-table-body');
+        const scheduleModule = tbody?.closest('.module-3');
+        
         if (!tbody || !schedule || !schedule.periods) {
             if (tbody) tbody.innerHTML = '<tr><td colspan="3" class="text-center p-4">No schedule available</td></tr>';
             return;
+        }
+
+        // Hide entire schedule module on weekends, holidays, and non-student days
+        if (schedule.type === 'weekend' || schedule.type === 'holiday' || schedule.type === 'non_student_day') {
+            if (scheduleModule) {
+                scheduleModule.style.display = 'none';
+            }
+            return;
+        }
+
+        // Show schedule module for regular school days
+        if (scheduleModule) {
+            scheduleModule.style.display = 'block';
         }
 
         // Use View Transitions for smooth updates
@@ -676,7 +701,10 @@ class EnhancedBellScheduleManager {
             'regular_day': 'Regular Day',
             'flex_day': 'Flex Day',
             'minimum_day': 'Minimum Day',
-            'mtss_day': 'MTSS Day'
+            'mtss_day': 'MTSS Day',
+            'weekend': 'Weekend',
+            'holiday': 'Holiday',
+            'non_student_day': 'Non-Student Day'
         };
         return names[scheduleType] || scheduleType;
     }
@@ -692,7 +720,10 @@ class EnhancedBellScheduleManager {
             'regular_day': 'Standard daily schedule with all periods and normal timing.',
             'flex_day': 'Modified schedule with extended periods and flexible time blocks.',
             'minimum_day': 'Shortened schedule with reduced class times and early dismissal.',
-            'mtss_day': 'Schedule with Multi-Tiered System of Supports (MTSS) periods.'
+            'mtss_day': 'Schedule with Multi-Tiered System of Supports (MTSS) periods.',
+            'weekend': 'No classes scheduled for weekends.',
+            'holiday': 'School is closed for holiday observance.',
+            'non_student_day': 'No classes - professional development or administrative day.'
         };
         return descriptions[scheduleType] || 'Standard schedule format.';
     }
