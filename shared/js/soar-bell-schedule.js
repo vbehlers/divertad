@@ -562,6 +562,90 @@ window.closeScheduleModal = function() {
     }
 };
 
+// Function to update SOAR KPI panels
+function updateSOARKPIs(scheduleData, currentTime) {
+    // Find current period and next bell
+    let currentPeriod = null;
+    let nextBell = null;
+    
+    // Parse current time
+    const currentHour = currentTime.getHours();
+    const currentMinute = currentTime.getMinutes();
+    const currentTimeMinutes = currentHour * 60 + currentMinute;
+    
+    // Find current period
+    for (let i = 0; i < scheduleData.length; i++) {
+        const period = scheduleData[i];
+        const [startHour, startMin] = period.start_time.split(':').map(Number);
+        const [endHour, endMin] = period.end_time.split(':').map(Number);
+        const startTimeMinutes = startHour * 60 + startMin;
+        const endTimeMinutes = endHour * 60 + endMin;
+        
+        if (currentTimeMinutes >= startTimeMinutes && currentTimeMinutes < endTimeMinutes) {
+            currentPeriod = period;
+            // Next bell is the end of current period
+            nextBell = {
+                time: period.end_time,
+                countdown: formatCountdown(endTimeMinutes - currentTimeMinutes)
+            };
+            break;
+        }
+    }
+    
+    // If no current period, find next period
+    if (!currentPeriod) {
+        for (let i = 0; i < scheduleData.length; i++) {
+            const period = scheduleData[i];
+            const [startHour, startMin] = period.start_time.split(':').map(Number);
+            const startTimeMinutes = startHour * 60 + startMin;
+            
+            if (currentTimeMinutes < startTimeMinutes) {
+                nextBell = {
+                    time: period.start_time,
+                    countdown: formatCountdown(startTimeMinutes - currentTimeMinutes)
+                };
+                break;
+            }
+        }
+    }
+    
+    // Update KPI panels
+    const currentPeriodElement = document.getElementById('current-period-kpi');
+    if (currentPeriodElement) {
+        const periodNumber = currentPeriod ? currentPeriod.period_name.replace(/[^\d]/g, '') || '0' : '0';
+        currentPeriodElement.textContent = periodNumber;
+    }
+    
+    const currentTimeElement = document.getElementById('current-time');
+    if (currentTimeElement) {
+        const timeString = currentTime.toLocaleTimeString('en-US', { 
+            hour12: false, 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit' 
+        });
+        currentTimeElement.textContent = timeString;
+    }
+    
+    const nextBellElement = document.getElementById('next-bell');
+    if (nextBellElement && nextBell) {
+        nextBellElement.textContent = `${nextBell.time} / ${nextBell.countdown}`;
+    } else if (nextBellElement) {
+        nextBellElement.textContent = 'After Hours';
+    }
+}
+
+// Helper function to format countdown
+function formatCountdown(minutes) {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    if (hours > 0) {
+        return `${hours}:${mins.toString().padStart(2, '0')}h`;
+    } else {
+        return `${mins}m`;
+    }
+}
+
 // School Hours Test Function - Make it global
 window.testSchoolHours = function() {
     console.log('Testing regular day schedule for SOAR debugging');
@@ -569,6 +653,10 @@ window.testSchoolHours = function() {
     // Force a regular day schedule (Monday/Wednesday schedule for SOAR)
     const scheduleData = soarSchedules.bell_schedules.monday_wednesday_schedule;
     const scheduleName = 'Monday / Wednesday Schedule (Debug)';
+    
+    // Set a time that's during school hours (e.g., 10:30 AM - between Period 2 and 3)
+    const schoolHoursDate = new Date();
+    schoolHoursDate.setHours(10, 30, 0, 0); // 10:30 AM
     
     // Update the schedule type display
     const scheduleDisplay = document.getElementById('schedule-type-display');
@@ -600,6 +688,9 @@ window.testSchoolHours = function() {
             tbody.appendChild(row);
         });
     }
+    
+    // Update KPI panels with school hours data
+    updateSOARKPIs(scheduleData, schoolHoursDate);
     
     // Show feedback
     const buttons = document.querySelectorAll('button[onclick^="test"]');
