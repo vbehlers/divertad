@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bell Schedule - Eastside High School</title>
+    <title>Bell Schedule - Loading...</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=home" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -117,6 +117,9 @@
                             <button onclick="openCalendarModal()" class="bg-gray-600 hover:bg-gray-700 text-white font-normal py-3 px-6 rounded-lg transition-colors">
                                 View Calendar
                             </button>
+                            <button onclick="testSchoolHours()" class="bg-purple-600 hover:bg-purple-700 text-white font-normal py-3 px-6 rounded-lg transition-colors">
+                                School Hours
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -135,7 +138,7 @@
         <!-- Sticky Header - Full Width -->
         <header class="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-10 lg:px-10 py-6 z-20 shadow-sm">
             <div class="flex items-center justify-between">
-                <h2 class="text-2xl font-medium text-gray-800 font-sans">Complete Bell Schedule - Eastside High School</h2>
+                <h2 class="text-2xl font-medium text-gray-800 font-sans">Complete Bell Schedule - Loading...</h2>
                 <button data-modal-close id="closeModalIconBtn" class="text-gray-400 hover:text-gray-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
@@ -169,7 +172,7 @@
         <!-- Sticky Header - Full Width -->
         <header class="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-10 lg:px-10 py-6 z-20 shadow-sm">
             <div class="flex items-center justify-between">
-                <h2 class="text-2xl font-medium text-gray-800 font-sans">Academic Calendar - <span id="modal-school-name">Eastside High School</span></h2>
+                <h2 class="text-2xl font-medium text-gray-800 font-sans">Academic Calendar - <span id="modal-school-name">Loading...</span></h2>
                 <button onclick="closeCalendarModal()" id="closeCalendarModalIconBtn" class="text-gray-400 hover:text-gray-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />

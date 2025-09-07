@@ -1634,7 +1634,32 @@ const districtSchedules = {
       ],
       "bell_schedules": {
         "regular_day": [
-          {"period_name": "Schedule Not Available", "start_time": "00:00", "end_time": "00:00", "duration_minutes": 0}
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:15", "duration_minutes": 45 },
+          { "period_name": "Period 2", "start_time": "09:17", "end_time": "10:02", "duration_minutes": 45 },
+          { "period_name": "Break", "start_time": "10:02", "end_time": "10:12", "duration_minutes": 10 },
+          { "period_name": "Period 3", "start_time": "10:14", "end_time": "10:59", "duration_minutes": 45 },
+          { "period_name": "Period 4", "start_time": "11:01", "end_time": "11:46", "duration_minutes": 45 },
+          { "period_name": "Lunch", "start_time": "11:46", "end_time": "12:16", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "12:16", "end_time": "13:01", "duration_minutes": 45 },
+          { "period_name": "Period 6", "start_time": "13:03", "end_time": "13:48", "duration_minutes": 45 }
+        ],
+        "flex_day": [
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:14", "duration_minutes": 44 },
+          { "period_name": "Period 2", "start_time": "09:16", "end_time": "10:00", "duration_minutes": 44 },
+          { "period_name": "Break", "start_time": "10:00", "end_time": "10:05", "duration_minutes": 5 },
+          { "period_name": "Period 3", "start_time": "10:07", "end_time": "10:51", "duration_minutes": 44 },
+          { "period_name": "Period 4", "start_time": "10:53", "end_time": "11:37", "duration_minutes": 44 },
+          { "period_name": "Lunch", "start_time": "11:37", "end_time": "12:07", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "12:07", "end_time": "12:51", "duration_minutes": 44 },
+          { "period_name": "Period 6", "start_time": "12:53", "end_time": "13:37", "duration_minutes": 44 }
+        ],
+        "minimum_day": [
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:00", "duration_minutes": 30 },
+          { "period_name": "Period 2", "start_time": "09:02", "end_time": "09:32", "duration_minutes": 30 },
+          { "period_name": "Period 3", "start_time": "09:34", "end_time": "10:04", "duration_minutes": 30 },
+          { "period_name": "Period 4", "start_time": "10:06", "end_time": "10:36", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "10:38", "end_time": "11:08", "duration_minutes": 30 },
+          { "period_name": "Period 6", "start_time": "11:10", "end_time": "11:40", "duration_minutes": 30 }
         ]
       },
       "holidays_and_important_dates": {
@@ -2051,6 +2076,109 @@ const districtSchedules = {
         "other_minimum_days_with_activities": []
       },
       "special_bell_schedule_notes": "The sources for Academy Prep Junior High School list titles for 'Knight Prep Academy Bell Schedule' and 'SAAV Bell Schedule' but do not include the actual period times or durations.",
+      "disclaimer": "All dates and times are subject to change. Please check with the school administration for the most current information."
+    },
+
+    // New Valley High School (NVHS)
+    {
+      "school_name": "New Valley High School",
+      "school_code": "NVHS",
+      "display_info": {
+        "page_title": "Bell Schedule - New Valley High School",
+        "modal_title": "Complete Bell Schedule - New Valley High School",
+        "calendar_title": "Academic Calendar - New Valley High School"
+      },
+      "general_academic_info": {
+        "academic_year": "2025-2026",
+        "first_day_of_school": "Not available in sources.",
+        "last_day_of_school": "Not available in sources.",
+        "graduation_date": "Not available in sources.",
+        "sb328_compliance_note": "California's SB328 requires public high schools to start no earlier than 8:30 am. New Valley High School's Period 1 begins at 8:30 AM, consistent with SB328 requirements."
+      },
+      "campus_details": [
+        {
+          "campus_name": "Main Campus",
+          "address": "Not available in sources.",
+          "phone": "Not available in sources."
+        }
+      ],
+      "bell_schedules": {
+        "regular_day": [
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:15", "duration_minutes": 45 },
+          { "period_name": "Period 2", "start_time": "09:17", "end_time": "10:02", "duration_minutes": 45 },
+          { "period_name": "Break", "start_time": "10:02", "end_time": "10:12", "duration_minutes": 10 },
+          { "period_name": "Period 3", "start_time": "10:14", "end_time": "10:59", "duration_minutes": 45 },
+          { "period_name": "Period 4", "start_time": "11:01", "end_time": "11:46", "duration_minutes": 45 },
+          { "period_name": "Lunch", "start_time": "11:46", "end_time": "12:16", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "12:16", "end_time": "13:01", "duration_minutes": 45 },
+          { "period_name": "Period 6", "start_time": "13:03", "end_time": "13:48", "duration_minutes": 45 }
+        ],
+        "flex_day": [
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:14", "duration_minutes": 44 },
+          { "period_name": "Period 2", "start_time": "09:16", "end_time": "10:00", "duration_minutes": 44 },
+          { "period_name": "Break", "start_time": "10:00", "end_time": "10:05", "duration_minutes": 5 },
+          { "period_name": "Period 3", "start_time": "10:07", "end_time": "10:51", "duration_minutes": 44 },
+          { "period_name": "Period 4", "start_time": "10:53", "end_time": "11:37", "duration_minutes": 44 },
+          { "period_name": "Lunch", "start_time": "11:37", "end_time": "12:07", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "12:07", "end_time": "12:51", "duration_minutes": 44 },
+          { "period_name": "Period 6", "start_time": "12:53", "end_time": "13:37", "duration_minutes": 44 }
+        ],
+        "minimum_day": [
+          { "period_name": "Period 1", "start_time": "08:30", "end_time": "09:00", "duration_minutes": 30 },
+          { "period_name": "Period 2", "start_time": "09:02", "end_time": "09:32", "duration_minutes": 30 },
+          { "period_name": "Period 3", "start_time": "09:34", "end_time": "10:04", "duration_minutes": 30 },
+          { "period_name": "Period 4", "start_time": "10:06", "end_time": "10:36", "duration_minutes": 30 },
+          { "period_name": "Period 5", "start_time": "10:38", "end_time": "11:08", "duration_minutes": 30 },
+          { "period_name": "Period 6", "start_time": "11:10", "end_time": "11:40", "duration_minutes": 30 }
+        ]
+      },
+      "holidays_and_important_dates": {
+        "holidays": [
+          { "name": "Labor Day", "start_date": "2025-09-01", "end_date": null },
+          { "name": "Veteran's Day", "start_date": "2025-11-11", "end_date": null },
+          { "name": "Thanksgiving Break", "start_date": "2025-11-24", "end_date": "2025-11-28" },
+          { "name": "Winter Break", "start_date": "2025-12-22", "end_date": "2026-01-09" },
+          { "name": "Martin Luther King Jr Day", "start_date": "2026-01-19", "end_date": null },
+          { "name": "Presidents Day", "start_date": "2026-02-16", "end_date": null },
+          { "name": "Spring Break", "start_date": "2026-03-23", "end_date": "2026-03-27" },
+          { "name": "Memorial Day", "start_date": "2026-05-25", "end_date": null }
+        ],
+        "non_student_days": [
+          { "date": "2025-10-22", "description": "Non-student Day (PD Day)" },
+          { "date": "2026-02-04", "description": "Non-student Day (PD Day)" },
+          { "date": "2026-04-08", "description": "Non-student Day (PD Day)" }
+        ],
+        "back_to_school_nights": [
+          { "date": "2025-09-03", "description": "September Back-to-School Night" },
+          { "date": "2026-01-28", "description": "January Back-to-School Night" }
+        ],
+        "end_of_quarter_semester_dates": [
+          { "name": "End of Quarter 1", "date": "2025-10-10" },
+          { "name": "End of Quarter 2 / Semester 1", "date": "2025-12-19" },
+          { "name": "End of Quarter 3", "date": "2026-03-20" },
+          { "name": "End of Quarter 4 / Semester 2", "date": "2026-06-04" }
+        ],
+        "semester_final_dates": [
+          { "date": "2025-12-18", "description": "First Semester Finals" },
+          { "date": "2025-12-19", "description": "First Semester Finals" },
+          { "date": "2026-06-03", "description": "Second Semester Finals" },
+          { "date": "2026-06-04", "description": "Second Semester Finals" }
+        ],
+        "testing_dates": [
+          { "date": "2025-10-13", "description": "PSAT" },
+          { "date": "2025-10-14", "description": "PSAT" },
+          { "date": "2025-10-15", "description": "PSAT" },
+          { "date": "2025-10-16", "description": "PSAT" },
+          { "date": "2025-10-17", "description": "PSAT" },
+          { "date": "2026-03-02", "description": "SAT" },
+          { "date": "2026-03-03", "description": "SAT" },
+          { "date": "2026-03-04", "description": "SAT" },
+          { "date": "2026-03-05", "description": "SAT" },
+          { "date": "2026-03-06", "description": "SAT" }
+        ],
+        "other_minimum_days_with_activities": []
+      },
+      "special_bell_schedule_notes": "New Valley High School follows a standard 6-period schedule with regular, flex, and minimum day variations.",
       "disclaimer": "All dates and times are subject to change. Please check with the school administration for the most current information."
     },
 
