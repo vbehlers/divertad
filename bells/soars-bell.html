@@ -168,7 +168,7 @@
         console.log('SOAR page loaded, school code set to:', window.BELL_SCHOOL_CODE);
         
         // SOAR schedule loader - hardcoded data approach
-        console.log('Loading SOAR schedule...');
+            console.log('Loading SOAR schedule...');
             
             // Get current day of week (0=Sunday, 1=Monday, etc.)
             const today = new Date();
@@ -249,18 +249,20 @@
             }
         }
         
-        // Update current date header
-        const currentDateHeader = document.getElementById('current-date-header');
-        if (currentDateHeader) {
-            const now = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            };
-            currentDateHeader.textContent = now.toLocaleDateString('en-US', options);
+        // Update current date header when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentDateHeader = document.getElementById('current-date-header');
+            if (currentDateHeader) {
+                const now = new Date();
+                const options = { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                };
+                currentDateHeader.textContent = now.toLocaleDateString('en-US', options);
             }
+        });
             
             // Load the schedule data
             const tbody = document.getElementById('schedule-table-body');
