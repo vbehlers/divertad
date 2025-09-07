@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs with Scoped View Transitions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* This tells the browser to do nothing with the default
+         * page transition, preventing the "flash" on the rest of the content. */
+        ::view-transition-group(root) {
+          animation: none;
+        }
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+          animation: none;
+        }
+        
+        /* This is a generic fade animation for any tab panel. */
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fade-out {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+    
+        /* Apply the animation to any element that is part of a tab content transition */
+        ::view-transition-old(tab-content),
+        ::view-transition-new(tab-content) {
+            animation-duration: 0.3s;
+            animation-timing-function: ease-in-out;
+        }
+        ::view-transition-old(tab-content) {
+            animation-name: fade-out;
+        }
+        ::view-transition-new(tab-content) {
+            animation-name: fade-in;
+        }
+    
+        /*
+         * THE FIX: Give the indicator and panels a unique view-transition-name.
+         * This tells the browser to animate them independently.
+        */
+        .active-tab-indicator {
+            view-transition-name: active-tab-indicator;
+        }
+        .tab-panel {
+            view-transition-name: tab-content;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-10">
+
+   <!-- 1. The HTML Structure (for one tab component) -->
+<!-- Use this structure for each tab group. The script will find them automatically. -->
+
+
+<div class="tabs-component w-full py-0 pr-0 mb-[30px]">
+    <div class="mb-0 border-b border-gray-200 -ml-3">
+        <nav class="relative flex -mb-px" aria-label="Tabs">
+            <button class="tab-button active text-blue-600 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab1-group1">Staff Directory</button>
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab2-group1">Bell Schedule</button>
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab3-group1">Contact</button>          
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap  px-4 font-medium text-sm" data-tab="#tab4-group1">Links</button>            
+            
+            <div class="active-tab-indicator absolute bottom-0 h-0.5 bg-blue-600"></div>
+        </nav>
+    </div>
+    <div class="pt-6 relative">
+        <div id="tab1-group1" class="tab-panel">
+            <h3 class="text-lg font-medium text-gray-900">Staff Directory</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's profile tab.</p>
+        </div>
+        <div id="tab2-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Bell Schedule</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's profile tab.</p>
+        </div>        
+        <div id="tab3-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Contact</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's dashboard tab.</p>
+        </div>
+            <div id="tab4-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Links</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's dashboard tab.</p>
+        </div>
+    </div>
+</div>
+<div class="tabs-component w-full py-0 pr-0 mb-[30px]">
+    <div class="mb-0 border-b border-gray-200 -ml-3">
+        <nav class="relative flex -mb-px" aria-label="Tabs">
+            <button class="tab-button active text-blue-600 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab1-group1">Pants</button>
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab2-group1">Shirts</button>
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab3-group1">Skirts</button>
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab4-group1">Accessories</button>
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab5-group1">Inappropriate Attire</button>
+            <div class="active-tab-indicator absolute bottom-0 h-0.5 bg-blue-600"></div>
+        </nav>
+    </div>
+    <div class="pt-6 relative">
+        <div id="tab1-group1" class="tab-panel">
+            <h3 class="text-lg font-medium text-gray-900">Pants</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's profile tab.</p>
+        </div>
+        <div id="tab2-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Shirts</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's dashboard tab.</p>
+        </div>
+        <div id="tab3-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Skirts</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's dashboard tab.</p>
+        </div> 
+        <div id="tab4-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Accessories</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's dashboard tab.</p>
+        </div>
+        <div id="tab5-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Inappropriate Attire</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's dashboard tab.</p>
+        </div>                      
+    </div>
+</div>
+<div class="tabs-component w-full py-0 pr-0 mb-[30px]">
+    <div class="mb-0 border-b border-gray-200 -ml-3">
+        <nav class="relative flex -mb-px" aria-label="Tabs">
+            <button class="tab-button active text-blue-600 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab1-group1">Attendance</button>
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab2-group1">Parent Engagement</button>
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab3-group1">Cell Phone Policy</button>
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab4-group1">Accessories</button>
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab5-group1">Discipline Policy</button>
+            <button class="tab-button text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-4 font-medium text-sm" data-tab="#tab6-group1">Uniform Complaint Procedure</button>
+            <div class="active-tab-indicator absolute bottom-0 h-0.5 bg-blue-600"></div>
+        </nav>
+    </div>
+    <div class="pt-6 relative">
+        <div id="tab1-group1" class="tab-panel">
+            <h3 class="text-lg font-medium text-gray-900">Attendance</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's profile tab.</p>
+        </div>
+        <div id="tab2-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Cell Phone Policy</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's dashboard tab.</p>
+        </div>
+        <div id="tab3-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Accessories</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's dashboard tab.</p>
+        </div>
+        <div id="tab4-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Skirts</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's dashboard tab.</p>
+        </div> 
+        <div id="tab5-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Discipline Policy</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's dashboard tab.</p>
+        </div>
+        <div id="tab6-group1" class="tab-panel hidden">
+            <h3 class="text-lg font-medium text-gray-900">Uniform Complaint Procedure</h3>
+            <p class="mt-2 text-sm text-gray-600">This is the content for the first tab group's dashboard tab.</p>
+        </div>                      
+    </div>
+</div>
+
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const allTabsComponents = document.querySelectorAll('.tabs-component');
+
+        allTabsComponents.forEach((tabsComponent, groupIndex) => {
+            const tabButtons = Array.from(tabsComponent.querySelectorAll('.tab-button'));
+            const tabPanels = Array.from(tabsComponent.querySelectorAll('.tab-panel'));
+            const indicator = tabsComponent.querySelector('.active-tab-indicator');
+            let activeTab = tabsComponent.querySelector('.tab-button.active') || tabButtons[0];
+            let activePanel = tabsComponent.querySelector('.tab-panel:not(.hidden)') || tabPanels[0];
+
+            if (!indicator || !activeTab || !activePanel) return;
+
+            // Give this group unique view-transition names to avoid cross-group collisions
+            const vtIndicatorName = `active-tab-indicator-${groupIndex}`;
+            const vtPanelName = `tab-content-${groupIndex}`;
+            indicator.style.viewTransitionName = vtIndicatorName;
+            tabPanels.forEach(p => { p.style.viewTransitionName = vtPanelName; });
+
+            function updateIndicator(tab) {
+                // Ensure the nav container is positioned so left works
+                const nav = indicator.parentElement;
+                if (getComputedStyle(nav).position === 'static') {
+                    nav.style.position = 'relative';
+                }
+                indicator.style.left = `${tab.offsetLeft}px`;
+                indicator.style.width = `${tab.offsetWidth}px`;
+            }
+
+            // Initial layout
+            updateIndicator(activeTab);
+
+            // Map buttons to panels by index within this component
+            tabButtons.forEach((button, i) => {
+                button.addEventListener('click', () => {
+                    if (button === activeTab) return;
+
+                    const targetPanel = tabPanels[i];
+                    if (!targetPanel) return;
+
+                    const updateDOM = () => {
+                        // Buttons
+                        activeTab.classList.remove('active', 'text-blue-600');
+                        button.classList.add('active', 'text-blue-600');
+
+                        // Panels
+                        activePanel.classList.add('hidden');
+                        targetPanel.classList.remove('hidden');
+
+                        // Indicator
+                        updateIndicator(button);
+
+                        activeTab = button;
+                        activePanel = targetPanel;
+                    };
+
+                    if (!document.startViewTransition) {
+                        updateDOM();
+                        return;
+                    }
+
+                    document.startViewTransition(updateDOM);
+                });
+            });
+        });
+    });
+</script>
+
+
+</body>
+</html>

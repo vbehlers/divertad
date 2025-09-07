@@ -1,0 +1,71 @@
+        <div id="letterModal" class="fixed inset-0 bg-[#cfcfcf] bg-opacity-95 flex items-start justify-center p-10" style="display: none;">
+            <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl md:max-w-3xl lg:max-w-4xl flex flex-col relative aspect-[8.5/11]">
+                
+                <!-- Modal Header -->
+                <header class="flex items-center justify-between px-4 md:px-10 lg:px-10 py-6 border-b border-gray-200">
+                    <h2 class="text-2xl font-medium text-gray-800 font-sans">Principal's Message</h2>
+                    <button data-modal-close id="closeModalIconBtn" class="text-gray-400 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </header>
+        
+                <!-- Modal Body (Scrollable Content) -->
+                <div class="md:px-10 lg:px-10 py-8 overflow-y-auto h-full font-sans pt-20 pr-24">
+                    <div class="mb-8">
+                        <p class="type-p5 text-gray-600">August 24, 2025</p>
+                    </div>
+        
+                    <div class="mb-8">
+                        <p class="type-p5 font-bold text-gray-700">Dear Student,</p>
+                    </div>
+        
+                    <div class="leading-relaxed space-y-4">
+                        <p class="type-p5 text-gray-800">Welcome to a new year at Antelope Valley High School! We are thrilled to have you with us as we embark on another chapter of learning, growth, and community. This year promises to be filled with exciting opportunities, new friendships, and memorable experiences.</p>
+                        <p class="type-p5 text-gray-800">Our dedicated staff is here to support you every step of the way. We encourage you to explore your passions, challenge yourself academically, and get involved in the many clubs and activities our school has to offer. Remember that your journey here is what you make it, and we are committed to providing an environment where you can thrive.</p>
+                        <p class="type-p5 text-gray-800">Let's make this a fantastic year together. Go Lopes!</p>
+                    </div>
+        
+                    <div class="mt-12">
+                        <p class="type-p5 text-gray-700">Sincerely,</p>
+                        <p class="type-p5 mt-4 font-bold text-gray-800">Blake Stanford</p>
+                        <p class="type-p5 text-sm text-gray-600">Principal</p>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+       <!-- Newsletter Modal Component -->
+       <div id="newsletterModal" class="fixed inset-0 bg-[#cfcfcf] bg-opacity-95 flex items-start justify-center p-24" style="display: none;">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-[400px] p-8 relative">
+            <button data-modal-close id="closeModalIconBtn" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <h2 class="text-2xl font-medium text-gray-800 mb-4">Contact AVHS</h2>
+            <p class="text-gray-600 mb-6">Please choose your preferred email provider to send a message to <strong>infoavhs@avhsd.org</strong>.</p>
+            
+            <div class="space-y-4">
+                <!-- Gmail Link -->
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=infoavhs@avhsd.org&su=Inquiry%20from%20Website" target="_blank" class="flex items-center justify-center w-full px-5 py-3 bg-gray-100 text-gray-700 font-regular rounded-lg hover:bg-[#0051d2] hover:text-white focus:outline-none focus:ring-0 focus:ring-gray-300">
+                    
+                    Continue with Gmail
+                </a>
+                <!-- Outlook Link -->
+                <a href="https://outlook.live.com/owa/?path=/mail/action/compose&to=infoavhs@avhsd.org&subject=Inquiry%20from%20Website" target="_blank" class="flex items-center justify-center w-full px-5 py-3 bg-gray-100 text-gray-700 font-regular rounded-lg hover:bg-[#0051d2] hover:text-white focus:outline-none focus:ring-0 focus:ring-gray-300">
+                   
+                    Continue with Outlook
+                </a>
+                <!-- Yahoo Link -->
+                <a href="https://mail.yahoo.com/?v=1&to=infoavhs@avhsd.org&su=Inquiry%20from%20Website" target="_blank" class="flex items-center justify-center w-full px-5 py-3 bg-gray-100 text-gray-700 font-regular rounded-lg hover:bg-[#0051d2] hover:text-white focus:outline-none focus:ring-0 focus:ring-gray-300">
+                   
+                    Continue with Yahoo
+                </a>
+            </div>
+            
+            <p class="text-xs text-gray-500 mt-6 text-center">Or, you can copy the address and send from your preferred app: <a href="mailto:infoavhs@avhsd.org" class="text-blue-600 hover:underline">infoavhs@avhsd.org</a>.</p>
+        </div>
+    </div>
+     

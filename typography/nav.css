@@ -1,0 +1,77 @@
+/* ================================
+   SHARED NAVIGATION STYLES
+   ================================ */
+
+/* --- 1. FONT DEFINITIONS (with corrected absolute paths) --- */
+@font-face {
+  font-family: 'IcoMoon';
+  src: url("https://www.soarhs.org/uploaded/themes/default_25/fonts/icomoon.eot?123");
+  src: url("https://www.soarhs.org/uploaded/themes/default_25/fonts/icomoon.eot?#iefix?123") format("embedded-opentype"),
+       url("https://www.soarhs.org/uploaded/themes/default_25/fonts/icomoon.woff2?123") format("woff2"),
+       url("https://www.soarhs.org/uploaded/themes/default_25/fonts/icomoon.woff?123") format("woff"),
+       url("https://www.soarhs.org/uploaded/themes/default_25/fonts/icomoon.ttf?123") format("truetype"),
+       url("https://www.soarhs.org/uploaded/themes/default_25/fonts/icomoon.svg#IcoMoon?123") format("svg");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* --- 2. MAIN NAVIGATION CONTAINER --- */
+.header-bottom {
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: #8B1C40; /* This is the maroon background */
+}
+
+.header-bottom > .fsElementContent {
+  position: relative;
+  margin: 0 auto;
+  max-width: 73.75rem;
+}
+
+.header-bottom .fsTwoColumnLayout {
+  display: flex;
+}
+
+.header-bottom .fsTwoColumnLayout > .fsDiv.fsStyleColumn-1 {
+  flex: 0 0 auto;
+  padding-right: 30px;
+}
+
+.header-bottom .fsTwoColumnLayout > .fsDiv.fsStyleColumn-2 {
+  display: block;
+  flex: 1 1 auto;
+}
+
+/* --- 3. NAVIGATION LINKS AND LISTS --- */
+.nav-logo-header ul, .nav-logo-header li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-logo-header .fsNavLevel1 li {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  height: 102px;
+  position: relative;
+}
+
+.nav-logo-header .fsNavLevel1 li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white; /* You may need to add/adjust this */
+  text-decoration: none; /* You may need to add/adjust this */
+  background: none;
+}
+
+.nav-logo-header .fsNavLevel1 li a:hover {
+  color: #ddd; /* You may need to add/adjust this */
+}
+
+.nav-logo-header .fsNavLevel1 li img {
+  display: block;
+  max-height: 70px;
+}

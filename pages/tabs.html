@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs with Scoped View Transitions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/tabs.css">
+    <link rel="stylesheet" media="all" href="css/av-article.css" />
+</head>
+<body class="bg-gray-100 p-10">
+
+   <!-- 1. The HTML Structure (for one tab component) -->
+<!-- Use this structure for each tab group. The script will find them automatically. -->
+
+<div class="tabs-scope">
+    <!-- Tab 1 Contact & Information -->
+    <div data-include="includes/about/tabs-group1.html"></div>
+    <!-- End Tab 1 Contact & Information -->
+
+    <!-- Tab 2 Contact & Information -->
+    <div data-include="includes/about/tabs-group2.html"></div>
+    <!-- End Tab 2 Contact & Information -->
+
+    <!-- Tab 3 policies -->
+    <div data-include="includes/about/tabs-group3.html"></div>
+    <!-- Tab 3 Contact & Information -->
+</div>
+
+</div>
+
+<script src="js/include-html.js"></script>
+<script src="js/tabs-init.js"></script>
+
+</body>
+</html>

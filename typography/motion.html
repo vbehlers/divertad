@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplified Motion Showcase</title>
+    <!-- Links to the same CSS file -->
+    <link rel="stylesheet" href="theme/v-theme.css">
+    <style>
+        /* Simple layout styles for this demo page */
+        body { padding: 2rem; }
+        .page-container { max-width: 900px; margin: auto; }
+        .motion-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; align-items: start; }
+        
+        /* Styles for placeholder elements */
+        .placeholder-card { background-color: var(--color-white); border-radius: 5px; padding: 1.5rem; }
+        .placeholder-photo-container { position: relative; border-radius: 5px; overflow: hidden; background-color: var(--color-light-gray); aspect-ratio: 1 / 1; }
+        .placeholder-photo { width: 100%; height: 100%; object-fit: cover; }
+        .placeholder-card-3 { border-radius: 5px; overflow: hidden; }
+        .placeholder-card-3-content { padding: 1.5rem; }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+
+        <h1>Simplified Motion Showcase</h1>
+        <p>This page demonstrates the simplified animations for the three specific card types. All other complex animations have been removed.</p>
+
+        <div class="card card-accent-primary">
+            <div class="card-body">
+                <h2>Card & Button Animations</h2>
+                <div class="motion-grid">
+
+                    <!-- Card Type 1: Corner Image Button -->
+                    <div class="placeholder-card motion-card-1">
+                        <div class="placeholder-photo-container" style="aspect-ratio: 1/1; margin-bottom: 1rem;">
+                           <img src="https://placehold.co/400x400/0C4B90/ffffff?text=Card+1" alt="Placeholder" class="placeholder-photo motion-photo-target">
+                        </div>
+                        <h5>Corner Image Button</h5>
+                        <p style="font-size: 14px;">Border is 2px orange, transitions to blue on hover. Image scaling is removed.</p>
+                    </div>
+
+                    <!-- Card Type 2: Post Link Card -->
+                    <div class="placeholder-card motion-card-2">
+                         <div class="placeholder-photo-container" style="aspect-ratio: 1/1;">
+                           <img src="https://placehold.co/400x400/F5821F/ffffff?text=Card+2" alt="Placeholder" class="placeholder-photo motion-photo-target">
+                        </div>
+                        <div class="motion-icon-target" style="display: none;"></div>
+                         <h5>Post Link Card</h5>
+                        <p style="font-size: 14px;">Same as Card 1. Border is 2px orange, transitions to blue on hover. Gradient and icon are removed.</p>
+                    </div>
+                    
+                    <!-- Card Type 3: Featured Story Card -->
+                    <div class="placeholder-card-3 motion-card-3">
+                        <div class="placeholder-photo-container" style="border-radius: 0; aspect-ratio: 4/3;">
+                           <img src="https://placehold.co/400x300/262626/ffffff?text=Card+3" alt="Placeholder" class="placeholder-photo motion-photo-target">
+                        </div>
+                        <div class="placeholder-card-3-content">
+                            <h5>Featured Story Card</h5>
+                            <p style="font-size: 14px;">Border-radius is now 5px. The active state is a 2px blue border, which transitions to orange on hover.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+             <div class="card-body">
+                <h2>Static Content</h2>
+                <p>All on-scroll animations have been removed. Content is now static and appears on page load without transitions.</p>
+                <h4>Horizontal Reveal (Static)</h4>
+                <p>This container no longer scales in horizontally.</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

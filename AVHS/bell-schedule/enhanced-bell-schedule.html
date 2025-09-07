@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Bell Schedule - AVHS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Base font settings */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        html {
+            font-size: var(--base-font-size);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /*
+         * Global style tokens (CSS Custom Properties) for easy updates.
+        */
+        :root {
+            /* Base Font Size Token */
+            --base-font-size: 16px;
+
+            /* Color Tokens */
+            --color-text-default: #111827;
+            --color-text-secondary: #4b5563;
+            --color-text-primary: #0051d2;
+
+            /* Font Weight Tokens */
+            --font-normal: 400;
+            --font-medium: 500;
+            --font-semibold: 600;
+            --font-bold: 700;
+
+            /* Font Size Tokens (in rem) */
+            --fs-h1: 4.3rem;
+            --fs-h2: 2.25rem;
+            --fs-h3: 1.8rem;
+            --fs-h4: 1.3rem;
+            --fs-h5: 1rem;
+            --fs-h6: 0.875rem;
+
+            /* Line Height Tokens (in rem) */
+            --lh-h1: 4.3rem;
+            --lh-h2: 2.25rem;
+            --lh-h3: 1.8rem;
+            --lh-h4: 1.3rem;
+            --lh-h5: 1rem;
+            --lh-h6: 0.875rem;
+
+            /* Line Height Tokens (in rem) */
+            --lh-p1: 5.1rem;
+            --lh-p2: 2.925rem;
+            --lh-p3: 2.3rem;
+            --lh-p4: 1.8rem;
+            --lh-p5: 1.513rem;
+            --lh-p6: 1.3rem;
+
+            /* Heading Bottom Margin Tokens (in rem) */
+            --h-margin-1: 5.75rem;
+            --h-margin-2: 1.25rem;
+            --h-margin-3: 1.0rem;
+            --h-margin-4: 0.6rem;
+            --h-margin-5: 0.5rem;
+            --h-margin-6: 0.5rem;
+
+            /* Module Spacing Tokens (in rem) */
+            --module-spacing-1: 4rem;
+            --module-spacing-2: 5.9rem;
+            --module-spacing-3: 1.5rem;
+            --module-spacing-4: 0rem;
+            --module-spacing-5: 1.2rem;
+            --module-spacing-6: 0.8rem;
+
+            /* Paragraph Group Padding Tokens (in rem) */
+            --group-padding-1: 6.8rem;
+            --group-padding-2: 4.5rem;
+            --group-padding-3: 2.3rem;
+            --group-padding-4: 2.2rem;
+            --group-padding-5: 1.5rem;
+            --group-padding-6: 0.533rem;
+
+            /* Proportional Paragraph Spacing Token */
+            --paragraph-spacing-scale: 0.4;
+        }
+
+        /* * Hierarchical Module Spacing */
+        .module-1 { margin-bottom: var(--module-spacing-1); }
+        .module-2 { margin-bottom: var(--module-spacing-2); }
+        .module-3 { margin-bottom: var(--module-spacing-3); }
+        .module-4 { margin-bottom: var(--module-spacing-4); }
+        .module-5 { margin-bottom: var(--module-spacing-5); }
+        .module-6 { margin-bottom: var(--module-spacing-6); }
+
+        /* * Paragraph Group Padding */
+        .group-1 { padding-bottom: var(--group-padding-1); }
+        .group-2 { padding-bottom: var(--group-padding-2); }
+        .group-3 { padding-bottom: var(--group-padding-3); }
+        .group-4 { padding-bottom: var(--group-padding-4); }
+        .group-5 { padding-bottom: var(--group-padding-5); }
+        .group-6 { padding-bottom: var(--group-padding-6); }
+        
+        /* * Proportional Paragraph Spacing */
+        .paragraph {
+            margin-bottom: calc(1.2em * var(--paragraph-spacing-scale));
+        }
+
+        /* * Typography classes using CSS variables */
+        .type-h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); margin-bottom: var(--h-margin-1); }
+        .type-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); margin-bottom: var(--h-margin-2); }
+        .type-h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); margin-bottom: var(--h-margin-3); }
+        .type-h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); margin-bottom: var(--h-margin-4); }
+        .type-h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); margin-bottom: var(--h-margin-5); }
+        .type-h6 { font-size: var(--fs-h6); line-height: var(--lh-h6); margin-bottom: var(--h-margin-6); }
+
+        .type-p1 { font-size: var(--fs-h1); line-height: var(--lh-p1); }
+        .type-p2 { font-size: var(--fs-h2); line-height: var(--lh-p2); }
+        .type-p3 { font-size: var(--fs-h3); line-height: var(--lh-p3); }
+        .type-p4 { font-size: var(--fs-h4); line-height: var(--lh-p4); }
+        .type-p5 { font-size: var(--fs-h5); line-height: var(--lh-p5); }
+        .type-p6 { font-size: var(--fs-h6); line-height: var(--lh-p6); }
+
+        /* * Semantic utility classes for themes */
+        .text-primary { color: var(--color-text-primary); }
+        .text-secondary { color: var(--color-text-secondary); }
+        .font-normal { font-weight: var(--font-normal); }
+        .font-medium { font-weight: var(--font-medium); }
+        .font-semibold { font-weight: var(--font-semibold); }
+        .font-bold { font-weight: var(--font-bold); }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Bell Schedule Specific Styles */
+        .notification-header {
+            margin-bottom: 2rem;
+        }
+
+        .header-dot {
+            display: inline-block;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background-color: #22c55e;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .notification-panels {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        /* KPI Panel Management */
+        .secondary-kpi {
+            opacity: 0.8;
+        }
+
+        .future-kpi {
+            opacity: 0.6;
+        }
+
+        .future-kpi.hidden {
+            display: none;
+        }
+
+        /* Responsive KPI Layout */
+        @media (max-width: 1200px) {
+            .secondary-kpi {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .notification-panels {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .panel {
+                padding-right: 2rem;
+            }
+        }
+
+        .panel {
+            text-align: left;
+            border-left: 2px solid #e2e8f0;
+            padding-left: 1rem;
+            padding-right: 8rem;
+            margin-left: -16px;
+            margin-top: 10px;
+        }
+
+        .panel-value {
+            font-size: 50px;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            font-family: 'Roboto', sans-serif;
+            color: #0051d2;
+            line-height: 1;
+        }
+
+        .panel-label {
+            font-size: 16px;
+            color: #111827;
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+            padding-left: 8px;
+        }
+
+        .time-display {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+        }
+
+        /* Flashing animation for next period indicator */
+        @keyframes flash-next-period {
+            0% { background-color: #fff; }
+            50% { background-color: #ffe5f1; }
+            100% { background-color: #fff; }
+        }
+
+        .flash-next-period {
+            animation: flash-next-period 1.5s infinite ease-in-out;
+            background-color: #ffe5f1 !important;
+        }
+
+        /* Style borders around flashing row to complement the flash */
+        .flash-next-period {
+            border-top: 3px solid #ff75b3 !important;
+            border-bottom: 3px solid #ff75b3 !important;
+        }
+
+        /* Smooth transitions for all changes */
+        .panel-value,
+        .panel-label,
+        tbody tr,
+        tbody td,
+        tbody span {
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Smooth indicator animation similar to tabs */
+        tbody tr {
+            transition: all 380ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        tbody tr.current-period {
+            border-left: 4px solid #0051d2;
+            transition: border-left 380ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Make all border-b elements 3px thick */
+        .border-b {
+            border-bottom-width: 3px !important;
+        }
+
+        /* View Transitions API keyframes for smooth number changes */
+        @keyframes vt-fade-in {
+            from { 
+                opacity: 0; 
+                transform: scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+        }
+
+        @keyframes vt-fade-out {
+            from { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+            to { 
+                opacity: 0; 
+                transform: scale(0.95); 
+            }
+        }
+
+        /* Apply View Transitions to specific elements */
+        .panel-value {
+            view-transition-name: panel-value;
+        }
+
+        #current-period-header {
+            view-transition-name: period-header;
+        }
+
+        /* Admin Panel Styles */
+        .admin-panel {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: #0051d2;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .admin-panel.hidden {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #0051d2;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .notification-panels {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .admin-toggle {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Admin Toggle Button -->
+    <button id="adminToggle" class="admin-toggle">Admin Panel</button>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel hidden">
+        <h3 class="type-h4 font-semibold mb-4">Bell Schedule Admin Panel</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- School Selection -->
+            <div class="form-group">
+                <label class="form-label">Current School</label>
+                <select id="schoolSelect" class="form-select">
+                    <option value="AVHS">Antelope Valley High School</option>
+                    <option value="SOAR">SOAR High School</option>
+                    <option value="DWHS">Desert Winds High School</option>
+                </select>
+            </div>
+
+            <!-- Date Override -->
+            <div class="form-group">
+                <label class="form-label">Date Override (for testing)</label>
+                <input type="date" id="dateOverride" class="form-input">
+                <button id="clearDateOverride" class="btn btn-secondary mt-2">Clear Override</button>
+            </div>
+
+            <!-- Schedule Type Override -->
+            <div class="form-group">
+                <label class="form-label">Schedule Type Override</label>
+                <select id="scheduleTypeOverride" class="form-select">
+                    <option value="">Auto-detect</option>
+                    <option value="regular_day">Regular Day</option>
+                    <option value="flex_day">Flex Day</option>
+                    <option value="minimum_day">Minimum Day</option>
+                    <option value="monday_wednesday_schedule">Monday/Wednesday (SOAR)</option>
+                    <option value="tuesday_thursday_schedule">Tuesday/Thursday (SOAR)</option>
+                    <option value="friday_schedule">Friday (SOAR)</option>
+                    <option value="mtss_day">MTSS Day</option>
+                </select>
+            </div>
+
+            <!-- Special Events -->
+            <div class="form-group">
+                <label class="form-label">Special Events Count</label>
+                <input type="number" id="specialEventsCount" class="form-input" min="0" max="10" value="0">
+            </div>
+
+            <!-- KPI Display Options -->
+            <div class="form-group">
+                <label class="form-label">KPI Display Options</label>
+                <div class="flex gap-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="showSecondaryKPIs" checked class="mr-2">
+                        Show Secondary KPIs
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" id="showFutureKPIs" class="mr-2">
+                        Show Future KPIs
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button id="saveSettings" class="btn btn-success">Save Settings</button>
+            <button id="resetSettings" class="btn btn-secondary">Reset to Defaults</button>
+            <button id="exportData" class="btn btn-primary">Export Schedule Data</button>
+        </div>
+
+        <!-- Quick Date Management -->
+        <div class="mt-6">
+            <h4 class="type-h5 font-semibold mb-3">Quick Date Management</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="form-group">
+                    <label class="form-label">Add Minimum Day</label>
+                    <input type="date" id="addMinimumDay" class="form-input">
+                    <input type="text" id="minimumDayReason" class="form-input mt-2" placeholder="Reason (optional)">
+                    <button id="addMinimumDayBtn" class="btn btn-primary mt-2">Add</button>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Add Flex Day</label>
+                    <input type="date" id="addFlexDay" class="form-input">
+                    <input type="text" id="flexDayReason" class="form-input mt-2" placeholder="Reason (optional)">
+                    <button id="addFlexDayBtn" class="btn btn-primary mt-2">Add</button>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Add Holiday</label>
+                    <input type="date" id="addHoliday" class="form-input">
+                    <input type="text" id="holidayName" class="form-input mt-2" placeholder="Holiday name">
+                    <button id="addHolidayBtn" class="btn btn-primary mt-2">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full max-w-[1500px] px-4 md:px-6 lg:px-8 mx-auto">
+        
+        <!-- Start Module 1 -->
+        <div class="module-1">
+            
+            <!-- Start Module 2 - Bell Schedule Notifications -->
+            <div class="module-2 vt-page-scope">
+
+                <!-- Start Module 3 -->
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal">
+                            <span id="current-date-header">Tuesday, March 19</span>: <span id="current-period-header" class="text-primary">Period 2</span>
+                        </h3>
+                        
+                        <!-- Schedule Type -->
+                        <div class="notification-header">
+                            <div class="text-left">
+                                <div class="text-base font-normal text-gray-900 mt-1" id="schedule-type-display">Regular Schedule</div>
+                            </div>
+                        </div>
+
+                        <!-- KPI Dashboard - Single Row with Expandable Structure -->
+                        <div class="notification-panels" id="kpi-dashboard">
+                            
+                            <!-- Primary KPIs (Always Visible) -->
+                            <div class="panel">
+                                <div class="panel-value" id="current-time">8:38:01</div>
+                                <div class="panel-label">Current Time</div>
+                            </div>
+
+                            <div class="panel">
+                                <div class="panel-value" id="next-bell">10:49 / 116:23m</div>
+                                <div class="panel-label">Next Bell</div>
+                            </div>
+
+                            <div class="panel">
+                                <div class="panel-value" id="special-events">0</div>
+                                <div class="panel-label">Special Events</div>
+                            </div>
+
+                            <!-- Secondary KPIs (Can be toggled or auto-expand) -->
+                            <div class="panel secondary-kpi" id="school-panel">
+                                <div class="panel-value" id="school-name">AVHS</div>
+                                <div class="panel-label">School</div>
+                            </div>
+                            
+                            <div class="panel secondary-kpi" id="year-panel">
+                                <div class="panel-value" id="academic-year">2024-2025</div>
+                                <div class="panel-label">Year</div>
+                            </div>
+                            
+                            <div class="panel secondary-kpi" id="status-panel">
+                                <div class="panel-value" id="school-status">In Session</div>
+                                <div class="panel-label">Status</div>
+                            </div>
+
+                            <!-- Future KPI Slots (Hidden by default, can be enabled) -->
+                            <div class="panel future-kpi hidden" id="attendance-panel">
+                                <div class="panel-value" id="attendance-rate">--</div>
+                                <div class="panel-label">Attendance</div>
+                            </div>
+
+                            <div class="panel future-kpi hidden" id="weather-panel">
+                                <div class="panel-value" id="weather-temp">--</div>
+                                <div class="panel-label">Weather</div>
+                            </div>
+
+                            <div class="panel future-kpi hidden" id="lunch-panel">
+                                <div class="panel-value" id="lunch-status">--</div>
+                                <div class="panel-label">Lunch</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Module 3 -->
+
+                <!-- Start Module 3 -->
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b-3 border-gray-200">
+                                        <th class="type-h5 text-primary font-normal py-4 pr-4 w-1/6">Period</th>
+                                        <th class="type-h5 text-primary font-normal p-4 w-1/3">Time</th>
+                                        <th class="type-h5 text-primary font-normal p-4 w-1/6">Duration</th>
+                                        <th class="type-h5 text-primary font-normal p-4 w-1/6">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="schedule-table-body">
+                                    <!-- Dynamic content will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Module 3 -->
+
+                <!-- Start Module 3 -->
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <div class="flex justify-start gap-4">
+                            <button data-modal-target="#scheduleModal" class="bg-blue-600 hover:bg-blue-700 text-white font-normal py-3 px-6 rounded-lg transition-colors">
+                                View Full Schedule
+                            </button>
+                            <button id="refreshSchedule" class="bg-green-600 hover:bg-green-700 text-white font-normal py-3 px-6 rounded-lg transition-colors">
+                                Refresh Schedule
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Module 3 -->
+
+            </div>
+            <!-- End Module 2 -->
+
+        </div>
+        <!-- End Module 1 -->
+        
+    </div>
+
+    <!-- Full Schedule Modal -->
+    <div id="scheduleModal" class="fixed inset-0 bg-white z-50" style="display: none;">
+        <!-- Sticky Header - Full Width -->
+        <header class="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-10 lg:px-10 py-6 z-20 shadow-sm">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-medium text-gray-800 font-sans">Complete Bell Schedule - <span id="modal-school-name">AVHS</span></h2>
+                <button data-modal-close id="closeModalIconBtn" class="text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+    
+        <!-- Scrollable Content Container -->
+        <div class="h-full overflow-y-auto pt-0">
+            <!-- Content - Centered with max-width 1000px -->
+            <div class="max-w-[1000px] mx-auto px-4 md:px-10 lg:px-10 py-8 font-sans">
+                <div id="modal-schedule-content">
+                    <!-- Dynamic schedule content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the district schedules data first, then the manager -->
+    <script src="district-schedules.js"></script>
+    <script src="enhanced-bell-schedule-manager.js"></script>
+    
+    <script>
+        // Initialize the enhanced bell schedule system
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if required data is available
+            if (typeof districtSchedules === 'undefined') {
+                console.error('districtSchedules not loaded');
+                document.body.innerHTML = '<div style="padding: 20px; color: red;">Error: District schedules data not loaded. Please check the JavaScript files.</div>';
+                return;
+            }
+            
+            if (typeof EnhancedBellScheduleManager === 'undefined') {
+                console.error('EnhancedBellScheduleManager not loaded');
+                document.body.innerHTML = '<div style="padding: 20px; color: red;">Error: Enhanced Bell Schedule Manager not loaded. Please check the JavaScript files.</div>';
+                return;
+            }
+            
+            try {
+                // Initialize the enhanced manager
+                const bellManager = new EnhancedBellScheduleManager(districtSchedules, 'AVHS');
+                
+                // Start auto-updating
+                bellManager.startAutoUpdate();
+                
+                // Make it globally available
+                window.bellManager = bellManager;
+                
+                // Initialize admin panel
+                initializeAdminPanel();
+                
+                // Initialize modal functionality
+                initializeModal();
+                
+                console.log('Enhanced Bell Schedule System initialized successfully');
+            } catch (error) {
+                console.error('Error initializing bell schedule system:', error);
+                document.body.innerHTML = '<div style="padding: 20px; color: red;">Error initializing bell schedule system: ' + error.message + '</div>';
+            }
+        });
+
+        function initializeAdminPanel() {
+            // Check if bellManager is available
+            if (!window.bellManager) {
+                console.error('bellManager not available for admin panel initialization');
+                return;
+            }
+            
+            const adminToggle = document.getElementById('adminToggle');
+            const adminPanel = document.getElementById('adminPanel');
+            const schoolSelect = document.getElementById('schoolSelect');
+            const dateOverride = document.getElementById('dateOverride');
+            const scheduleTypeOverride = document.getElementById('scheduleTypeOverride');
+            const specialEventsCount = document.getElementById('specialEventsCount');
+            const saveSettings = document.getElementById('saveSettings');
+            const resetSettings = document.getElementById('resetSettings');
+            const exportData = document.getElementById('exportData');
+            const refreshSchedule = document.getElementById('refreshSchedule');
+            
+            // Check if all required elements exist
+            if (!adminToggle || !adminPanel || !schoolSelect) {
+                console.error('Required admin panel elements not found');
+                return;
+            }
+
+            // Toggle admin panel
+            adminToggle.addEventListener('click', () => {
+                adminPanel.classList.toggle('hidden');
+            });
+
+            // School selection
+            schoolSelect.addEventListener('change', (e) => {
+                window.bellManager.switchSchool(e.target.value);
+                window.bellManager.updateDashboard();
+            });
+
+            // Date override
+            dateOverride.addEventListener('change', (e) => {
+                if (e.target.value) {
+                    window.bellManager.setDateOverride(new Date(e.target.value));
+                } else {
+                    window.bellManager.clearDateOverride();
+                }
+                window.bellManager.updateDashboard();
+            });
+
+            // Clear date override
+            document.getElementById('clearDateOverride').addEventListener('click', () => {
+                dateOverride.value = '';
+                window.bellManager.clearDateOverride();
+                window.bellManager.updateDashboard();
+            });
+
+            // Schedule type override
+            scheduleTypeOverride.addEventListener('change', (e) => {
+                if (e.target.value) {
+                    window.bellManager.setScheduleTypeOverride(e.target.value);
+                } else {
+                    window.bellManager.clearScheduleTypeOverride();
+                }
+                window.bellManager.updateDashboard();
+            });
+
+            // Special events count
+            specialEventsCount.addEventListener('change', (e) => {
+                window.bellManager.setSpecialEventsCount(parseInt(e.target.value) || 0);
+                window.bellManager.updateDashboard();
+            });
+
+            // KPI Display Options
+            const showSecondaryKPIs = document.getElementById('showSecondaryKPIs');
+            const showFutureKPIs = document.getElementById('showFutureKPIs');
+
+            showSecondaryKPIs.addEventListener('change', (e) => {
+                toggleKPIVisibility('secondary-kpi', e.target.checked);
+            });
+
+            showFutureKPIs.addEventListener('change', (e) => {
+                toggleKPIVisibility('future-kpi', e.target.checked);
+            });
+
+            // Save settings
+            saveSettings.addEventListener('click', () => {
+                const settings = {
+                    school: schoolSelect.value,
+                    dateOverride: dateOverride.value,
+                    scheduleTypeOverride: scheduleTypeOverride.value,
+                    specialEventsCount: specialEventsCount.value,
+                    showSecondaryKPIs: showSecondaryKPIs.checked,
+                    showFutureKPIs: showFutureKPIs.checked
+                };
+                localStorage.setItem('bellScheduleSettings', JSON.stringify(settings));
+                alert('Settings saved!');
+            });
+
+            // Reset settings
+            resetSettings.addEventListener('click', () => {
+                localStorage.removeItem('bellScheduleSettings');
+                schoolSelect.value = 'AVHS';
+                dateOverride.value = '';
+                scheduleTypeOverride.value = '';
+                specialEventsCount.value = '0';
+                showSecondaryKPIs.checked = true;
+                showFutureKPIs.checked = false;
+                window.bellManager.clearAllOverrides();
+                window.bellManager.switchSchool('AVHS');
+                window.bellManager.updateDashboard();
+                toggleKPIVisibility('secondary-kpi', true);
+                toggleKPIVisibility('future-kpi', false);
+                alert('Settings reset!');
+            });
+
+            // Export data
+            exportData.addEventListener('click', () => {
+                const data = window.bellManager.exportScheduleData();
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'bell-schedule-data.json';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+
+            // Refresh schedule
+            refreshSchedule.addEventListener('click', () => {
+                window.bellManager.updateDashboard();
+            });
+
+            // Load saved settings
+            const savedSettings = localStorage.getItem('bellScheduleSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                schoolSelect.value = settings.school || 'AVHS';
+                dateOverride.value = settings.dateOverride || '';
+                scheduleTypeOverride.value = settings.scheduleTypeOverride || '';
+                specialEventsCount.value = settings.specialEventsCount || '0';
+                showSecondaryKPIs.checked = settings.showSecondaryKPIs !== false; // Default to true
+                showFutureKPIs.checked = settings.showFutureKPIs || false;
+                
+                if (settings.school) {
+                    window.bellManager.switchSchool(settings.school);
+                }
+                if (settings.dateOverride) {
+                    window.bellManager.setDateOverride(new Date(settings.dateOverride));
+                }
+                if (settings.scheduleTypeOverride) {
+                    window.bellManager.setScheduleTypeOverride(settings.scheduleTypeOverride);
+                }
+                if (settings.specialEventsCount) {
+                    window.bellManager.setSpecialEventsCount(parseInt(settings.specialEventsCount));
+                }
+                
+                // Apply KPI visibility settings
+                toggleKPIVisibility('secondary-kpi', showSecondaryKPIs.checked);
+                toggleKPIVisibility('future-kpi', showFutureKPIs.checked);
+            }
+
+            // Quick date management
+            initializeQuickDateManagement();
+        }
+
+        function toggleKPIVisibility(className, show) {
+            const elements = document.querySelectorAll('.' + className);
+            elements.forEach(element => {
+                if (show) {
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            });
+        }
+
+        function initializeQuickDateManagement() {
+            // Add minimum day
+            document.getElementById('addMinimumDayBtn').addEventListener('click', () => {
+                const date = document.getElementById('addMinimumDay').value;
+                const reason = document.getElementById('minimumDayReason').value;
+                if (date) {
+                    window.bellManager.addMinimumDay(date, reason);
+                    document.getElementById('addMinimumDay').value = '';
+                    document.getElementById('minimumDayReason').value = '';
+                    alert('Minimum day added!');
+                }
+            });
+
+            // Add flex day
+            document.getElementById('addFlexDayBtn').addEventListener('click', () => {
+                const date = document.getElementById('addFlexDay').value;
+                const reason = document.getElementById('flexDayReason').value;
+                if (date) {
+                    window.bellManager.addFlexDay(date, reason);
+                    document.getElementById('addFlexDay').value = '';
+                    document.getElementById('flexDayReason').value = '';
+                    alert('Flex day added!');
+                }
+            });
+
+            // Add holiday
+            document.getElementById('addHolidayBtn').addEventListener('click', () => {
+                const date = document.getElementById('addHoliday').value;
+                const name = document.getElementById('holidayName').value;
+                if (date && name) {
+                    window.bellManager.addHoliday(date, name);
+                    document.getElementById('addHoliday').value = '';
+                    document.getElementById('holidayName').value = '';
+                    alert('Holiday added!');
+                }
+            });
+        }
+
+        function initializeModal() {
+            // Modal functionality
+            function openModal(modal) {
+                if (modal) {
+                    modal.style.display = 'block';
+                    // Update modal content
+                    updateModalContent();
+                }
+            }
+
+            function closeModal(modal) {
+                if (modal) modal.style.display = 'none';
+            }
+
+            function updateModalContent() {
+                const schoolName = document.getElementById('modal-school-name');
+                const content = document.getElementById('modal-schedule-content');
+                
+                if (schoolName) {
+                    schoolName.textContent = window.bellManager.currentSchool.school_name;
+                }
+                
+                if (content) {
+                    content.innerHTML = window.bellManager.generateModalContent();
+                }
+            }
+
+            // Bind modal events
+            document.querySelectorAll('[data-modal-target]').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const sel = btn.getAttribute('data-modal-target');
+                    const modal = sel ? document.querySelector(sel) : null;
+                    openModal(modal);
+                });
+            });
+
+            document.querySelectorAll('[data-modal-close]').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const modal = btn.closest('.fixed');
+                    closeModal(modal);
+                });
+            });
+
+            document.querySelectorAll('.fixed').forEach((modal) => {
+                modal.addEventListener('click', (event) => {
+                    if (event.target === modal) closeModal(modal);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

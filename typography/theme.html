@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System</title>
+    <link rel="stylesheet" href="theme/v-theme.css">
+    <style>
+        /* Simple layout styles for the demo page */
+        body {
+            padding: 2rem;
+        }
+        .page-container { 
+            max-width: 900px; 
+            margin: auto; 
+        }
+        .button-showcase { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 1rem; 
+            align-items: center; 
+            margin-bottom: 2rem; 
+            padding: 1.5rem; 
+            background: var(--color-white); 
+            border-radius: 16px; 
+            border: 1px solid var(--color-light-gray);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+
+        <h1>Design System</h1>
+        
+        <div class="card card-accent-primary">
+            <div class="card-body">
+                <h2>Typography Showcase</h2>
+                
+                <p>Paragraph <small class="metric-tag">P Element (16px / 26.4px)</small></p>
+                
+                <h1>Heading 1 <small class="metric-tag">H1 Element (44px / 52.8px)</small></h1>
+                <h2>Heading 2 <small class="metric-tag">H2 Element (36px / 43.2px)</small></h2>
+                <h3>Heading 3 <small class="metric-tag">H3 Element (28px / 33.6px)</small></h3>
+                <h4>Heading 4 <small class="metric-tag">H4 Element (20px / 24px)</small></h4>
+                <h5>Heading 5 <small class="metric-tag">H5 Element (16px / 19.2px)</small></h5>
+                <h6>Heading 6 (Sub-label) <small class="metric-tag">H6 Element (14px / 16.8px)</small></h6>
+                
+                <blockquote>
+                    <p>"This is a blockquote."</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h2>Oddball & Display Sizes</h2>
+                <h1 class="display-4">Display 4 <small class="metric-tag">Class: <code>.display-4</code> (160px / 110px)</small></h1>
+                <h1 class="display-1">Display 1 <small class="metric-tag">Class: <code>.display-1</code> (120px / 120px)</small></h1>
+                <h2 class="display-2">Display 2 <small class="metric-tag">Class: <code>.display-2</code> (96px / 96px)</small></h2>
+                <h3 class="display-3">Display 3 <small class="metric-tag">Class: <code>.display-3</code> (72px / 79.2px)</small></h3>
+                <h4 class="display-5">Display 5 <small class="metric-tag">Class: <code>.display-5</code> (50px / 50px)</small></h4>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <h2>Specialty Type Styles</h2>
+                <p>These are placeholders for unique, non-standard text styles.</p>
+                
+                <p style="margin-top: 2rem;" class="fx-text-knockout">Knockout Text <small class="metric-tag">Class: <code>.fx-text-knockout</code> (50px / 50px)</small></p>
+                <p style="margin-top: 2rem;" class="fx-text-gradient">Gradient Text <small class="metric-tag">Class: <code>.fx-text-gradient</code> (72px / 72px)</small></p>
+                <p style="margin-top: 2rem;" class="fx-text-shadow">Shadow Text <small class="metric-tag">Class: <code>.fx-text-shadow</code> (80px / 80px)</small></p>
+
+            </div>
+        </div>
+
+        <div class="card card-accent-secondary">
+            <div class="card-body">
+                <h2>Button Showcase</h2>
+                <div class="button-showcase">
+                    <a href="#/" class="button-solid-dark">Solid Dark</a>
+                    <a href="#/" class="button-solid-light">Solid Light</a>
+                    <a href="#/" class="button-solid-primary">Solid Primary</a>
+                    <a href="#/" class="button-solid-secondary">Solid Secondary</a>
+                    <a href="#/" class="button-hollow-dark">Hollow Dark</a>
+                    <a href="#/" class="button-hollow-light">Hollow Light</a>
+                    <a href="#/" class="button-hollow-primary">Hollow Primary</a>
+                    <a href="#/" class="button-hollow-secondary">Hollow Secondary</a>
+                    <a href="#/" class="button-arrow-primary">Arrow Primary</a>
+                    <a href="#/" class="button-arrow-light">Arrow Light</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-dark">
+            <div class="card-header">
+              <h4>Dark Card Variant</h4>
+            </div>
+            <div class="card-body">
+                <p>This is the dark version of the card component, useful for calling special attention to a section.</p>
+            </div>
+             <div class="card-footer" style="background-color: transparent; border: none;">
+                <a href="#/" class="button-arrow-white">Arrow White</a>
+             </div>
+        </div>
+
+    </div>
+</body>
+</html>

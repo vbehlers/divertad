@@ -1,0 +1,29 @@
+<!-- READER MODE HTML STRUCTURE - Add this to your site pages -->
+
+<!-- Add this button to your site header/navigation area -->
+<button onclick="toggleReaderMode('es')" class="reader-mode-btn"> Leer en Español</button>
+
+<!-- Add this HTML structure at the end of your body tag, before closing </body> -->
+<div id="reader-mode-overlay" class="reader-mode-overlay">
+    <div class="reader-mode-header">
+        <h1>Antelope Valley High School - Modo Lector</h1>
+        <button onclick="closeReaderMode()" class="reader-mode-close-btn">×</button>
+    </div>
+    
+    <div class="reader-mode-nav">
+        <ul>
+            <li><a href="#" onclick="loadReaderContent('es')">Académicos</a></li>
+            <li><a href="#" onclick="loadReaderContent('es')">Transcripciones</a></li>
+            <li><a href="#" onclick="loadReaderContent('es')">Graduación</a></li>
+            <li><a href="#" onclick="loadReaderContent('es')">Contacto</a></li>
+        </ul>
+    </div>
+    
+    <div id="reader-mode-content" class="reader-mode-content">
+        <!-- Content will be loaded here by JavaScript -->
+    </div>
+</div>
+
+<!-- Add these lines to your <head> section -->
+<!-- <link rel="stylesheet" href="reader-mode.css"> -->
+<!-- <script src="reader-mode.js"></script> -->

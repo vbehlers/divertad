@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f
+
+set timeout 30
+set host "dev.avhsd.org"
+set user "sftpuser"
+set pass "01Avhsd-Dev23"
+
+spawn sftp $user@$host
+expect "password:"
+send "$pass\r"
+expect "sftp>"
+send "ls\r"
+expect "sftp>"
+send "pwd\r"
+expect "sftp>"
+interact

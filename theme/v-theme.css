@@ -1,0 +1,218 @@
+/* ==========================================================================
+   0. SETUP & CONFIGURATION
+   ========================================================================== */
+
+/* Import Google Fonts (Roboto only) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700&display=swap');
+
+/* Custom Icon Font (using a CDN link for the demo) */
+@font-face {
+  font-family: "IcoMoon";
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/icomoon.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ==========================================================================
+   1. COLOR PALETTE & ROOT VARIABLES
+   ========================================================================== */
+:root {
+  /* Primary & Secondary */
+  --color-primary: #0C4B90;
+  --color-secondary: #F5821F;
+
+  /* Neutral Grays */
+  --color-dark: #262626;
+  --color-medium-gray: #636363;
+  --color-light-gray: #e5e5e5;
+  --color-background: #f8f8f8;
+  --color-white: #ffffff;
+
+  /* Text Colors */
+  --color-text-primary: var(--color-dark);
+  --color-text-secondary: var(--color-medium-gray);
+  --color-text-on-dark: var(--color-white);
+}
+
+/* ==========================================================================
+   2. TYPOGRAPHY
+   ========================================================================== */
+
+/* --- Base Typography --- */
+body {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Headings (Roboto, Normal Weight) --- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400; /* BOLD REMOVED */
+  line-height: 1.2;
+  color: var(--color-dark);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+h1 { font-size: 2.75rem; /* 44px */ }
+h2 { font-size: 2.25rem; /* 36px */ }
+h3 { font-size: 1.75rem; /* 28px */ }
+h4 { font-size: 1.25rem; /* 20px */ }
+h5 { font-size: 1rem;    /* 16px */ }
+h6 { font-size: 0.875rem;/* 14px */ text-transform: uppercase; color: var(--color-text-secondary); }
+
+/* --- Paragraph, Links & Text Elements --- */
+p {
+  margin-top: 0;
+  margin-bottom: 1.25em;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none; /* Underline removed */
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+a:hover {
+  text-decoration: none; /* Underline on hover REMOVED */
+  opacity: 0.8;
+}
+
+strong, b { font-weight: 400; /* BOLD REMOVED */ }
+em, i { font-style: italic; }
+
+/* --- Blockquote --- */
+blockquote {
+  margin-left: 0;
+  padding: 1rem 1.5rem;
+  border-left: 4px solid var(--color-primary);
+  background-color: var(--color-white);
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+blockquote p { margin-bottom: 0; }
+
+/* --- Simple Tag for Displaying Metrics --- */
+.metric-tag {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-medium-gray);
+  vertical-align: middle;
+  margin-left: 1rem;
+  text-transform: none;
+  letter-spacing: normal;
+  font-style: normal;
+}
+.metric-tag code {
+  background-color: var(--color-light-gray);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+}
+
+
+/* ==========================================================================
+   3. CONTAINERS & CARDS
+   ========================================================================== */
+
+.card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-light-gray);
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.card-header,
+.card-body,
+.card-footer {
+  padding: 2rem;
+}
+
+.card-header { border-bottom: 1px solid var(--color-light-gray); }
+.card-header h3, .card-header h4 { margin: 0; }
+
+.card-footer {
+  background-color: var(--color-background);
+  border-top: 1px solid var(--color-light-gray);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.card-accent-primary { border-top: 5px solid var(--color-primary); }
+.card-accent-secondary { border-top: 5px solid var(--color-secondary); }
+
+.card-dark {
+  background-color: var(--color-dark);
+  color: var(--color-text-on-dark);
+  border-color: #444;
+}
+.card-dark h1, .card-dark h2, .card-dark h3, .card-dark h4 { color: var(--color-text-on-dark); }
+.card-dark a { color: var(--color-secondary); }
+.card-dark .card-footer { background-color: #3a3a3a; border-top: 1px solid #505050; }
+
+
+/* ==========================================================================
+   4. BUTTONS (SIMPLE TRANSITIONS)
+   ========================================================================== */
+
+.small-button, .button-solid-dark, .button-solid-light, .button-hollow-dark, .button-hollow-light, .button-solid-primary, .button-solid-secondary, .button-hollow-primary, .button-hollow-secondary, .button-arrow-primary, .button-arrow-light, .button-arrow-white {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 16px 29px;
+  font-family: "Roboto", sans-serif !important;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  text-align: center;
+  max-width: 300px;
+  border-radius: 29px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.button-solid-dark { border: 2px solid var(--color-dark) !important; background-color: var(--color-dark); color: var(--color-white); }
+.button-solid-dark:hover { background-color: var(--color-white); color: var(--color-dark); }
+.button-solid-light { border: 2px solid #f8f8f8 !important; background-color: #f8f8f8; color: var(--color-dark); }
+.button-solid-light:hover { background-color: var(--color-dark); color: var(--color-white); border-color: var(--color-dark) !important; }
+.button-solid-primary { border: 2px solid var(--color-primary) !important; background-color: var(--color-primary); color: var(--color-white); }
+.button-solid-primary:hover { background-color: var(--color-white); color: var(--color-primary); }
+.button-solid-secondary { border: 2px solid var(--color-secondary) !important; background-color: var(--color-secondary); color: var(--color-white); }
+.button-solid-secondary:hover { background-color: var(--color-white); color: var(--color-secondary); }
+.button-hollow-dark { border: 2px solid var(--color-dark) !important; background-color: transparent; color: var(--color-dark); }
+.button-hollow-dark:hover { background-color: var(--color-dark); color: var(--color-white); }
+.button-hollow-light { border: 2px solid var(--color-light-gray) !important; background-color: transparent; color: var(--color-medium-gray); }
+.button-hollow-light:hover { background-color: var(--color-dark); color: var(--color-white); border-color: var(--color-dark) !important; }
+.button-hollow-primary { border: 2px solid var(--color-primary) !important; background-color: transparent; color: var(--color-primary); }
+.button-hollow-primary:hover { background-color: var(--color-primary); color: var(--color-white); }
+.button-hollow-secondary { border: 2px solid var(--color-secondary) !important; background-color: transparent; color: var(--color-secondary); }
+.button-hollow-secondary:hover { background-color: var(--color-secondary); color: var(--color-white); }
+.button-arrow-primary:after, .button-arrow-light:after, .button-arrow-white:after { content: ""; font-family: "IcoMoon"; margin-left: 10px; }
+.button-arrow-primary { border: 2px solid var(--color-primary) !important; background-color: var(--color-white); color: var(--color-primary); }
+.button-arrow-primary:hover { background-color: var(--color-primary); color: var(--color-white); }
+.button-arrow-light { border: 2px solid var(--color-light-gray) !important; background-color: var(--color-white); color: var(--color-dark); }
+.button-arrow-light:hover { background-color: var(--color-dark); color: var(--color-white); border-color: var(--color-dark) !important; }
+.button-arrow-white { border: 2px solid var(--color-white) !important; background-color: transparent; color: var(--color-white); }
+.button-arrow-white:hover { background-color: var(--color-white); color: var(--color-dark); }

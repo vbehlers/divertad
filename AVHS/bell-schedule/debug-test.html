@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Debug Test</h1>
+    <div id="debug-output"></div>
+
+    <script src="district-schedules.js"></script>
+    <script src="enhanced-bell-schedule-manager.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const output = document.getElementById('debug-output');
+            
+            try {
+                // Test 1: Check if districtSchedules is loaded
+                if (typeof districtSchedules === 'undefined') {
+                    output.innerHTML += '<div class="debug error">❌ districtSchedules not loaded</div>';
+                    return;
+                }
+                output.innerHTML += '<div class="debug success">✅ districtSchedules loaded</div>';
+                
+                // Test 2: Check schools array
+                if (!districtSchedules.schools || !Array.isArray(districtSchedules.schools)) {
+                    output.innerHTML += '<div class="debug error">❌ schools array not found</div>';
+                    return;
+                }
+                output.innerHTML += '<div class="debug success">✅ schools array found with ' + districtSchedules.schools.length + ' schools</div>';
+                
+                // Test 3: Check AVHS school
+                const avhsSchool = districtSchedules.schools.find(school => school.school_code === 'AVHS');
+                if (!avhsSchool) {
+                    output.innerHTML += '<div class="debug error">❌ AVHS school not found</div>';
+                    return;
+                }
+                output.innerHTML += '<div class="debug success">✅ AVHS school found: ' + avhsSchool.school_name + '</div>';
+                
+                // Test 4: Check bell_schedules
+                if (!avhsSchool.bell_schedules) {
+                    output.innerHTML += '<div class="debug error">❌ bell_schedules not found for AVHS</div>';
+                    return;
+                }
+                output.innerHTML += '<div class="debug success">✅ bell_schedules found for AVHS</div>';
+                
+                // Test 5: Check regular_day schedule
+                if (!avhsSchool.bell_schedules.regular_day) {
+                    output.innerHTML += '<div class="debug error">❌ regular_day schedule not found</div>';
+                    return;
+                }
+                output.innerHTML += '<div class="debug success">✅ regular_day schedule found with ' + avhsSchool.bell_schedules.regular_day.length + ' periods</div>';
+                
+                // Test 6: Try to create manager
+                if (typeof EnhancedBellScheduleManager === 'undefined') {
+                    output.innerHTML += '<div class="debug error">❌ EnhancedBellScheduleManager not loaded</div>';
+                    return;
+                }
+                output.innerHTML += '<div class="debug success">✅ EnhancedBellScheduleManager loaded</div>';
+                
+                // Test 7: Create manager instance
+                const manager = new EnhancedBellScheduleManager(districtSchedules, 'AVHS');
+                output.innerHTML += '<div class="debug success">✅ Manager created successfully</div>';
+                
+                // Test 8: Get schedule for today
+                const todaySchedule = manager.getScheduleForDate();
+                output.innerHTML += '<div class="debug success">✅ Today schedule: ' + todaySchedule.name + ' with ' + (todaySchedule.periods ? todaySchedule.periods.length : 0) + ' periods</div>';
+                
+                // Test 9: Get KPI data
+                const kpiData = manager.getKPIData();
+                output.innerHTML += '<div class="debug success">✅ KPI data: Current period = ' + kpiData.currentPeriod.name + '</div>';
+                
+            } catch (error) {
+                output.innerHTML += '<div class="debug error">❌ Error: ' + error.message + '</div>';
+                console.error('Debug error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
+

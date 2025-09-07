@@ -1,0 +1,174 @@
+    /* Base font settings */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+   
+   @view-transition {
+    navigation: auto;
+}
+   
+    html {
+    font-size: var(--base-font-size); /* Apply the base font size to the root */
+    }
+    
+   
+
+    /* Your other custom CSS rules can go below this line */
+    body {
+    font-family: 'Roboto', sans-serif;
+    }
+    /*
+     * Global style tokens (CSS Custom Properties) for easy updates.
+    */
+    :root {
+        /* Base Font Size Token */
+        --base-font-size: 16px;
+
+        /* Color Tokens */
+        --color-text-default: #111827;
+        --color-text-secondary: #4b5563;
+        --color-text-primary: #0051d2;
+
+        /* Font Weight Tokens */
+        --font-normal: 400;
+        --font-medium: 500;
+        --font-semibold: 600;
+        --font-bold: 700;
+
+        /* Font Size Tokens (in rem) */
+        --fs-h1: 4.3rem;    /* 36px */
+        --fs-h2: 2.25rem;  /* 26px */
+        --fs-h3: 1.8rem;    /* 22.5px */
+        --fs-h4: 1.3rem;    /* 18px */
+        --fs-h5: 1rem;      /* 15px */
+        --fs-h6: 0.875rem;  /* 14px */
+
+       /* Line Height Tokens (in rem) */
+        --lh-h1: 4.3rem;    /* 36px */
+        --lh-h2: 2.25rem;  /* 26px */
+        --lh-h3: 1.8rem;   /* 20px */
+        --lh-h4: 1.3rem;    /* 18px */
+        --lh-h5: 1rem;      /* 15px */
+        --lh-h6: 0.875rem;  /* 14px */
+
+        /* Line Height Tokens (in rem) */
+        --lh-p1: 5.1rem;    /* 45px */
+        --lh-p2: 2.925rem;    /* 33px */
+        --lh-p3: 2.3rem;   /* 26.25px */
+        --lh-p4: 1.8rem;    /* 24px */
+        --lh-p5: 1.513rem;   /* 21.75px */
+        --lh-p6: 1.3rem;    /* 19.5px */
+
+        /* Heading Bottom Margin Tokens (in rem) */
+        --h-margin-1: 5.75rem;   /* 37.5px */
+        --h-margin-2: 1.25rem;  /* 26.25px */
+        --h-margin-3: 1.0rem;   /* 13.5px */
+        --h-margin-4: 0.6rem;   /* 9px */
+        --h-margin-5: 0.5rem;   /* 7.5px */
+        --h-margin-6: 0.5rem;   /* 7.5px */
+
+        /* Module Spacing Tokens (in rem) */
+        --module-spacing-1: 4rem;     /* 60px */
+        --module-spacing-2: 5.9rem;   /* 48px */
+        --module-spacing-3: 1.5rem;   /* 36px */
+        --module-spacing-4: 0rem;   /* 24px */
+        --module-spacing-5: 1.2rem;   /* 18px */
+        --module-spacing-6: 0.8rem;   /* 12px */
+
+        /* Paragraph Group Padding Tokens (in rem) */
+        --group-padding-1: 6.8rem;     /* 75px */
+        --group-padding-2: 4.5rem;   /* 67.5px */
+        --group-padding-3: 2.3rem;  /* 42.75px */
+        --group-padding-4: 2.2rem;  /* 26.25px */
+        --group-padding-5: 1.5rem;   /* 22.5px */
+        --group-padding-6: 0.533rem; /* 8px */
+
+        /* Proportional Paragraph Spacing Token */
+        --paragraph-spacing-scale: 0.4; /* Multiplier for font-size */
+    }
+
+    /* * Hierarchical Module Spacing */
+    .module-1 { margin-bottom: var(--module-spacing-1); }
+    .module-2 { margin-bottom: var(--module-spacing-2); }
+    .module-3 { margin-bottom: var(--module-spacing-3); }
+    .module-4 { margin-bottom: var(--module-spacing-4); }
+    .module-5 { margin-bottom: var(--module-spacing-5); }
+    .module-6 { margin-bottom: var(--module-spacing-6); }
+
+    /* * Paragraph Group Padding */
+    .group-1 { padding-bottom: var(--group-padding-1); }
+    .group-2 { padding-bottom: var(--group-padding-2); }
+    .group-3 { padding-bottom: var(--group-padding-3); }
+    .group-4 { padding-bottom: var(--group-padding-4); }
+    .group-5 { padding-bottom: var(--group-padding-5); }
+    .group-6 { padding-bottom: var(--group-padding-6); }
+    
+    /* * Proportional Paragraph Spacing */
+    .paragraph {
+        margin-bottom: calc(1.2em * var(--paragraph-spacing-scale));
+    }
+
+    /*
+     * THE FIX: This rule targets the last paragraph in any group and removes its bottom margin.
+     * This prevents the paragraph's own spacing from stacking with the group/module spacing.
+    */
+    div[class*="group-"] > p.paragraph:last-child {
+        margin-bottom: 0;
+    }
+
+    /*
+     * THE FIX: This rule tells a parent group to remove its own bottom padding
+     * IF AND ONLY IF it contains another module inside it. This prevents the
+     * double-padding issue with nested components.
+    */
+    .group-1:has(.module-2),
+    .group-2:has(.module-3),
+    .group-3:has(.module-4),
+    .group-4:has(.module-5),
+    .group-5:has(.module-6) {
+        padding-bottom: 0;
+    }
+
+
+
+    /* * Typography classes using CSS variables */
+    .type-h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); margin-bottom: var(--h-margin-1); }
+    .type-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); margin-bottom: var(--h-margin-2); }
+    .type-h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); margin-bottom: var(--h-margin-3); }
+    .type-h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); margin-bottom: var(--h-margin-4); }
+    .type-h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); margin-bottom: var(--h-margin-5); }
+    .type-h6 { font-size: var(--fs-h6); line-height: var(--lh-h6); margin-bottom: var(--h-margin-6); }
+
+    .type-p1 { font-size: var(--fs-h1); line-height: var(--lh-p1); }
+    .type-p2 { font-size: var(--fs-h2); line-height: var(--lh-p2); }
+    .type-p3 { font-size: var(--fs-h3); line-height: var(--lh-p3); }
+    .type-p4 { font-size: var(--fs-h4); line-height: var(--lh-p4); }
+    .type-p5 { font-size: var(--fs-h5); line-height: var(--lh-p5); }
+    .type-p6 { font-size: var(--fs-h6); line-height: var(--lh-p6); }
+
+    /* * Semantic utility classes for themes */
+    .text-primary { color: var(--color-text-primary); }
+    .text-secondary { color: var(--color-text-secondary); }
+    .font-normal { font-weight: var(--font-normal); }
+    .font-medium { font-weight: var(--font-medium); }
+    .font-semibold { font-weight: var(--font-semibold); }
+    .font-bold { font-weight: var(--font-bold); }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Roboto', sans-serif;
+      }
+    
+    
+    /* * Addendum class to zero-out module spacing */
+    .addendum {
+        margin-bottom: 0 !important;
+    }
+
+
+
+    /*
+ * CSS FOR VIEW TRANSITIONS
+ * This creates the cross-fade effect when switching tabs.
+*/
+
+
+  
+  

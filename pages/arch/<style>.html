@@ -1,0 +1,945 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+    /* Your other custom CSS rules can go below this line */
+    body {
+    font-family: 'Roboto', sans-serif;
+    }
+
+    /* Base font settings */
+    html {
+        font-size: var(--base-font-size); /* Apply the base font size to the root */
+    }
+    body {
+        font-family: 'Roboto', sans-serif;
+        color: var(--color-text-default); /* Use the new color token */
+    }
+
+    /*
+     * Global style tokens (CSS Custom Properties) for easy updates.
+    */
+    :root {
+        /* Base Font Size Token */
+        --base-font-size: 16px;
+
+        /* Color Tokens */
+        --color-text-default: #111827;
+        --color-text-secondary: #4b5563;
+        --color-text-primary: #0051d2;
+
+        /* Font Weight Tokens */
+        --font-normal: 400;
+        --font-medium: 500;
+        --font-semibold: 600;
+        --font-bold: 700;
+
+        /* Font Size Tokens (in rem) */
+        --fs-h1: 4.3rem;    /* 68.8px */
+        --fs-h2: 2.25rem;   /* 36px */
+        --fs-h3: 1.9rem;    /* 30.4px */
+        --fs-h4: 1.3rem;    /* 20.8px */
+        --fs-h5: 1rem;      /* 16px */
+        --fs-h6: 0.875rem;  /* 14px */
+
+        /* Line Height Tokens (in rem) */
+        --lh-h1: 4.3rem;    /* 68.8px */
+        --lh-h2: 2.25rem;   /* 36px */
+        --lh-h3: 1.9rem;    /* 30.4px */
+        --lh-h4: 1.175rem;  /* 18.8px */
+        --lh-h5: 1rem;      /* 16px */
+        --lh-h6: 0.875rem;  /* 14px */
+
+        /* Line Height Tokens (in rem) */
+        --lh-p1: 5.1rem;    /* 81.6px */
+        --lh-p2: 2.925rem;  /* 46.8px */
+        --lh-p3: 2.3rem;    /* 36.8px */
+        --lh-p4: 1.775rem;  /* 28.4px */
+        --lh-p5: 1.413rem;  /* 22.6px */
+        --lh-p6: 1.3rem;    /* 20.8px */
+
+        /* Heading Bottom Margin Tokens (in rem) */
+        --h-margin-1: 5.75rem;   /* 92px */
+        --h-margin-2: 1.25rem;   /* 20px */
+        --h-margin-3: 1.0rem;    /* 16px */
+        --h-margin-4: 0.6rem;    /* 9.6px */
+        --h-margin-5: 0.5rem;    /* 8px */
+        --h-margin-6: 0.5rem;    /* 8px */
+
+        /* Module Spacing Tokens (in rem) */
+        --module-spacing-1: 4rem;     /* 64px */
+        --module-spacing-2: 5.9rem;   /* 94.4px */
+        --module-spacing-3: 1.5rem;   /* 24px */
+        --module-spacing-4: 0rem;     /* 0px */
+        --module-spacing-5: 1.2rem;   /* 19.2px */
+        --module-spacing-6: 0.8rem;   /* 12.8px */
+
+        /* Paragraph Group Padding Tokens (in rem) */
+        --group-padding-1: 6.8rem;   /* 108.8px */
+        --group-padding-2: 4.5rem;   /* 72px */
+        --group-padding-3: 2.3rem;   /* 36.8px */
+        --group-padding-4: 2.2rem;   /* 35.2px */
+        --group-padding-5: 1.5rem;   /* 24px */
+        --group-padding-6: 0.533rem; /* 8.5px */
+
+        /* Proportional Paragraph Spacing Token */
+        --paragraph-spacing-scale: 0.4; /* Multiplier for font-size */
+    }
+
+    /* * Hierarchical Module Spacing */
+    .module-1 { margin-bottom: var(--module-spacing-1); }
+    .module-2 { margin-bottom: var(--module-spacing-2); }
+    .module-3 { margin-bottom: var(--module-spacing-3); }
+    .module-4 { margin-bottom: var(--module-spacing-4); }
+    .module-5 { margin-bottom: var(--module-spacing-5); }
+    .module-6 { margin-bottom: var(--module-spacing-6); }
+
+    /* * Paragraph Group Padding */
+    .group-1 { padding-bottom: var(--group-padding-1); }
+    .group-2 { padding-bottom: var(--group-padding-2); }
+    .group-3 { padding-bottom: var(--group-padding-3); }
+    .group-4 { padding-bottom: var(--group-padding-4); }
+    .group-5 { padding-bottom: var(--group-padding-5); }
+    .group-6 { padding-bottom: var(--group-padding-6); }
+    
+    /* * Proportional Paragraph Spacing */
+    .paragraph {
+        margin-bottom: calc(1.2em * var(--paragraph-spacing-scale));
+    }
+
+    /*
+     * THE FIX: This rule targets the last paragraph in any group and removes its bottom margin.
+     * This prevents the paragraph's own spacing from stacking with the group/module spacing.
+    */
+    div[class*="group-"] > p.paragraph:last-child {
+        margin-bottom: 0;
+    }
+
+    /*
+     * THE FIX: This rule tells a parent group to remove its own bottom padding
+     * IF AND ONLY IF it contains another module inside it. This prevents the
+     * double-padding issue with nested components.
+    */
+    .group-1:has(.module-2),
+    .group-2:has(.module-3),
+    .group-3:has(.module-4),
+    .group-4:has(.module-5),
+    .group-5:has(.module-6) {
+        padding-bottom: 0;
+    }
+
+
+
+    /* * Typography classes using CSS variables */
+    .type-h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); margin-bottom: var(--h-margin-1); }
+    .type-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); margin-bottom: var(--h-margin-2); }
+    .type-h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); margin-bottom: var(--h-margin-3); }
+    .type-h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); margin-bottom: var(--h-margin-4); }
+    .type-h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); margin-bottom: var(--h-margin-5); }
+    .type-h6 { font-size: var(--fs-h6); line-height: var(--lh-h6); margin-bottom: var(--h-margin-6); }
+
+    .type-p1 { font-size: var(--fs-h1); line-height: var(--lh-p1); }
+    .type-p2 { font-size: var(--fs-h2); line-height: var(--lh-p2); }
+    .type-p3 { font-size: var(--fs-h3); line-height: var(--lh-p3); }
+    .type-p4 { font-size: var(--fs-h4); line-height: var(--lh-p4); }
+    .type-p5 { font-size: var(--fs-h5); line-height: var(--lh-p5); }
+    .type-p6 { font-size: var(--fs-h6); line-height: var(--lh-p6); }
+
+    /* * Semantic utility classes for themes */
+    .text-primary { color: var(--color-text-primary); }
+    .text-secondary { color: var(--color-text-secondary); }
+    .font-normal { font-weight: var(--font-normal); }
+    .font-medium { font-weight: var(--font-medium); }
+    .font-semibold { font-weight: var(--font-semibold); }
+    .font-bold { font-weight: var(--font-bold); }
+
+    /* * Addendum class to zero-out module spacing */
+    .addendum {
+        margin-bottom: 0 !important;
+    }
+
+</style>
+
+                
+
+
+<div class="w-[70vw] min-w-[700px] mx-auto">
+<!-- Start Module 1 -->
+<div class="module-1">
+
+    <!-- Heading/Paragraph Group 1 -->
+    <div class="group-1">
+        <h1 class="type-h1 font-normal text-primary">About</h1>
+        <p class="type-p2 font-normal paragraph">Welcome to Antelope Valley High School, home of the Lopes! We've been a cornerstone of the Lancaster community since 1912, and we're proud of our deep roots in the Antelope Valley. For over a hundred years, we've been dedicated to providing a top-notch education in a place that feels like a home away from home.</p>
+
+        <p class="type-p2 font-normal paragraph">Here at AVHS, we're more than just a school; we're a family. We believe in building strong relationships and creating a place where every student can discover their passions and potential. Our teachers are dedicated to helping students succeed, not just in the classroom, but in life. We're all about rolling up our sleeves and working together to help our students become creative, critical thinkers, and responsible citizens.</p>
+    </div>
+<div class="w-full">
+                    
+        <!-- Start Module 2 -->
+        <div class="module-2">
+            <!-- Heading/Paragraph Group 2 -->
+            <div class="group-2">
+                <h2 class="type-h2 font-normal text-primary">Messaging &amp; Notifications</h2>
+                <p class="type-p3 font-normal paragraph">Stay in the loop with everything happening at AVHS. This is your official hub for important announcements, weekly updates, and timely reminders to help you and your student have a great school year.”</p>
+            </div>
+
+            <!-- Start Module 3 -->
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal">From The Principal</h3>
+                        <p class="type-p4 font-normal paragraph">The halls are buzzing again, and a new year of learning and growth is upon us here in Lancaster. To help set the tone for the months ahead, our Principal has a special welcome message to share. Read on for their thoughts on what makes our Lope community so strong and the exciting opportunities that await our students this year.</p>
+                        <button data-modal-target="#letterModal" class="px-6 py-3 bg-[#0051d2] text-white font-medium rounded-lg shadow-md hover:bg-blue-600 focus:outline-none ">
+                            Open Letter
+                        </button>
+                     </div>
+                </div>
+
+                 <!-- Start Module 3 -->
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal ">Mission and Vision</h3>
+                    
+            
+                        <!-- Start Module 4 -->
+                        <div class="module-4">
+
+                            <!-- Heading/Paragraph Group 4 -->
+                            <div class="group-4">
+                                <h4 class="type-h4 font-normal text-primary">What We’re All About — Our Mission</h4>
+                                <p class="type-p4 font-normal paragraph">Here at Antelope Valley High, we’re about more than just textbooks and tests. We want to create a place where students are challenged to think bigger, get creative, and build real friendships with classmates and teachers. It’s all about rolling up our sleeves together, so our kids learn how to solve the kinds of tough problems they’ll face in the real world.</p>
+                            </div>
+                            <div class="group-4">
+                                <h4 class="type-h4 font-normal text-primary">Our Dream for Every Lope — Our Vision</h4>
+                                <p class="type-p4 font-normal paragraph">When our students walk across that graduation stage, we want them to see two things clearly: a solid plan for their future and the power they have to make a difference right here in our community. We want them to leave AVHS not just with a diploma, but with a purpose.</p>
+                            </div>
+                            <div class="group-4">
+                                <h4 class="type-h4 font-normal text-primary">The Lope Way: Our Promise to You</h4>
+                                <p class="type-p4 font-normal paragraph">The Lope Way is our promise for every student who walks these halls. It starts with teaching them to think for themselves—to know their own strengths, learn from their mistakes, and confidently chase down their goals. We believe strong thinkers also need to be strong communicators, so we teach them to speak up and listen well. Our goal is to spark a genuine fire for learning that never goes out, giving our students the grit to stick with any challenge. At the heart of it all, we’re raising good neighbors who practice respect for themselves, each other, and our community. And to tie it all together, we make sure every Lope is ready for a high-tech world, equipped with the skills to adapt, collaborate, and succeed long after they leave our care.</p>
+                            </div>
+                            <!-- End Heading/Paragraph Group 4-->
+
+                        </div>
+                        <!-- End Module 4 -->
+                    </div>
+                </div>
+
+
+
+         </div>
+         <!-- End Module 2 -->               
+
+
+
+        <!-- Start Module 2 -->
+        <div class="module-2">
+            <!-- Heading/Paragraph Group 2 -->
+           
+                <h2 class="type-h2 font-normal text-primary">Contact &amp; Information</h2>
+           
+
+
+                                 <!-- Start Module 3 -->
+                                 <div class="module-3">
+                                    <!-- Heading/Paragraph Group 3 -->
+                                    <div class="group-0">
+                                        <h3 class="type-h3 font-normal">Details</h3>
+                                    
+                            
+                                        <!-- Start Module 4 -->
+                                        <div class="module-4">
+            
+                                            <!-- Heading/Paragraph Group 4 -->
+                                            <div class="group-0">
+                                                <p class="type-p4 font-normal paragraph">Here at Antelope Valley High, we’re about more than just textbooks and tests. We want to create a place where students are challenged to think bigger, get creative, and build real friendships with classmates and teachers. It’s all about rolling up our sleeves together, so our kids learn how to solve the kinds of tough problems they’ll face in the real world.</p>
+                                                <p class="type-p4 font-normal paragraph">Have a question or need more information? Use this form to send a message. We will reply to the email address you provide. You can also call us at (555) 123-4567 or email directly by clicking <button data-modal-target="#newsletterModal" class="text-blue-600 hover:underline focus:outline-none">infoavhs@avhsd.org</button>.
+                                                </p>
+                                                
+                                           
+
+                                    <!-- FIRST TAB COMPONENT -->
+                                    <div class="tabs-component w-full bg-white py-0 pr-0 min-h-[350px]">
+                                        <!-- Tab navigation -->
+                                        <div class="mb-4 border-b border-gray-200 -ml-3">
+                                            <ul class="flex flex-wrap -mb-px text-center" role="tablist">
+                                                <li class="me-2" role="links">
+                                                    <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#staff-d-1" role="tab" type="button">Staff Directory</button>
+                                                </li>
+                                                <li class="me-2" role="presentation">
+                                                    <button class="inline-block type-p1 font-medium border-b-2 rounded-t-lg" data-tabs-target="#Bell-1" role="tab" type="button">Bell Schedule</button>
+                                                <li class="me-2" role="presentation">
+                                                    <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#contact-1" role="tab" type="button">Contact</button>
+                                                </li>
+                                                <li class="me-2" role="links">
+                                                    <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#links-1" role="tab" type="button">Links</button>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        <!-- Tab content -->
+                                        <div class="module-3">
+                                            <div class="pl-0 pr-0">
+                                                <div class="hidden py-4 pr-4 rounded-lg" id="Bell-1" role="tabpanel">
+                                                    <div class="group-4">
+                                                        <h3 class="type-h4 font-medium ">Office Hours</h3>
+                                                        <div class="w-full overflow-x-auto">
+                                                            <table class="w-full text-left border-collapse table-fixed ">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="type-h5 text-primary font-medium py-4 pr-4 border-b-2 border-gray-200 w-1/4">Period</th>
+                                                                        <th class="type-h5 text-primary font-medium p-4 border-b-2 border-gray-200 w-1/2">Time (Regular | Flex | Minimum)</th>
+                                                                        <th class="type-h5 text-primary font-medium p-4 border-b-2 border-gray-200 text-right">M</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">0</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">7:45 - 8:39  |  7:45 - 8:39  |  7:45 - 8:39</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200 font-medium text-right">54 / 54 / 54</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">1</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">8:45 - 9:42  |  8:45 - 9:34  |  8:45 - 9:22</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200 font-medium text-right">57 / 49 / 37</td>
+                                                                    </tr>
+                                                                    <tr class="bg-green-50">
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">Break</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">9:42 - 9:52  |  9:34 - 9:44  |  9:22 - 9:32</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200 font-medium text-right">10 / 10 / 10</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">2</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">9:58 - 10:58  |  9:50 - 10:39  |  9:38 - 10:15</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200 font-medium text-right">60 / 49 / 37</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">3</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">11:04 - 12:01  |  10:45 - 11:35  |  10:21 - 10:58</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200 font-medium text-right">57 / 50 / 37</td>
+                                                                    </tr>
+                                                                    <tr class="bg-green-50">
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">4A Lunch</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">12:01 - 12:31  |  11:35 - 12:05  |  10:58 - 11:28</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200 font-medium text-right">30 / 30 / 30</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">4A Class</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">12:37 - 1:34  |  12:11 - 1:00  |  11:34 - 12:11</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200 font-medium text-right">57 / 49 / 37</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">4B Class</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">12:07 - 1:04  |  11:41 - 12:30  |  11:04 - 11:41</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200 font-medium text-right">57 / 49 / 37</td>
+                                                                    </tr>
+                                                                    <tr class="bg-green-50">
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">4B Lunch</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">1:04 - 1:34  |  12:30 - 1:00  |  11:41 - 12:11</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200 font-medium text-right">30 / 30 / 30</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">5</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">1:40 - 2:37  |  1:06 - 1:55  |  12:17 - 12:54</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200 font-medium text-right">57 / 49 / 37</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">6</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200">2:43 - 3:40  |  2:01 - 2:50  |  1:00 - 1:37</td>
+                                                                        <td class="type-p5 p-4 border-b border-gray-200 font-medium text-right">57 / 49 / 37</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="hidden py-4 pr-4 rounded-lg" id="contact-1" role="tabpanel">
+                                                    <div class="group-4">
+                                                        <h3 class="type-h4 font-medium ">Contact</h3>
+                                                        <div class="w-full overflow-x-auto">
+                                                            <table class="w-full text-left border-collapse">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="type-h5 text-primary font-medium py-4 pr-4 border-b-2 border-gray-200">Address</th>
+                                                                        <th class="type-h5 text-primary font-medium py-4 pr-4 border-b-2 border-gray-200">Hours</th>
+                                                                        <th class="type-h5 text-primary font-medium py-4 pr-4 border-b-2 border-gray-200">Phone</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <!-- SOAR High School Lancaster Section -->
+                                                                    <tr>
+                                                                        <td class="type-p5 pt-8 pb-4 pr-4 border-b border-gray-200 font-medium" colspan="3">SOAR High School Lancaster</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">3041 West Avenue K, Lancaster, CA 93536</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200"></td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">(661) 722-6509, (661) 429-0522 (text)</td>
+                                                                    </tr>
+                                                        
+                                                                    <!-- SOAR High School Palmdale Section -->
+                                                                    <tr>
+                                                                        <td class="type-p5 pt-8 pb-4 pr-4 border-b border-gray-200 font-medium" colspan="3">SOAR High School Palmdale</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">2270 East Avenue Q, Palmdale, CA 93550</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200"></td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">(661) 274-4619, (661) 429-0522 (text)</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                                <div class="hidden py-4 pr-4 rounded-lg" id="staff-d-1" role="tabpanel">
+                                                    <div class="group-4">
+                                                        <h3 class="type-h4 font-medium ">Staff</h3>
+                                                        <div class="w-full overflow-x-auto">
+                                                            <table class="w-full text-left border-collapse">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="type-h5 text-primary font-medium py-4 pr-4 border-b-2 border-gray-200">Name</th>
+                                                                        <th class="type-h5 text-primary font-medium py-4 pr-4 border-b-2 border-gray-200">Role</th>
+                                                                        <th class="type-h5 text-primary font-medium py-4 pr-4 border-b-2 border-gray-200">Ext</th>
+                                                                        <th class="type-h5 text-primary font-medium py-4 pr-4 border-b-2 border-gray-200">Email</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <!-- Principal and Assistant Principal Section -->
+                                                                    <tr>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200 font-medium" colspan="4">Principal and Assistant Principal</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Lisa Schmidt</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Principal</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200"></td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">lschmidt@avhsd.org</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Leighann Pacheco</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Principal's Secretary</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Ext. 101</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">lpacheco@avhsd.org</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Megan Andrews</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Assistant Principal</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200"></td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">mandrews@avhsd.org</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Amanda Newton</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Assistant Principal's Secretary</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Ext. 108</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">anewton@avhsd.org</td>
+                                                                    </tr>
+                                                                    <!-- Vice Principals Section -->
+                                                                    <tr>
+                                                                        <td class="type-p5 pt-8 pb-4 pr-4 border-b border-gray-200 font-medium" colspan="4">Vice Principals</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Aaron Foley</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Activities<br><span class="text-sm text-gray-500">Secretary: mcserrano@avhsd.org</span></td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Ext. 167</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">afoley@avhsd.org</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Mike Lipka</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Athletics<br><span class="text-sm text-gray-500">Secretary: Fabiola Calderon (fcalderon@avhsd.org)</span></td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Ext. 176</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">mlipka@avhsd.org</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Ed Gonzalez</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Special Education<br><span class="text-sm text-gray-500">Secretary: Marisol Serrano-Gonzalez (mserrano@avhsd.org)</span></td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Ext. 237</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">egonzalez@avhsd.org</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Nicole Williford</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Special Programs<br><span class="text-sm text-gray-500">Secretary: Lorena Ortega (lortega@avhsd.org)</span></td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">Ext. 888</td>
+                                                                        <td class="type-p5 py-4 pr-4 border-b border-gray-200">nwilliford@avhsd.org</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>                                                            </div>
+                                                </div>
+                                                <div class="hidden py-4 pr-4 rounded-lg" id="links-1" role="tabpanel">
+                                                    <div class="group-4">
+                                                        <h3 class="type-h4 font-medium ">Links</h3>
+                                                        <p class="type-p5 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+                                                    </div>
+                                                </div>
+                                                <div class="hidden py-4 pr-4 rounded-lg" id="tipline-1" role="tabpanel">
+                                                    <div class="group-4">
+                                                        <h3 class="type-h4 font-medium ">Tip Line</h3>
+                                                        <p class="type-p5 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Module 4 -->
+                                    </div>
+
+                                </div>
+                                <!-- End Module 3 -->
+        </div>
+    </div>
+
+
+    </div>
+    <!-- End Module 2 -->               
+
+
+
+    <!-- Start Module 2 -->
+    <div class="module-2">
+        <!-- Heading/Paragraph Group 2 -->
+        
+            <h2 class="type-h2 font-normal text-primary">School Rules</h2>
+        
+
+
+                                 <!-- Start Module 3 -->
+                                 <div class="module-3">
+                                    <!-- Heading/Paragraph Group 3 -->
+                                    <div class="group-3">
+                                        <h3 class="type-h3 font-normal">Dress Code</h3>
+                                    
+                                    
+                                        <!-- Start Module 4 -->
+                                        <div class="module-4">
+            
+                                            <!-- Heading/Paragraph Group 4 -->
+                                            <div class="group-4">
+                                                <p class="type-p4 font-normal paragraph">All Highland High School students are required to be visibly wearing their student identification cards in order to enter the school campus, and will adhere to the following guidelines for student dress on campus and at school-related activities off campus.</p>
+                                            </div>
+
+                                       
+                                             
+                                        </div>
+                                                <!-- FIRST TAB COMPONENT -->
+                                                <div class="tabs-component w-full bg-white py-0 pr-6 -ml-3 min-h-[350px]">
+                
+                                                    <!-- Tab navigation -->
+                                                    <div class="mb-4 border-b border-gray-200">
+                                                        <ul class="flex flex-wrap -mb-px text-center" role="tablist">
+                                                            <li class="me-2" role="presentation">
+                                                                <!-- The user already applied the custom classes here, which is great. -->
+                                                                <button class="inline-block type-p1 font-medium border-b-2 rounded-t-lg" data-tabs-target="#pants-1" role="tab" type="button">Pants / Shorts / Belts</button>
+                                                            </li>
+                                                            <li class="me-2" role="presentation">
+                                                                <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#blouses-1" role="tab" type="button">Shirts / Blouses</button>
+                                                            </li>
+                                                            <li class="me-2" role="presentation">
+                                                                <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#footwear-1" role="tab" type="button">Footwear</button>
+                                                            </li>
+                                                            <li class="me-2" role="links">
+                                                                <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#skirts-1" role="tab" type="button">Skirts / Dresses</button>
+                                                            </li>
+    
+                                                            <li class="me-2" role="links">
+                                                                <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#accessories-1" role="tab" type="button">Accessories</button>
+                                                            </li>
+                                                            <li class="me-2" role="links">
+                                                                <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#inappropo-1" role="tab" type="button">Inappropriate Attire</button>
+                                                            </li>
+
+
+                                                        </ul>
+                                                    </div>
+                                                    <!-- Tab content -->
+                                                    <div class="module-3">
+                                                    <div class="pl-4 pr-24">
+                                                        <div class="hidden py-4 pr-4 rounded-lg" id="pants-1" role="tabpanel">
+                                                            <div class="group-4">
+                                                                <h3 class="type-h4 font-regular ">Pants, Shorts, Belts</h3>
+
+                                                                <p class="type-p5 font-normal paragraph">To ensure a proper and safe learning environment, all students must wear pants and shorts fitted at the waist; sagging or low-riding is not permitted. All bottoms must be worn right-side out and have a finished, hemmed edge. Ragged, torn, or cutoff styles are not allowed, and any non-factory produced cuffs or creases are prohibited.</p> 
+                                                                <p class="type-p5 font-normal paragraph"></p>Additionally, shorts must not have hemlines or slits that are above the mid-thigh. If shorts extend below the knee, they cannot be worn with over-the-calf socks. For bib-style pants or shorts, both straps must be fastened over the shoulders. Finally, pant legs should not be so long that they drag on the ground. Belts must be worn snugly without the ends hanging down, and buckles must be free of any initials or inappropriate designs. Studded or spiked belts are not permitted.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="hidden py-4 pr-4 rounded-lg" id="blouses-1" role="tabpanel">
+                                                            <div class="group-4">
+                                                                <h3 class="type-h4 font-regular ">Shirts, Blouses and Tops</h3>
+                                                                <p class="type-p5 font-normal paragraph">Clothing that depicts “gang-style” writing, illegal activity, obscene gestures, or references to tobacco, drugs, or alcohol is not permitted. Any words or pictures that depict violence or intimidation, or otherwise pose a threat to student safety, are also prohibited. All shirts and tops must cover the midriff at all times, and shirts cannot be buttoned only at the top. </p>
+                                                                <p class="type-p5 font-normal paragraph">Prohibited styles include tank tops, strapless tops, spaghetti straps, off-the-shoulder shirts, cut-out designs, low-cut shirts, bare-back shirts, and sheer or mesh clothing worn without an appropriate shirt underneath. Undergarments must not be visible. Additionally, non-manufactured creases in shirts and any non-school sports jerseys are not allowed.</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="hidden py-4 pr-4 rounded-lg" id="footwear-1" role="tabpanel">
+                                                            <div class="group-4">
+                                                                <h3 class="type-h4 font-regular ">Footwear</h3>
+                                                                <p class="type-p5 font-normal paragraph">All students must wear appropriate footwear at all times. Prohibited styles include slippers, steel-toed boots, and thongs or flip-flops. Shoes may not have any inappropriate writing on them. Additionally, shoelaces are restricted to solid black, white, or brown. Finally, students are not permitted to wear black, red, or blue athletic shoes in combination with clothing of the same color.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="hidden py-4 pr-4 rounded-lg" id="skirts-1" role="tabpanel">
+                                                            <div class="group-4">
+                                                                <h3 class="type-h4 font-regular ">Skirts, Jumpers and One-Piece Dresses</h3>
+                                                                <p class="type-p5 font-normal paragraph">Skirts, jumpers, and one-piece dresses must have hemlines and slits no higher than the mid-thigh. Additionally, any transparent, strapless, or backless dresses are not permitted on campus.</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="hidden py-4 pr-4 rounded-lg" id="accessories-1" role="tabpanel">
+                                                            <div class="group-4">
+                                                                <h3 class="type-h4 font-regular ">Accessories & Personal Items</h3>
+                                                                <p class="type-p5 font-normal paragraph">Only official Highland High School headwear is permitted on campus, and hats must always be worn with the bill facing forward. The only writing allowed on a hat is the owner's name on the underside of the bill. Items associated with gang attire, such as certain headbands, scarves, bandanas, do-rags, and hairnets, are not allowed. Additionally, combs, curlers, rubber bands, clips, hair picks, or plastic bags may not be worn or displayed. Hats are only permitted inside classrooms or offices with direct permission from staff. During cold weather, solid-colored beanies may be worn.</p>
+                                                                <p class="type-p5 font-normal paragraph">Students may wear appropriate chains as necklaces, but chains attached to wallets or hanging from pants are not allowed. Spiked collars, spiked accessories, and any body piercings that pose a safety risk or become a major distraction are also prohibited.</p>
+                                                                <p class="type-p5 font-normal paragraph">Sunglasses may be worn on campus but must be removed before entering a classroom. Book bags and backpacks can be any color but must be free of all writing or graffiti, with the exception of the student's name for identification.</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="hidden py-4 pr-4 rounded-lg" id="inappropo-1" role="tabpanel">
+                                                            <div class="group-4">
+                                                                <h3 class="type-h4 font-regular ">Inappropriate Attire and Tattoos</h3>
+                                                                <p class="type-p5 font-normal paragraph">To maintain a safe and respectful campus, any attire that may cause student unrest is not allowed. This includes clothing with any writing or patterns that are not factory-produced. Clothing that represents gangs, racist or hate groups, or any group not officially approved by Highland High School is strictly prohibited. Any style of dress that could be seen as provoking fear, violence, or intimidation, including gang-related attire, is not acceptable. Pajamas or any clothing typically worn for sleep may not be worn at school.</p>
+                                                                <p class="type-p5 font-normal paragraph">Furthermore, any gang or "tagger-crew" style writing on shoes, clothes, backpacks, accessories, or on the body is not permitted. Excessive use of specific colors in combination with other gang-affiliated attire is also prohibited. Items such as handcuffs, safety pins, and needles are not allowed on campus. Finally, clothing that resembles law enforcement or security uniforms is strictly forbidden.</p>
+                                                                <p class="type-p5 font-normal paragraph">Tattoos that depict illegal activity, have sexual or obscene content, or include logos and words that could be perceived as threatening, "gang-like," or likely to provoke violence must not be visible at school or any school-sponsored events.</p>
+
+                                                            </div>
+                                                        </div>
+
+
+
+
+                                                    </div>
+                                                    
+                                                
+                                                
+                                            </div>
+                                            <!-- End Module 4 -->
+                                    </div>
+
+                                </div>
+                                <!-- End Module 3 -->
+            
+           
+                         <!-- Start Module 3 -->
+                         <div class="module-3">
+                            <!-- Heading/Paragraph Group 3 -->
+                            <div class="group-3">
+                                <h3 class="type-h3 font-normal">School Policies</h3>
+                            
+                    
+                                <!-- Start Module 4 -->
+                                <div class="module-4">
+    
+                                    <!-- Heading/Paragraph Group 4 -->
+                                    <div class="group-4">
+                                        <h4 class="type-h4 font-normal text-primary">We are hear to help...</h4>
+                                        <p class="type-p4 font-normal paragraph">Here at Antelope Valley High, we’re about more than just textbooks and tests. We want to create a place where students are challenged to think bigger, get creative, and build real friendships with classmates and teachers. It’s all about rolling up our sleeves together, so our kids learn how to solve the kinds of tough problems they’ll face in the real world.</p>
+                                   
+
+                                        <!-- FIRST TAB COMPONENT -->
+                                        <div class="tabs-component w-full bg-white py-6 pr-6 -ml-3 min-h-[200px]">
+        
+                                            <!-- Tab navigation -->
+                                            <div class="mb-4 border-b border-gray-200">
+                                                <ul class="flex flex-wrap -mb-px text-center" role="tablist">
+                                                    <li class="me-2" role="links">
+                                                        <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#Attendance-1" role="tab" type="button">Attendance</button>
+                                                    </li>
+
+                                                    <li class="me-2" role="presentation">
+                                                        <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#parent-engagement-1" role="tab" type="button">Parent Engagement</button>
+                                                    </li>
+                                                    <li class="me-2" role="presentation">
+                                                        <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#cel-phone-1" role="tab" type="button">Cell Phone Policy</button>
+                                                    </li>
+
+                                                    <li class="me-2" role="links">
+                                                        <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#discipline-1" role="tab" type="button">Discipline Policy</button>
+                                                    </li>
+                                                    <li class="me-2" role="links">
+                                                        <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#uniform-complaint-1" role="tab" type="button">Uniform Complaint Procedure</button>
+                                                    </li>
+
+
+                                                </ul>
+                                            </div>
+                                            <!-- Tab content -->
+                                            <div class="module-3">
+                                            <div class="pl-4 pr-24">
+                                                <div class="hidden py-4 pr-4 rounded-lg" id="Attendance-1" role="tabpanel">
+                                                    <div class="group-4">
+                                                        <h3 class="type-h4 font-medium ">Attendance</h3>
+                                                        <p class="type-p5 font-normal paragraph">Highland High School recognizes its responsibility to ensure that students attend class regularly and on time, as attendance plays an important role in student achievement. Tardiness is a failure to appear on time and is considered a form of absence. It is the student’s responsibility to be in the classroom and ready to work before the tardy bell rings. Such common problems as oversleeping and repeated occurrences of car trouble are unacceptable reasons for tardiness to school and are considered unexcused tardies/absences.</p>
+                                                        <p class="type-p5 font-normal paragraph">Tardies are counted cumulatively and across classes. Habitual tardiness is considered a form of truancy, and Education Code 48260 provides that legal action may be taken against a student and/or parent for truancy. Failure to appear for a Saturday School will result in the assignment of one day In-House Suspension. Disciplinary Procedure Philosophy - The Board of Education has the responsibility to see that an appropriate educational program is available to each student in our schools. Rules and regulations are established to ensure a proper climate in which students may pursue their studies.</p>
+                                                        <p class="type-p5 font-normal paragraph">School personnel have been charged by the Board to carry out these rules in a friendly, firm and fair manner and to safeguard each student's right to the finest education we can provide. The Board further feels that good discipline is a shared responsibility. Students, parents, teachers, and administrators all share in this endeavor and responsibility. At any time, students may be disciplined and/or counseled by teachers, administrators or other staff members regarding their behavior and/or referred to other authorities in special circumstances.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="hidden py-4 pr-4 rounded-lg" id="parent-engagement-1" role="tabpanel">
+                                                    <div class="group-4">
+                                                        <h3 class="type-h4 font-medium ">Parent Engagement</h3>
+                                                    
+                                                        <p class="type-p5 font-normal paragraph">He left it dead, and with its head He went galumphing back. “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+                                                    </div>
+                                                <div class="hidden py-4 pr-4 rounded-lg" id="cel-phone-1" role="tabpanel">
+                                                    <div class="group-4">
+                                                        <h3 class="type-h4 font-medium ">Cell Phone Policy</h3>
+                                                        <p class="type-p5 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, And the mome raths outgrabe.</p>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                <div class="hidden py-4 pr-4 rounded-lg" id="discipline-1" role="tabpanel">
+                                                    <div class="group-4">
+                                                        <h3 class="type-h4 font-medium ">Discipline Policy</h3>
+                                                        <p class="type-p5 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+                                                    </div>
+                                                </div>
+                                                <div class="hidden py-4 pr-4 rounded-lg" id="discipline-1" role="tabpanel">
+                                                    <div class="group-4">
+                                                        <h3 class="type-h4 font-medium ">Discipline Policy</h3>
+                                                        <p class="type-p5 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- End Module 4 -->
+                            </div>
+
+                        </div>
+                        <!-- End Module 3 -->
+            
+        </div>
+    </div>
+
+
+    </div>
+    <!-- End Module 2 -->               
+
+
+        <!-- Start Module 2 -->
+        <div class="module-2">
+            <!-- Heading/Paragraph Group 2 -->
+            <div class="group-2">
+                <h2 class="type-h2 font-normal text-primary">The Legal Stuff</h2>
+                <p class="type-p3 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!.”</p>
+            </div>
+
+            <!-- Start Module 3 -->
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal">Safety Message / Plan</h3>
+                        <p class="type-p4 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+                    </div>
+                </div>
+
+
+                <!-- Start Module 3 -->
+
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal ">District Links</h3>
+                    
+            
+                        <!-- Start Module 4 -->
+                        <div class="module-4">
+
+                            <!-- Heading/Paragraph Group 4 -->
+                            <div class="group-4">
+                                <h4 class="type-h4 font-normal text-primary">What We’re All About — Our Mission</h4>
+                                <p class="type-p4 font-normal paragraph">Here at Antelope Valley High, we’re about more than just textbooks and tests. We want to create a place where students are challenged to think bigger, get creative, and build real friendships with classmates and teachers. It’s all about rolling up our sleeves together, so our kids learn how to solve the kinds of tough problems they’ll face in the real world.</p>
+                                <p class="type-p4 font-normal paragraph">Here at Antelope Valley High,</p>
+                            </div>
+                            <div class="group-4">
+                                <h4 class="type-h4 font-normal text-primary">Our Dream for Every Lope — Our Vision</h4>
+                                <p class="type-p4 font-normal paragraph">When our students walk across that graduation stage, we want them to see two things clearly: a solid plan for their future and the power they have to make a difference right here in our community. We want them to leave AVHS not just with a diploma, but with a purpose.</p>
+                            </div>
+                            <div class="group-4">
+                                <h4 class="type-h4 font-normal text-primary">The Lope Way: Our Promise to You</h4>
+                                <p class="type-p4 font-normal paragraph">The Lope Way is our promise for every student who walks these halls. It starts with teaching them to think for themselves—to know their own strengths, learn from their mistakes, and confidently chase down their goals. We believe strong thinkers also need to be strong communicators, so we teach them to speak up and listen well. Our goal is to spark a genuine fire for learning that never goes out, giving our students the grit to stick with any challenge. At the heart of it all, we’re raising good neighbors who practice respect for themselves, each other, and our community. And to tie it all together, we make sure every Lope is ready for a high-tech world, equipped with the skills to adapt, collaborate, and succeed long after they leave our care.</p>
+                            </div>
+                            <!-- End Heading/Paragraph Group 4-->
+
+                        </div>
+                        <!-- End Module 4 -->
+                    </div>
+                </div>
+
+
+         </div>
+         <!-- End Module 2 -->               
+
+
+            
+
+</div>
+<!-- End Module 1 -->
+<!-- Button to open the Newsletter modal -->
+
+<div id="letterModal" class="fixed inset-0 bg-[#cfcfcf] bg-opacity-95 flex items-start justify-center p-10" style="display: none;">
+    <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl md:max-w-3xl lg:max-w-4xl flex flex-col relative aspect-[8.5/11]">
+        
+        <!-- Modal Header -->
+        <header class="flex items-center justify-between px-4 md:px-10 lg:px-10 py-6 border-b border-gray-200">
+            <h2 class="text-2xl font-medium text-gray-800 font-sans">Principal's Message</h2>
+            <button id="closeModalIconBtn" class="text-gray-400 hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </header>
+
+        <!-- Modal Body (Scrollable Content) -->
+        <div class="md:px-10 lg:px-10 py-8 overflow-y-auto h-full font-sans pt-20 pr-24">
+            <div class="mb-8">
+                <p class="type-p5 text-gray-600">August 24, 2025</p>
+            </div>
+
+            <div class="mb-8">
+                <p class="type-p5 font-bold text-gray-700">Dear Student,</p>
+            </div>
+
+            <div class="leading-relaxed space-y-4">
+                <p class="type-p5 text-gray-800">Welcome to a new year at Antelope Valley High School! We are thrilled to have you with us as we embark on another chapter of learning, growth, and community. This year promises to be filled with exciting opportunities, new friendships, and memorable experiences.</p>
+                <p class="type-p5 text-gray-800">Our dedicated staff is here to support you every step of the way. We encourage you to explore your passions, challenge yourself academically, and get involved in the many clubs and activities our school has to offer. Remember that your journey here is what you make it, and we are committed to providing an environment where you can thrive.</p>
+                <p class="type-p5 text-gray-800">Let's make this a fantastic year together. Go Lopes!</p>
+            </div>
+
+            <div class="mt-12">
+                <p class="type-p5 text-gray-700">Sincerely,</p>
+                <p class="type-p5 mt-4 font-bold text-gray-800">Blake Stanford</p>
+                <p class="type-p5 text-sm text-gray-600">Principal</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Newsletter Modal Component -->
+<div id="newsletterModal" class="fixed inset-0 bg-[#cfcfcf] bg-opacity-95 flex items-start justify-center p-24" style="display: none;">
+<div class="bg-white rounded-lg shadow-xl w-full max-w-[400px] p-8 relative">
+    <button data-modal-close class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+    <h2 class="text-2xl font-medium text-gray-800 mb-4">Contact AVHS</h2>
+    <p class="text-gray-600 mb-6">Please choose your preferred email provider to send a message to <strong>infoavhs@avhsd.org</strong>.</p>
+    
+    <div class="space-y-4">
+        <!-- Gmail Link -->
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=infoavhs@avhsd.org&su=Inquiry%20from%20Website" target="_blank" class="flex items-center justify-center w-full px-5 py-3 bg-gray-100 text-gray-700 font-regular rounded-lg hover:bg-[#0051d2] hover:text-white focus:outline-none focus:ring-0 focus:ring-gray-300">
+            
+            Continue with Gmail
+        </a>
+        <!-- Outlook Link -->
+        <a href="https://outlook.live.com/owa/?path=/mail/action/compose&to=infoavhs@avhsd.org&subject=Inquiry%20from%20Website" target="_blank" class="flex items-center justify-center w-full px-5 py-3 bg-gray-100 text-gray-700 font-regular rounded-lg hover:bg-[#0051d2] hover:text-white focus:outline-none focus:ring-0 focus:ring-gray-300">
+           
+            Continue with Outlook
+        </a>
+        <!-- Yahoo Link -->
+        <a href="https://mail.yahoo.com/?v=1&to=infoavhs@avhsd.org&su=Inquiry%20from%20Website" target="_blank" class="flex items-center justify-center w-full px-5 py-3 bg-gray-100 text-gray-700 font-regular rounded-lg hover:bg-[#0051d2] hover:text-white focus:outline-none focus:ring-0 focus:ring-gray-300">
+           
+            Continue with Yahoo
+        </a>
+    </div>
+    
+    <p class="text-xs text-gray-500 mt-6 text-center">Or, you can copy the address and send from your preferred app: <a href="mailto:infoavhs@avhsd.org" class="text-blue-600 hover:underline">infoavhs@avhsd.org</a>.</p>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const openModalButtons = document.querySelectorAll('[data-modal-target]');
+        const closeModalButtons = document.querySelectorAll('[data-modal-close]');
+
+        function openModal(modal) {
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeModal(modal) {
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        openModalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = document.querySelector(button.dataset.modalTarget);
+                openModal(modal);
+            });
+        });
+
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = button.closest('.fixed');
+                closeModal(modal);
+            });
+        });
+
+        document.querySelectorAll('.fixed').forEach(modal => {
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal(modal);
+                }
+            });
+        });
+    });
+</script>      
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // This function initializes a single tab component.
+    const initTabs = (tabsComponent) => {
+        const tabs = tabsComponent.querySelectorAll('[role="tab"]');
+        const tabContents = tabsComponent.querySelectorAll('[role="tabpanel"]');
+
+        const baseTabClasses = 'inline-block p-4 border-b-2 rounded-t-lg';
+        const activeTabClasses = 'text-blue-600 border-blue-600';
+        const inactiveTabClasses = 'border-transparent hover:text-gray-600 hover:border-gray-300';
+
+        const switchTab = (clickedTab) => {
+            const targetId = clickedTab.getAttribute('data-tabs-target');
+            const targetPanel = tabsComponent.querySelector(targetId);
+
+            // Deactivate all tabs within this component
+            tabs.forEach(tab => {
+                if (tab.disabled) return;
+                tab.setAttribute('aria-selected', 'false');
+                tab.className = `${baseTabClasses} ${inactiveTabClasses}`;
+            });
+
+            // Hide all tab content panels within this component
+            tabContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Activate the clicked tab and show its content panel
+            clickedTab.setAttribute('aria-selected', 'true');
+            clickedTab.className = `${baseTabClasses} ${activeTabClasses}`;
+            if (targetPanel) {
+                targetPanel.classList.remove('hidden');
+            }
+        };
+
+        tabs.forEach(tab => {
+            if (!tab.disabled) {
+                tab.addEventListener('click', () => switchTab(tab));
+            }
+        });
+
+        // Activate the first non-disabled tab on load for this component
+        const firstEnabledTab = tabsComponent.querySelector('[role="tab"]:not([disabled])');
+        if (firstEnabledTab) {
+            switchTab(firstEnabledTab);
+        }
+    };
+
+    // Find all tab components on the page and initialize each one.
+    const allTabsComponents = document.querySelectorAll('.tabs-component');
+    allTabsComponents.forEach(tabsComponent => {
+        initTabs(tabsComponent);
+    });
+});
+</script>

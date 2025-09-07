@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Headings with Tailwind CSS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Base font settings */
+        html {
+            font-size: var(--base-font-size); /* Apply the base font size to the root */
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--color-text-default); /* Use the new color token */
+        }
+
+        /*
+         * Global style tokens (CSS Custom Properties) for easy updates.
+        */
+        :root {
+            /* Base Font Size Token */
+            --base-font-size: 16px;
+
+            /* Color Tokens */
+            --color-text-default: #111827;
+            --color-text-secondary: #4b5563;
+            --color-text-primary: #0051d2;
+
+            /* Font Weight Tokens */
+            --font-normal: 400;
+            --font-medium: 500;
+            --font-semibold: 600;
+            --font-bold: 700;
+
+            /* Font Size Tokens (in rem) */
+            --fs-h1: 4.3rem;    /* 36px */
+            --fs-h2: 2.25rem;  /* 26px */
+            --fs-h3: 1.9rem;    /* 22.5px */
+            --fs-h4: 1.3rem;    /* 18px */
+            --fs-h5: 1rem;      /* 15px */
+            --fs-h6: 0.875rem;  /* 14px */
+
+           /* Line Height Tokens (in rem) */
+            --lh-h1: 4.3rem;    /* 36px */
+            --lh-h2: 2.25rem;  /* 26px */
+            --lh-h3: 1.9rem;   /* 20px */
+            --lh-h4: 1.175rem;    /* 18px */
+            --lh-h5: 1rem;      /* 15px */
+            --lh-h6: 0.875rem;  /* 14px */
+
+            /* Line Height Tokens (in rem) */
+            --lh-p1: 5.1rem;    /* 45px */
+            --lh-p2: 2.925rem;    /* 33px */
+            --lh-p3: 2.3rem;   /* 26.25px */
+            --lh-p4: 1.775rem;    /* 24px */
+            --lh-p5: 1.413rem;   /* 21.75px */
+            --lh-p6: 1.3rem;    /* 19.5px */
+
+            /* Heading Bottom Margin Tokens (in rem) */
+            --h-margin-1: 5.75rem;   /* 37.5px */
+            --h-margin-2: 1.25rem;  /* 26.25px */
+            --h-margin-3: 1.0rem;   /* 13.5px */
+            --h-margin-4: 0.6rem;   /* 9px */
+            --h-margin-5: 0.5rem;   /* 7.5px */
+            --h-margin-6: 0.5rem;   /* 7.5px */
+
+            /* Module Spacing Tokens (in rem) */
+            --module-spacing-1: 4rem;     /* 60px */
+            --module-spacing-2: 5.9rem;   /* 48px */
+            --module-spacing-3: 1.5rem;   /* 36px */
+            --module-spacing-4: 0rem;   /* 24px */
+            --module-spacing-5: 1.2rem;   /* 18px */
+            --module-spacing-6: 0.8rem;   /* 12px */
+
+            /* Paragraph Group Padding Tokens (in rem) */
+            --group-padding-1: 6.8rem;     /* 75px */
+            --group-padding-2: 4.5rem;   /* 67.5px */
+            --group-padding-3: 2.3rem;  /* 42.75px */
+            --group-padding-4: 2.2rem;  /* 26.25px */
+            --group-padding-5: 1.5rem;   /* 22.5px */
+            --group-padding-6: 0.533rem; /* 8px */
+
+            /* Proportional Paragraph Spacing Token */
+            --paragraph-spacing-scale: 0.4; /* Multiplier for font-size */
+        }
+
+        /* * Hierarchical Module Spacing */
+        .module-1 { margin-bottom: var(--module-spacing-1); }
+        .module-2 { margin-bottom: var(--module-spacing-2); }
+        .module-3 { margin-bottom: var(--module-spacing-3); }
+        .module-4 { margin-bottom: var(--module-spacing-4); }
+        .module-5 { margin-bottom: var(--module-spacing-5); }
+        .module-6 { margin-bottom: var(--module-spacing-6); }
+
+        /* * Paragraph Group Padding */
+        .group-1 { padding-bottom: var(--group-padding-1); }
+        .group-2 { padding-bottom: var(--group-padding-2); }
+        .group-3 { padding-bottom: var(--group-padding-3); }
+        .group-4 { padding-bottom: var(--group-padding-4); }
+        .group-5 { padding-bottom: var(--group-padding-5); }
+        .group-6 { padding-bottom: var(--group-padding-6); }
+        
+        /* * Proportional Paragraph Spacing */
+        .paragraph {
+            margin-bottom: calc(1.2em * var(--paragraph-spacing-scale));
+        }
+
+        /*
+         * THE FIX: This rule targets the last paragraph in any group and removes its bottom margin.
+         * This prevents the paragraph's own spacing from stacking with the group/module spacing.
+        */
+        div[class*="group-"] > p.paragraph:last-child {
+            margin-bottom: 0;
+        }
+
+        /*
+         * THE FIX: This rule tells a parent group to remove its own bottom padding
+         * IF AND ONLY IF it contains another module inside it. This prevents the
+         * double-padding issue with nested components.
+        */
+        .group-1:has(.module-2),
+        .group-2:has(.module-3),
+        .group-3:has(.module-4),
+        .group-4:has(.module-5),
+        .group-5:has(.module-6) {
+            padding-bottom: 0;
+        }
+
+
+
+        /* * Typography classes using CSS variables */
+        .type-h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); margin-bottom: var(--h-margin-1); }
+        .type-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); margin-bottom: var(--h-margin-2); }
+        .type-h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); margin-bottom: var(--h-margin-3); }
+        .type-h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); margin-bottom: var(--h-margin-4); }
+        .type-h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); margin-bottom: var(--h-margin-5); }
+        .type-h6 { font-size: var(--fs-h6); line-height: var(--lh-h6); margin-bottom: var(--h-margin-6); }
+
+        .type-p1 { font-size: var(--fs-h1); line-height: var(--lh-p1); }
+        .type-p2 { font-size: var(--fs-h2); line-height: var(--lh-p2); }
+        .type-p3 { font-size: var(--fs-h3); line-height: var(--lh-p3); }
+        .type-p4 { font-size: var(--fs-h4); line-height: var(--lh-p4); }
+        .type-p5 { font-size: var(--fs-h5); line-height: var(--lh-p5); }
+        .type-p6 { font-size: var(--fs-h6); line-height: var(--lh-p6); }
+
+        /* * Semantic utility classes for themes */
+        .text-primary { color: var(--color-text-primary); }
+        .text-secondary { color: var(--color-text-secondary); }
+        .font-normal { font-weight: var(--font-normal); }
+        .font-medium { font-weight: var(--font-medium); }
+        .font-semibold { font-weight: var(--font-semibold); }
+        .font-bold { font-weight: var(--font-bold); }
+
+        /* * Addendum class to zero-out module spacing */
+        .addendum {
+            margin-bottom: 0 !important;
+        }
+
+    </style>
+</head>
+<body class="bg-white">
+
+    <div class="w-[70vw] min-w-[700px] mx-auto my-16 p-8">
+
+       
+    <!-- Start Module 1 -->
+    <div class="module-1">
+
+        <!-- Heading/Paragraph Group 1 -->
+        <div class="group-1">
+            <h1 class="type-h1 font-normal text-primary">About</h1>
+            <p class="type-p2 font-normal paragraph">Welcome to Antelope Valley High School, home of the Lopes! We've been a cornerstone of the Lancaster community since 1912, and we're proud of our deep roots in the Antelope Valley. For over a hundred years, we've been dedicated to providing a top-notch education in a place that feels like a home away from home.</p>
+
+            <p class="type-p2 font-normal paragraph">Here at AVHS, we're more than just a school; we're a family. We believe in building strong relationships and creating a place where every student can discover their passions and potential. Our teachers are dedicated to helping students succeed, not just in the classroom, but in life. We're all about rolling up our sleeves and working together to help our students become creative, critical thinkers, and responsible citizens.</p>
+        </div>
+
+            <!-- Start Module 2 -->
+            <div class="module-2">
+                <!-- Heading/Paragraph Group 2 -->
+                <div class="group-2">
+                    <h2 class="type-h2 font-normal text-primary">Messaging & Notifications</h2>
+                    <p class="type-p3 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!.”</p>
+                </div>
+
+                <!-- Start Module 3 -->
+                    <div class="module-3">
+                        <!-- Heading/Paragraph Group 3 -->
+                        <div class="group-3">
+                            <h3 class="type-h3 font-normal">From The Principal</h3>
+                            <p class="type-p4 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+                            <p class="type-p4 font-normal paragraph">He left it dead, and with its head He went galumphing back. “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+                        </div>
+                    </div>
+
+                     <!-- Start Module 3 -->
+                    <div class="module-3">
+                        <!-- Heading/Paragraph Group 3 -->
+                        <div class="group-3">
+                            <h3 class="type-h3 font-normal ">Mission and Vision</h3>
+                        
+                
+                            <!-- Start Module 4 -->
+                            <div class="module-4">
+
+                                <!-- Heading/Paragraph Group 4 -->
+                                <div class="group-4">
+                                    <h4 class="type-h4 font-normal text-primary">What We’re All About — Our Mission</h4>
+                                    <p class="type-p4 font-normal paragraph">Here at Antelope Valley High, we’re about more than just textbooks and tests. We want to create a place where students are challenged to think bigger, get creative, and build real friendships with classmates and teachers. It’s all about rolling up our sleeves together, so our kids learn how to solve the kinds of tough problems they’ll face in the real world.</p>
+                                </div>
+                                <div class="group-4">
+                                    <h4 class="type-h4 font-normal text-primary">Our Dream for Every Lope — Our Vision</h4>
+                                    <p class="type-p4 font-normal paragraph">When our students walk across that graduation stage, we want them to see two things clearly: a solid plan for their future and the power they have to make a difference right here in our community. We want them to leave AVHS not just with a diploma, but with a purpose.</p>
+                                </div>
+                                <div class="group-4">
+                                    <h4 class="type-h4 font-normal text-primary">The Lope Way: Our Promise to You</h4>
+                                    <p class="type-p4 font-normal paragraph">The Lope Way is our promise for every student who walks these halls. It starts with teaching them to think for themselves—to know their own strengths, learn from their mistakes, and confidently chase down their goals. We believe strong thinkers also need to be strong communicators, so we teach them to speak up and listen well. Our goal is to spark a genuine fire for learning that never goes out, giving our students the grit to stick with any challenge. At the heart of it all, we’re raising good neighbors who practice respect for themselves, each other, and our community. And to tie it all together, we make sure every Lope is ready for a high-tech world, equipped with the skills to adapt, collaborate, and succeed long after they leave our care.</p>
+                                </div>
+                                <!-- End Heading/Paragraph Group 4-->
+
+                            </div>
+                            <!-- End Module 4 -->
+                        </div>
+                    </div>
+
+
+                    <!-- Start Module 3 -->
+                    <div class="module-3">
+                        <!-- Heading/Paragraph Group 3 -->
+                        <div class="group-3">
+                            <h3 class="type-h3 font-normal">Staff Directory</h3>
+                            <p class="type-p4 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought.!</p>
+                        </div>
+                        <!-- End Heading/Paragraph Group 3 -->
+                    </div>
+                    <!-- End Module 3 -->
+
+             </div>
+             <!-- End Module 2 -->               
+
+
+
+            <!-- Start Module 2 -->
+            <div class="module-2">
+                <!-- Heading/Paragraph Group 2 -->
+                <div class="group-2">
+                    <h2 class="type-h2 font-normal text-primary">Contact & Information</h2>
+                    <p class="type-p3 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!.”</p>
+                </div>
+
+
+                                     <!-- Start Module 3 -->
+                                     <div class="module-3">
+                                        <!-- Heading/Paragraph Group 3 -->
+                                        <div class="group-3">
+                                            <h3 class="type-h3 font-normal">Details</h3>
+                                        
+                                
+                                            <!-- Start Module 4 -->
+                                            <div class="module-4">
+                
+                                                <!-- Heading/Paragraph Group 4 -->
+                                                <div class="group-4">
+                                                    <h4 class="type-h4 font-normal text-primary">We are hear to help...</h4>
+                                                    <p class="type-p4 font-normal paragraph">Here at Antelope Valley High, we’re about more than just textbooks and tests. We want to create a place where students are challenged to think bigger, get creative, and build real friendships with classmates and teachers. It’s all about rolling up our sleeves together, so our kids learn how to solve the kinds of tough problems they’ll face in the real world.</p>
+                                               
+
+                                                    <!-- FIRST TAB COMPONENT -->
+                                                    <div class="tabs-component w-full bg-white py-6 pr-6 -ml-3 min-h-[350px]">
+                    
+                                                        <!-- Tab navigation -->
+                                                        <div class="mb-4 border-b border-gray-200">
+                                                            <ul class="flex flex-wrap -mb-px text-center" role="tablist">
+                                                                <li class="me-2" role="presentation">
+                                                                    <!-- The user already applied the custom classes here, which is great. -->
+                                                                    <button class="inline-block type-p1 font-medium border-b-2 rounded-t-lg" data-tabs-target="#Bell-1" type="button" role="tab">Bell Schedule</button>
+                                                                </li>
+                                                                <li class="me-2" role="presentation">
+                                                                    <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#Hours-1" type="button" role="tab">Office Hours</button>
+                                                                </li>
+                                                                <li class="me-2" role="presentation">
+                                                                    <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#Contact-1" type="button" role="tab">Contact</button>
+                                                                </li>
+                                                                <li class="me-2" role="links">
+                                                                    <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#links-1" type="button" role="tab">Links</button>
+                                                                </li>
+                                                                <li class="me-2" role="links">
+                                                                    <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#tipline-1" type="button" role="tab">Tip Line</button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <!-- Tab content -->
+                                                        <div class="module-3">
+                                                        <div class="pl-4">
+                                                            <div class="hidden py-4 pr-4 rounded-lg" id="Bell-1" role="tabpanel">
+                                                                <div class="group-4">
+                                                                    <h3 class="type-h4 font-medium ">Bell Schedule</h3>
+                                                                    <p class="type-p5 font-normal paragraph">And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="hidden py-4 pr-4 rounded-lg" id="Hours-1" role="tabpanel">
+                                                                <div class="group-4">
+                                                                    <h3 class="type-h4 font-medium ">Office Hours</h3>
+                                                                    <p class="type-p5 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, And the mome raths outgrabe.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="hidden py-4 pr-4 rounded-lg" id="Contact-1" role="tabpanel">
+                                                                <div class="group-4">
+                                                                    <h3 class="type-h4 font-medium ">Contact</h3>
+                                                                
+                                                                    <div class="w-full overflow-x-auto">
+                                                                        <table class="w-full text-left border-collapse">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th class="type-h5 text-primary font-medium p-4 pl-0 border-b-2 border-gray-200">Name</th>
+                                                                                    <th class="type-h5 text-primary font-medium p-4 pl-0 border-b-2 border-gray-200">Phone</th>
+                                                                                    <th class="type-h5 text-primary font-medium p-4 pl-0 border-b-2 border-gray-200">Fax</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td class="type-p5 p-4 pl-0 border-b border-gray-200">Blake Stanford, Principal</td>
+                                                                                    <td class="type-p5 p-4 pl-0 border-b border-gray-200">661-946-3800</td>
+                                                                                    <td class="type-p5 p-4 pl-0 border-b border-gray-200">661-941-3025</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="hidden py-4 pr-4 rounded-lg" id="links-1" role="tabpanel">
+                                                                <div class="group-4">
+                                                                    <h3 class="type-h4 font-medium ">Links</h3>
+                                                                    <p class="type-p5 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="hidden py-4 pr-4 rounded-lg" id="tipline-1" role="tabpanel">
+                                                                <div class="group-4">
+                                                                    <h3 class="type-h4 font-medium ">Tip Line</h3>
+                                                                    <p class="type-p5 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    
+                                                </div>
+                                                <!-- End Module 4 -->
+                                        </div>
+
+                                    </div>
+                                    <!-- End Module 3 -->
+                
+
+
+
+                <!-- Start Module 3 -->
+                    <div class="module-3">
+                        <!-- Heading/Paragraph Group 3 -->
+                        <div class="group-3">
+                            <h3 class="type-h3 font-normal">Calendar</h3>
+                            <p class="type-p4 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile</p>
+                        </div>
+                    </div>
+
+
+
+
+
+                 <!-- Start Module 3 -->
+                 <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal">Campus Policy</h3>
+                       <p class="type-p4 font-normal paragraph">He left it dead, and with its head He went galumphing back. “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe.</p>
+                    </div>
+                </div>
+               
+
+                
+            </div>
+        </div>
+
+
+
+
+
+        </div>
+        <!-- End Module 2 -->               
+
+
+
+            <!-- Start Module 2 -->
+            <div class="module-2">
+                <!-- Heading/Paragraph Group 2 -->
+                <div class="group-2">
+                    <h2 class="type-h2 font-normal text-primary">Rules</h2>
+                    <p class="type-p3 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!.”</p>
+                </div>
+
+
+                                     <!-- Start Module 3 -->
+                                     <div class="module-3">
+                                        <!-- Heading/Paragraph Group 3 -->
+                                        <div class="group-3">
+                                            <h3 class="type-h3 font-normal">School Policies</h3>
+                                        
+                                
+                                            <!-- Start Module 4 -->
+                                            <div class="module-4">
+                
+                                                <!-- Heading/Paragraph Group 4 -->
+                                                <div class="group-4">
+                                                    <h4 class="type-h4 font-normal text-primary">We are hear to help...</h4>
+                                                    <p class="type-p4 font-normal paragraph">Here at Antelope Valley High, we’re about more than just textbooks and tests. We want to create a place where students are challenged to think bigger, get creative, and build real friendships with classmates and teachers. It’s all about rolling up our sleeves together, so our kids learn how to solve the kinds of tough problems they’ll face in the real world.</p>
+                                               
+
+                                                    <!-- FIRST TAB COMPONENT -->
+                                                    <div class="tabs-component w-full bg-white py-6 pr-6 -ml-3 min-h-[350px]">
+                    
+                                                        <!-- Tab navigation -->
+                                                        <div class="mb-4 border-b border-gray-200">
+                                                            <ul class="flex flex-wrap -mb-px text-center" role="tablist">
+                                                                <li class="me-2" role="presentation">
+                                                                    <!-- The user already applied the custom classes here, which is great. -->
+                                                                    <button class="inline-block type-p1 font-medium border-b-2 rounded-t-lg" data-tabs-target="#dress-code-1" type="button" role="tab">Dress Code</button>
+                                                                </li>
+                                                                <li class="me-2" role="presentation">
+                                                                    <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#cel-phone-1" type="button" role="tab">Cell Phone Policy</button>
+                                                                </li>
+                                                                <li class="me-2" role="presentation">
+                                                                    <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#parent-engagement-1" type="button" role="tab">Parent Engagement</button>
+                                                                </li>
+                                                                <li class="me-2" role="links">
+                                                                    <button class="inline-block type-p4 font-medium border-b-2 rounded-t-lg" data-tabs-target="#discipline-1" type="button" role="tab">Discipline Policy</button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <!-- Tab content -->
+                                                        <div class="module-3">
+                                                        <div class="pl-4 pr-24">
+                                                            <div class="hidden py-4 pr-4 rounded-lg" id="dress-code-1" role="tabpanel">
+                                                                <div class="group-4">
+                                                                    <h3 class="type-h4 font-medium ">Dress Code</h3>
+                                                                    <p class="type-p5 font-normal paragraph"> “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="hidden py-4 pr-4 rounded-lg" id="cel-phone-1" role="tabpanel">
+                                                                <div class="group-4">
+                                                                    <h3 class="type-h4 font-medium ">Cell Phone Policy</h3>
+                                                                    <p class="type-p5 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, And the mome raths outgrabe.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="hidden py-4 pr-4 rounded-lg" id="parent-engagement-1" role="tabpanel">
+                                                                <div class="group-4">
+                                                                    <h3 class="type-h4 font-medium ">Parent Engagement</h3>
+                                                                
+                                                                    <p class="type-p5 font-normal paragraph">He left it dead, and with its head He went galumphing back. “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="hidden py-4 pr-4 rounded-lg" id="discipline-1" role="tabpanel">
+                                                                <div class="group-4">
+                                                                    <h3 class="type-h4 font-medium ">Discipline Policy</h3>
+                                                                    <p class="type-p5 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    
+                                                </div>
+                                                <!-- End Module 4 -->
+                                        </div>
+
+                                    </div>
+                                    <!-- End Module 3 -->
+                
+
+
+
+                <!-- Start Module 3 -->
+                    <div class="module-3">
+                        <!-- Heading/Paragraph Group 3 -->
+                        <div class="group-3">
+                            <h3 class="type-h3 font-normal">Parent Engagement Policy</h3>
+                            <p class="type-p4 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p></p>
+                        </div>
+                    </div>
+
+
+
+
+
+                 <!-- Start Module 3 -->
+                 <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal">Campus Policy</h3>
+                        <p class="type-p4 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+                    </div>
+                </div>
+               
+                 <!-- Start Module 3 -->
+                 <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal">Uniform Complaint Procedures</h3>
+                        <p class="type-p4 font-normal paragraph">He left it dead, and with its head He went galumphing back. “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+
+
+
+
+        </div>
+        <!-- End Module 2 -->               
+
+
+            <!-- Start Module 2 -->
+            <div class="module-2">
+                <!-- Heading/Paragraph Group 2 -->
+                <div class="group-2">
+                    <h2 class="type-h2 font-normal text-primary">The Legal Stuff</h2>
+                    <p class="type-p3 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!.”</p>
+                </div>
+
+                <!-- Start Module 3 -->
+                    <div class="module-3">
+                        <!-- Heading/Paragraph Group 3 -->
+                        <div class="group-3">
+                            <h3 class="type-h3 font-normal">Safety Message / Plan</h3>
+                            <p class="type-p4 font-normal paragraph">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+                        </div>
+                    </div>
+
+
+                    <!-- Start Module 3 -->
+
+                    <div class="module-3">
+                        <!-- Heading/Paragraph Group 3 -->
+                        <div class="group-3">
+                            <h3 class="type-h3 font-normal ">District Links</h3>
+                        
+                
+                            <!-- Start Module 4 -->
+                            <div class="module-4">
+
+                                <!-- Heading/Paragraph Group 4 -->
+                                <div class="group-4">
+                                    <h4 class="type-h4 font-normal">Experiencing Homelessness</h4>
+                                    <p class="type-p5 font-normal paragraph">Here at Antelope Valley High, we’re about more than just textbooks and tests. We want to create a place where students are challenged to think bigger, get creative, and build real friendships with classmates and teachers. It’s all about rolling up our sleeves together, so our kids learn how to solve the kinds of tough problems they’ll face in the real world.</p>
+                                    <p class="type-p5 font-normal paragraph text-primary">Link</p>
+                                </div>
+                                <div class="group-4">
+                                    <h4 class="type-h4 font-normal">LCAP Survey</h4>
+                                    <p class="type-p5 font-normal paragraph">When our students walk across that graduation stage, we want them to see two things clearly: a solid plan for their future and the power they have to make a difference right here in our community. We want them to leave AVHS not just with a diploma, but with a purpose.</p>
+                                    <p class="type-p5 font-normal paragraph text-primary">Link</p>
+                                </div>
+                                <div class="group-4">
+                                    <h4 class="type-h4 --font-normal">Title I</h4>
+                                    <p class="type-p5 font-normal paragraph">The Lope Way is our promise for every student who walks these halls. It starts with teaching them to think for themselves—to know their own strengths, learn from their mistakes, and confidently chase down their goals. We believe strong thinkers also need to be strong communicators</p>
+                                    <p class="type-p5 font-normal paragraph text-primary">Link</p>
+                                </div>
+                                <div class="group-4">
+                                    <h4 class="type-h4 font-normal">Title IX</h4>
+                                    <p class="type-p5 font-normal paragraph">The Lope Way is our promise for every student who walks these halls. It starts with teaching them to think for themselves—to know their own strengths, learn from their mistakes, and confidently chase down their goals. We believe strong thinkers also need to be strong communicators</p>
+                                    <p class="type-p5 font-normal paragraph text-primary">Link</p>
+                                </div>
+
+                                <!-- End Heading/Paragraph Group 4-->
+
+                            </div>
+                            <!-- End Module 4 -->
+                        </div>
+                    </div>
+
+
+             </div>
+             <!-- End Module 2 -->               
+
+
+                
+
+    </div>
+    <!-- End Module 1 -->
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // This function initializes a single tab component.
+        const initTabs = (tabsComponent) => {
+            const tabs = tabsComponent.querySelectorAll('[role="tab"]');
+            const tabContents = tabsComponent.querySelectorAll('[role="tabpanel"]');
+
+            const baseTabClasses = 'inline-block p-4 border-b-2 rounded-t-lg';
+            const activeTabClasses = 'text-blue-600 border-blue-600';
+            const inactiveTabClasses = 'border-transparent hover:text-gray-600 hover:border-gray-300';
+
+            const switchTab = (clickedTab) => {
+                const targetId = clickedTab.getAttribute('data-tabs-target');
+                const targetPanel = tabsComponent.querySelector(targetId);
+
+                // Deactivate all tabs within this component
+                tabs.forEach(tab => {
+                    if (tab.disabled) return;
+                    tab.setAttribute('aria-selected', 'false');
+                    tab.className = `${baseTabClasses} ${inactiveTabClasses}`;
+                });
+
+                // Hide all tab content panels within this component
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+
+                // Activate the clicked tab and show its content panel
+                clickedTab.setAttribute('aria-selected', 'true');
+                clickedTab.className = `${baseTabClasses} ${activeTabClasses}`;
+                if (targetPanel) {
+                    targetPanel.classList.remove('hidden');
+                }
+            };
+
+            tabs.forEach(tab => {
+                if (!tab.disabled) {
+                    tab.addEventListener('click', () => switchTab(tab));
+                }
+            });
+
+            // Activate the first non-disabled tab on load for this component
+            const firstEnabledTab = tabsComponent.querySelector('[role="tab"]:not([disabled])');
+            if (firstEnabledTab) {
+                switchTab(firstEnabledTab);
+            }
+        };
+
+        // Find all tab components on the page and initialize each one.
+        const allTabsComponents = document.querySelectorAll('.tabs-component');
+        allTabsComponents.forEach(tabsComponent => {
+            initTabs(tabsComponent);
+        });
+    });
+</script>
+
+</body>
+</html>

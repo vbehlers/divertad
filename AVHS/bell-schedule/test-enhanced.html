@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Enhanced Bell Schedule</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .error { color: red; }
+        .success { color: green; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Enhanced Bell Schedule Test</h1>
+    
+    <div class="test-section">
+        <h2>File Loading Test</h2>
+        <div id="file-loading-status">Testing...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>District Data Test</h2>
+        <div id="district-data-status">Testing...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Manager Class Test</h2>
+        <div id="manager-status">Testing...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>KPI Data Test</h2>
+        <div id="kpi-status">Testing...</div>
+    </div>
+
+    <!-- Load the JavaScript files -->
+    <script src="district-schedules.js"></script>
+    <script src="enhanced-bell-schedule-manager.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Test page loaded');
+            
+            // Test 1: File Loading
+            const fileStatus = document.getElementById('file-loading-status');
+            try {
+                if (typeof districtSchedules !== 'undefined') {
+                    fileStatus.innerHTML = '<span class="success">✓ district-schedules.js loaded successfully</span>';
+                } else {
+                    fileStatus.innerHTML = '<span class="error">✗ district-schedules.js failed to load</span>';
+                }
+                
+                if (typeof EnhancedBellScheduleManager !== 'undefined') {
+                    fileStatus.innerHTML += '<br><span class="success">✓ enhanced-bell-schedule-manager.js loaded successfully</span>';
+                } else {
+                    fileStatus.innerHTML += '<br><span class="error">✗ enhanced-bell-schedule-manager.js failed to load</span>';
+                }
+            } catch (error) {
+                fileStatus.innerHTML = '<span class="error">✗ Error loading files: ' + error.message + '</span>';
+            }
+            
+            // Test 2: District Data
+            const districtStatus = document.getElementById('district-data-status');
+            try {
+                if (typeof districtSchedules !== 'undefined') {
+                    const schools = districtSchedules.schools;
+                    districtStatus.innerHTML = `<span class="success">✓ District data loaded with ${schools.length} schools</span>`;
+                    districtStatus.innerHTML += '<br><span class="info">Schools: ' + schools.map(s => s.school_code).join(', ') + '</span>';
+                } else {
+                    districtStatus.innerHTML = '<span class="error">✗ District data not available</span>';
+                }
+            } catch (error) {
+                districtStatus.innerHTML = '<span class="error">✗ Error with district data: ' + error.message + '</span>';
+            }
+            
+            // Test 3: Manager Class
+            const managerStatus = document.getElementById('manager-status');
+            try {
+                if (typeof EnhancedBellScheduleManager !== 'undefined') {
+                    const manager = new EnhancedBellScheduleManager(districtSchedules, 'AVHS');
+                    managerStatus.innerHTML = '<span class="success">✓ EnhancedBellScheduleManager instantiated successfully</span>';
+                    managerStatus.innerHTML += '<br><span class="info">Current school: ' + manager.currentSchool.school_name + '</span>';
+                } else {
+                    managerStatus.innerHTML = '<span class="error">✗ EnhancedBellScheduleManager not available</span>';
+                }
+            } catch (error) {
+                managerStatus.innerHTML = '<span class="error">✗ Error creating manager: ' + error.message + '</span>';
+            }
+            
+            // Test 4: KPI Data
+            const kpiStatus = document.getElementById('kpi-status');
+            try {
+                if (typeof EnhancedBellScheduleManager !== 'undefined') {
+                    const manager = new EnhancedBellScheduleManager(districtSchedules, 'AVHS');
+                    const kpiData = manager.getKPIData();
+                    kpiStatus.innerHTML = '<span class="success">✓ KPI data generated successfully</span>';
+                    kpiStatus.innerHTML += '<br><span class="info">Schedule Type: ' + kpiData.scheduleType + '</span>';
+                    kpiStatus.innerHTML += '<br><span class="info">Current Period: ' + kpiData.currentPeriod.name + '</span>';
+                    kpiStatus.innerHTML += '<br><span class="info">School: ' + kpiData.schoolName + '</span>';
+                } else {
+                    kpiStatus.innerHTML = '<span class="error">✗ Cannot generate KPI data</span>';
+                }
+            } catch (error) {
+                kpiStatus.innerHTML = '<span class="error">✗ Error generating KPI data: ' + error.message + '</span>';
+            }
+        });
+    </script>
+</body>
+</html>
+

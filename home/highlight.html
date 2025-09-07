@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Highlight</title>
+    <link rel="stylesheet" href="https://use.typekit.net/thk1qtq.css" />
+    <link rel="stylesheet" href="highlight.css" />
+    <!-- GSAP + ScrollTrigger (local, non-module) -->
+    <script src="vendor/gsap.min.js" defer></script>
+    <script src="vendor/ScrollTrigger.min.js" defer></script>
+  </head>
+  <body>
+    <div class="top-spacer"></div>
+    <main class="stage">
+      <h1 class="display-title">Our Mission</h1>
+      <p class="deck" aria-hidden="true">
+        Is to empower every student to reach their full potential by providing a
+        supportive, inclusive, and celebratory learning environment. We are
+        dedicated to cultivating a positive school culture that celebrates
+        diversity, fosters mutual respect, and encourages collaboration and
+        transparency.
+      </p>
+    </main>
+    <script src="highlight-gsap.js" defer></script>
+    <script>
+      // Inline fallback: shows motion even if GSAP/ScrollTrigger fail to load
+      (function(){
+        function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+        function init(){
+          if (window.gsap && window.ScrollTrigger) return; // GSAP path handles it
+          var title = document.querySelector('h1.display-title');
+          if (!title) return;
+          title.style.transformOrigin = 'top center';
+          title.animate([
+            { opacity: 0, transform: 'translateY(40px)' },
+            { opacity: 1, transform: 'none' }
+          ], { duration: 800, easing: 'cubic-bezier(.22,.8,.36,1)', fill: 'both' });
+          var total = 1000, minScale = 0.6;
+          function onScroll(){
+            var p = clamp(window.scrollY / total, 0, 1);
+            var s = 1 + (minScale - 1) * p;
+            title.style.transform = 'scale(' + s + ')';
+          }
+          window.addEventListener('scroll', onScroll, { passive: true });
+          window.addEventListener('resize', onScroll);
+          onScroll();
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+        } else { init(); }
+      })();
+    </script>
+  </body>
+  </html>

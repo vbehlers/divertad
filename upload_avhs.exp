@@ -1,0 +1,30 @@
+#!/usr/bin/expect -f
+
+set timeout 60
+set host "dev.avhsd.org"
+set user "sftpuser"
+set pass "01Avhsd-Dev23"
+
+spawn sftp $user@$host
+expect "password:"
+send "$pass\r"
+expect "sftp>"
+
+# Navigate to html directory
+send "cd html\r"
+expect "sftp>"
+
+# Upload the entire AVHS folder
+send "put -r AVHS\r"
+expect "sftp>"
+
+# List contents to verify upload
+send "ls -la\r"
+expect "sftp>"
+
+# Show current directory
+send "pwd\r"
+expect "sftp>"
+
+# Keep interactive session open
+interact

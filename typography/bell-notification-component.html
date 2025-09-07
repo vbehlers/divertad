@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bell Notification Component - Reusable</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Bell Notification Component Styles */
+        .bell-notification {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .notification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .kpi-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.1);
+        }
+
+        .kpi-card.current-period {
+            background: #dcfce7;
+            border-color: #22c55e;
+        }
+
+        .kpi-card.countdown {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+        }
+
+        .kpi-card.schedule-type {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+        }
+
+        .kpi-title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .kpi-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            font-family: 'JetBrains Mono', 'Monaco', 'Consolas', monospace;
+        }
+
+        .kpi-subtitle {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-active { background-color: #22c55e; }
+        .status-upcoming { background-color: #3b82f6; }
+        .status-completed { background-color: #9ca3af; }
+
+        .countdown-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .notification-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 p-4">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Bell Schedule Notifications</h2>
+        
+        <!-- Bell Notification Component -->
+        <div class="bell-notification">
+            <div class="notification-grid">
+                
+                <!-- Current Period KPI -->
+                <div class="kpi-card current-period">
+                    <div class="kpi-title">Current Period</div>
+                    <div class="kpi-value">Period 2</div>
+                    <div class="kpi-subtitle">9:52 AM - 10:49 AM</div>
+                    <div class="mt-2">
+                        <span class="status-indicator status-active"></span>
+                        <span class="text-sm font-medium text-green-800">Active Now</span>
+                    </div>
+                </div>
+
+                <!-- Countdown Timer KPI -->
+                <div class="kpi-card countdown">
+                    <div class="kpi-title">Next Bell In</div>
+                    <div class="kpi-value" id="countdown">12:34</div>
+                    <div class="kpi-subtitle">10:49 AM</div>
+                </div>
+
+                <!-- Current Time KPI -->
+                <div class="kpi-card">
+                    <div class="kpi-title">Current Time</div>
+                    <div class="kpi-value" id="current-time">9:36:45</div>
+                    <div class="kpi-subtitle">Tuesday, March 19</div>
+                </div>
+
+                <!-- Schedule Type KPI -->
+                <div class="kpi-card schedule-type">
+                    <div class="kpi-title">Today's Schedule</div>
+                    <div class="kpi-value">Regular</div>
+                    <div class="kpi-subtitle">No Special Events</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integration Example -->
+        <div class="bg-white rounded-lg border border-gray-200 p-4">
+            <h3 class="text-lg font-medium text-gray-800 mb-3">Integration Code</h3>
+            <p class="text-sm text-gray-600 mb-3">Copy this HTML structure to integrate the notification component into your existing bell schedule:</p>
+            
+            <pre class="bg-gray-100 p-3 rounded text-xs overflow-x-auto"><code>&lt;!-- Bell Notification Component --&gt;
+&lt;div class="bell-notification"&gt;
+    &lt;div class="notification-grid"&gt;
+        
+        &lt;!-- Current Period KPI --&gt;
+        &lt;div class="kpi-card current-period"&gt;
+            &lt;div class="kpi-title"&gt;Current Period&lt;/div&gt;
+            &lt;div class="kpi-value"&gt;Period 2&lt;/div&gt;
+            &lt;div class="kpi-subtitle"&gt;9:52 AM - 10:49 AM&lt;/div&gt;
+            &lt;div class="mt-2"&gt;
+                &lt;span class="status-indicator status-active"&gt;&lt;/span&gt;
+                &lt;span class="text-sm font-medium text-green-800"&gt;Active Now&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Countdown Timer KPI --&gt;
+        &lt;div class="kpi-card countdown"&gt;
+            &lt;div class="kpi-title"&gt;Next Bell In&lt;/div&gt;
+            &lt;div class="kpi-value" id="countdown"&gt;12:34&lt;/div&gt;
+            &lt;div class="kpi-subtitle"&gt;10:49 AM&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Current Time KPI --&gt;
+        &lt;div class="kpi-card"&gt;
+            &lt;div class="kpi-title"&gt;Current Time&lt;/div&gt;
+            &lt;div class="kpi-value" id="current-time"&gt;9:36:45&lt;/div&gt;
+            &lt;div class="kpi-subtitle"&gt;Tuesday, March 19&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Schedule Type KPI --&gt;
+        &lt;div class="kpi-card schedule-type"&gt;
+            &lt;div class="kpi-title"&gt;Today's Schedule&lt;/div&gt;
+            &lt;div class="kpi-value"&gt;Regular&lt;/div&gt;
+            &lt;div class="kpi-subtitle"&gt;No Special Events&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+    </div>
+
+    <script>
+        // Real-time clock and countdown functionality
+        function updateTime() {
+            const now = new Date();
+            const currentTimeElement = document.getElementById('current-time');
+            const countdownElement = document.getElementById('countdown');
+            
+            // Update current time
+            currentTimeElement.textContent = now.toLocaleTimeString('en-US', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            // Calculate time until next bell (example: 10:49 AM)
+            const nextBell = new Date();
+            nextBell.setHours(10, 49, 0, 0);
+            
+            if (now < nextBell) {
+                const timeDiff = nextBell - now;
+                const minutes = Math.floor(timeDiff / (1000 * 60));
+                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+                countdownElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Add pulse animation when less than 5 minutes
+                if (minutes < 5) {
+                    countdownElement.classList.add('countdown-pulse');
+                } else {
+                    countdownElement.classList.remove('countdown-pulse');
+                }
+            } else {
+                countdownElement.textContent = '00:00';
+                countdownElement.classList.remove('countdown-pulse');
+            }
+        }
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call
+    </script>
+</body>
+</html>

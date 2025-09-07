@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home</title>
+    <link rel="stylesheet" href="./home.css" />
+  </head>
+  <body>
+    <p class="subtitle">Mission</p>
+    <h1 class="display-title">Stinky</h1>
+    <p class="deck">
+      Is to empower every student to reach their full potential by providing a
+      supportive, inclusive, and celebratory learning environment. We are
+      dedicated to cultivating a positive school culture that celebrates
+      diversity, fosters mutual respect, and encourages collaboration and
+      transparency.
+    </p>
+    <div class="spacer"></div>
+    <script>
+      (function () {
+        const title = document.querySelector('h1.display-title');
+        if (!title) return;
+        title.style.transformOrigin = 'top center';
+        title.style.willChange = 'transform, opacity';
+        // Always-visible load-in
+        title.animate([
+          { opacity: 0, transform: 'translateY(40px)' },
+          { opacity: 1, transform: 'none' }
+        ], { duration: 800, easing: 'cubic-bezier(.22,.8,.36,1)', fill: 'both' });
+
+        // Scroll-linked shrink 1 -> 0.6 over 1000px
+        const total = 1000, minScale = 0.6;
+        const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+        function update() {
+          const p = clamp(window.scrollY / total, 0, 1);
+          const s = 1 + (minScale - 1) * p;
+          title.style.transform = `scale(${s})`;
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        update();
+      })();
+    </script>
+  </body>
+  </html>

@@ -1,0 +1,13 @@
+
+@view-transition {
+    navigation: auto;
+}
+
+#alpha {
+
+    view-transition-name: alpha;
+}
+
+::view-transition-group(*) {
+    animation-duration: 0.5s;
+}

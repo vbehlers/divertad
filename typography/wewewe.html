@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Headings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /*
+         * Global style tokens (CSS Custom Properties) for easy updates.
+        */
+        :root {
+            /* Color Tokens */
+            --text-default: #111827;
+            --text-secondary: #4b5563;
+            --text-primary: #2563eb;
+
+            /* Font Weight Tokens */
+            --font-normal: 400;
+            --font-medium: 500;
+            --font-semibold: 600;
+            --font-bold: 700;
+        }
+
+        /* Custom styles for the body to ensure a clean look */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* White page background */
+            color: var(--text-default); /* Apply the global color token */
+            font-weight: var(--font-normal); /* Apply the global font-weight token */
+            margin: 0; /* Reset default browser margin */
+        }
+
+        /* Container for the headings, used for layout purposes */
+        .headings-container {
+            text-align: left; /* Align text to the left */
+            width: 1200px; /* Set a fixed width for the container */
+            margin: 4rem auto; /* Vertical and horizontal centering of the container block */
+            padding: 2rem;
+        }
+
+        /*
+         * Heading styles now have their color and weight defined directly,
+         * using the global tokens.
+        */
+        h1 {
+            font-size: 40px;
+            line-height: 40px;
+            margin-bottom: 30px;
+            margin-top: 0;
+            
+            font-weight: var(--font-bold);
+        }
+
+        h2 {
+            font-size: 26px;
+            line-height: 26px;
+            margin-bottom: 10px;
+            margin-top: 0;
+            font-weight: var(--font-semibold);
+        }
+
+        h3 {
+            font-size: 20px;
+            line-height: 20px;
+            margin-bottom: 8px;
+            margin-top: 0;
+            font-weight: var(--font-semibold);
+        }
+
+        h4 {
+            font-size: 18px;
+            line-height: 18px;
+            margin-bottom: 7px;
+            margin-top: 0;
+            font-weight: var(--font-medium);
+        }
+
+        h5 {
+            font-size: 16px;
+            line-height: 16px;
+            margin-bottom: 6px;
+            margin-top: 0;
+            font-weight: var(--font-medium);
+        }
+
+        h6 {
+            font-size: 14px;
+            line-height: 14px;
+            margin-bottom: 5px;
+            margin-top: 0;
+            color: var(--text-secondary);
+            font-weight: var(--font-medium);
+        }
+
+        /*
+         * Paragraph styles with the hanging quote effect removed.
+        */
+        .p1 {
+            font-size: 40px;
+            line-height: 50px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .p2 {
+            font-size: 26px;
+            line-height: 36px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .p3 {
+            font-size: 20px;
+            line-height: 29px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .p4 {
+            font-size: 18px;
+            line-height: 27px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .p5 {
+            font-size: 16px;
+            line-height: 25px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .p6 {
+            font-size: 14px;
+            line-height: 23px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        /*
+         * Text group wrappers now use padding-bottom. This combines with the
+         * paragraph's margin-bottom for a cumulative spacing effect.
+        */
+        .text-group-1 { padding-bottom: 30px; }
+        .text-group-2 { padding-bottom: 10px; }
+        .text-group-3 { padding-bottom: 8px; }
+        .text-group-4 { padding-bottom: 7px; }
+        .text-group-5 { padding-bottom: 6px; }
+        .text-group-6 { padding-bottom: 5px; }
+
+        /*
+         * Utility classes to apply tokenized styles.
+        */
+        .text-primary { color: var(--text-primary); }
+        .text-secondary { color: var(--text-secondary); }
+
+        .font-medium { font-weight: var(--font-medium); }
+        .font-semibold { font-weight: var(--font-semibold); }
+        .font-bold { font-weight: var(--font-bold); }
+
+    </style>
+</head>
+<body>
+
+    <div class="headings-container">
+        <div class="text-group-1">
+            <h1>Heading Level 1</h1>
+            <p class="p1">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+            <p class="p1">He left it dead, and with its head He went galumphing back. “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+        </div>
+
+        <div class="text-group-2">
+            <h2>Heading Level 2</h2>
+            <p class="p2">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+            <p class="p2">He left it dead, and with its head He went galumphing back. “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+        </div>
+
+        <div class="text-group-3">
+            <h3>Heading Level 3</h3>
+            <p class="p3">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+            <p class="p3">He left it dead, and with its head He went galumphing back. “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+        </div>
+
+        <div class="text-group-4">
+            <h4>Heading Level 4</h4>
+            <p class="p4">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+            <p class="p4">He left it dead, and with its head He went galumphing back. “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+        </div>
+
+        <div class="text-group-5">
+            <h5>Heading Level 5</h5>
+            <p class="p5">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+            <p class="p5">He left it dead, and with its head He went galumphing back. “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+        </div>
+
+        <div class="text-group-6">
+            <h6>Heading Level 6</h6>
+            <p class="p6">Beware the Jabberwock, my son! The jaws that bite, the claws that catch! Beware the Jubjub bird, and shun The frumious Bandersnatch!” He took his vorpal sword in hand; Long time the manxome foe he sought— So rested he by the Tumtum tree And stood awhile in thought. And, as in uffish thought he stood, The Jabberwock, with eyes of flame, Came whiffling through the tulgey wood, And burbled as it came! One, two! One, two! And through and through The vorpal blade went snicker-snack!</p>
+            <p class="p6">He left it dead, and with its head He went galumphing back. “And hast thou slain the Jabberwock? Come to my arms, my beamish boy! O frabjous day! Callooh! Callay!” He chortled in his joy. ’Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.</p>
+        </div>
+    </div>
+
+</body>
+</html>

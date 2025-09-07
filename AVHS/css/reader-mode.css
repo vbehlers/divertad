@@ -1,0 +1,168 @@
+/* Reader Mode Styles - Completely isolated from existing site styles */
+
+/* Reader Mode Button */
+.reader-mode-btn {
+    background: #0051d2;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 15px;
+    transition: background-color 0.2s ease;
+}
+
+.reader-mode-btn:hover {
+    background: #003d9e;
+}
+
+/* Reader Mode Overlay */
+.reader-mode-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 9999;
+    overflow-y: auto;
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.6;
+    display: none;
+}
+
+.reader-mode-overlay.active {
+    display: block;
+}
+
+/* Reader Header */
+.reader-mode-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    padding: 20px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 10000;
+}
+
+.reader-mode-header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #0051d2;
+    font-weight: 600;
+}
+
+.reader-mode-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #6c757d;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reader-mode-close-btn:hover {
+    color: #343a40;
+}
+
+/* Reader Content */
+.reader-mode-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    font-size: 18px;
+    color: #333;
+}
+
+.reader-mode-content h2 {
+    color: #0051d2;
+    font-size: 22px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.reader-mode-content h3 {
+    color: #495057;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.reader-mode-content p {
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.reader-mode-content ul, .reader-mode-content ol {
+    margin-bottom: 20px;
+    padding-left: 30px;
+}
+
+.reader-mode-content li {
+    margin-bottom: 10px;
+}
+
+/* Reader Navigation */
+.reader-mode-nav {
+    background: #e9ecef;
+    padding: 15px 40px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.reader-mode-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 30px;
+}
+
+.reader-mode-nav li {
+    margin: 0;
+}
+
+.reader-mode-nav a {
+    color: #0051d2;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.reader-mode-nav a:hover {
+    border-bottom-color: #0051d2;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .reader-mode-content {
+        padding: 20px;
+        font-size: 16px;
+    }
+    
+    .reader-mode-header {
+        padding: 15px 20px;
+    }
+    
+    .reader-mode-nav {
+        padding: 10px 20px;
+    }
+    
+    .reader-mode-nav ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+}

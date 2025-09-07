@@ -1,0 +1,45 @@
+@import url("https://use.typekit.net/thk1qtq.css");
+
+.subtitle {
+  font-size: 31px;
+  line-height: 93px;
+  color: #0C4B90;
+  font-family: "inter-variable", sans-serif;
+  font-variation-settings: 'wght' 400, 'slnt' 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1.display-title {
+  font-size: 140px;
+  line-height: 93px;
+  color: #0C4B90;
+  font-family: "inter-variable", sans-serif;
+  font-variation-settings: 'wght' 500, 'slnt' 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 100px;
+  margin-left: -8px;
+  text-transform: uppercase;
+  /* CSS intro so there's always visible motion */
+  animation: titleIntro 0.8s ease-out both;
+}
+
+p.deck {
+  font-size: 45px;
+  line-height: 56px;
+  color: #1a1a1a;
+  font-family: "inter-variable", sans-serif;
+  font-variation-settings: 'wght' 300, 'slnt' 0;
+  padding-right: 10%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@keyframes titleIntro {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Add scroll space so the scroll-linked demo is obvious */
+.spacer { height: 1500px; }

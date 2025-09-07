@@ -1,0 +1,72 @@
+@import url("https://use.typekit.net/thk1qtq.css");
+
+* { box-sizing: border-box; }
+html, body { height: 100%; overflow-x: hidden; }
+body { margin: 0; }
+
+/* 800px block above the title */
+.top-spacer {
+  height: 1500px;
+  width: 100%;
+  background: #eee;
+}
+
+/* Full-viewport stage, center all children */
+.stage {
+  min-height: 100vh;
+  width: 100%;
+  display: grid;
+  justify-items: center; /* horizontal centering */
+  align-items: start;    /* start at top of stage */
+  position: relative;
+}
+
+/* Overlay children in the same centered grid cell */
+h1.display-title,
+p.deck {
+  grid-area: 1 / 1;
+}
+
+/* Responsive, full-width title with 5% side padding */
+h1.display-title {
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+  box-sizing: border-box;
+  margin: 0;
+  text-align: center;
+  color: #333;
+  font-family: "inter-variable", sans-serif;
+  font-variation-settings: 'wght' 500, 'slnt' 0;
+  /* HUGE: scale with viewport; aim to fill width minus 10% padding */
+  font-size: clamp(64px, 16vw, 40vw);
+  line-height: 0.9;
+  /* Allow wrapping to keep within viewport while staying fluid */
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: auto;
+  text-transform: uppercase;
+  z-index: 1; /* ensure it overlaps the deck */
+  /* CSS-only intro so there's always some animation */
+  animation: titleIntro 0.8s ease-out both;
+}
+
+@keyframes titleIntro {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Keep deck in DOM and layout, but not visible */
+p.deck {
+  font-size: 45px;
+  line-height: 56px;
+  color: #1a1a1a;
+  font-family: "inter-variable", sans-serif;
+  font-variation-settings: 'wght' 300, 'slnt' 0;
+  padding-right: 10%;
+  margin: 0;
+  opacity: 0;           /* not visible */
+  pointer-events: none; /* ignore interactions */
+  z-index: 0;
+}

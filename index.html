@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fixed Layout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900">
+
+    <div class="w-full h-[45vh] bg-blue-500 flex items-center justify-center px-12">
+
+        <div class="flex flex-col space-y-4">
+
+            <nav class="w-full h-[90px] bg-green-500 opacity-20 flex items-center justify-between">
+                <div class="flex-grow"></div>
+                <div class="w-[162px] flex justify-center">
+                    <img src="your-logo.svg" alt="Logo" class="h-full">
+                </div>
+                <div class="flex-grow flex justify-end"></div>
+            </nav>
+
+            <div id="av-search" class="w-full h-[231px] bg-opacity-20 flex flex-col items-center justify-center space-y-4">
+                <div>
+                    <p class="text-white text-base">What are we accomplishing today?</p>
+                </div>
+                
+                <div class="relative w-full max-w-[500px]">
+                    <button id="dropdown-button" class="w-full h-[40px] text-sm text-gray-700 bg-white rounded-[5px] shadow-md flex items-center px-4 pr-10 appearance-none focus:outline-none">
+                        Select an onion...
+                        <div class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 pointer-events-none">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 6.757 7.586 5.343 9l4.95 4.95z" />
+                            </svg>
+                        </div>
+                    </button>
+                    <div id="dropdown-menu" class="absolute hidden w-full mt-1 bg-white rounded-[5px] shadow-md z-10 transition-all duration-300">
+                        <ul class="py-1">
+                            <li class="px-4 py-2 text-gray-700 text-sm hover:bg-gray-100 cursor-pointer" data-value="option1">Option 1</li>
+                            <li class="px-4 py-2 text-gray-700 text-sm hover:bg-gray-100 cursor-pointer" data-value="option2">Option 2</li>
+                            <li class="px-4 py-2 text-gray-700 text-sm hover:bg-gray-100 cursor-pointer" data-value="option3">Option 3</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <button class="w-[95px] h-[29px] text-gray-700 rounded-[60px] bg-gray-200 flex items-center justify-center text-[14px]">Button</button>
+                    <button class="w-[95px] h-[29px] rounded-[60px] bg-gray-200 flex items-center justify-center text-[14px]">Button</button>
+                    <button class="w-[95px] h-[29px] rounded-[60px] bg-gray-200 flex items-center justify-center text-[14px]">Button</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="container" class="w-full h-screen bg-purple-500">
+      </div>
+    
+    <script>
+    const dropdownButton = document.getElementById('dropdown-button');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    const dropdownItems = dropdownMenu.querySelectorAll('li');
+    
+    dropdownButton.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('hidden');
+        dropdownMenu.classList.toggle('translate-y-0');
+    });
+    
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', () => {
+            dropdownButton.textContent = item.textContent;
+            dropdownMenu.classList.add('hidden');
+            dropdownMenu.classList.remove('translate-y-0');
+        });
+    });
+    </script>
+        
+  </body>
+</html>
+
+
+
+
