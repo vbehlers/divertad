@@ -1,127 +1,4 @@
-/* Base font settings */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
 
-html {
-    font-size: var(--base-font-size);
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-}
-
-/*
- * Global style tokens (CSS Custom Properties) for easy updates.
-*/
-:root {
-    /* Base Font Size Token */
-    --base-font-size: 16px;
-
-    /* Color Tokens */
-    --color-text-default: #111827;
-    --color-text-secondary: #4b5563;
-    --color-text-primary: #0051d2;
-
-    /* Font Weight Tokens */
-    --font-normal: 400;
-    --font-medium: 500;
-    --font-semibold: 600;
-    --font-bold: 700;
-
-    /* Font Size Tokens (in rem) */
-    --fs-h1: 4.3rem;
-    --fs-h2: 2.25rem;
-    --fs-h3: 1.8rem;
-    --fs-h4: 1.3rem;
-    --fs-h5: 1rem;
-    --fs-h6: 0.875rem;
-
-    /* Line Height Tokens (in rem) */
-    --lh-h1: 4.3rem;
-    --lh-h2: 2.25rem;
-    --lh-h3: 1.8rem;
-    --lh-h4: 1.3rem;
-    --lh-h5: 1rem;
-    --lh-h6: 0.875rem;
-
-    /* Line Height Tokens (in rem) */
-    --lh-p1: 5.1rem;
-    --lh-p2: 2.925rem;
-    --lh-p3: 2.3rem;
-    --lh-p4: 1.8rem;
-    --lh-p5: 1.513rem;
-    --lh-p6: 1.3rem;
-
-    /* Heading Bottom Margin Tokens (in rem) */
-    --h-margin-1: 5.75rem;
-    --h-margin-2: 1.25rem;
-    --h-margin-3: 1.0rem;
-    --h-margin-4: 0.6rem;
-    --h-margin-5: 0.5rem;
-    --h-margin-6: 0.5rem;
-
-    /* Module Spacing Tokens (in rem) */
-    --module-spacing-1: 4rem;
-    --module-spacing-2: 5.9rem;
-    --module-spacing-3: 1.5rem;
-    --module-spacing-4: 0rem;
-    --module-spacing-5: 1.2rem;
-    --module-spacing-6: 0.8rem;
-
-    /* Paragraph Group Padding Tokens (in rem) */
-    --group-padding-1: 6.8rem;
-    --group-padding-2: 4.5rem;
-    --group-padding-3: 2.3rem;
-    --group-padding-4: 2.2rem;
-    --group-padding-5: 1.5rem;
-    --group-padding-6: 0.533rem;
-
-    /* Proportional Paragraph Spacing Token */
-    --paragraph-spacing-scale: 0.4;
-}
-
-/* * Hierarchical Module Spacing */
-.module-1 { margin-bottom: var(--module-spacing-1); }
-.module-2 { margin-bottom: var(--module-spacing-2); }
-.module-3 { margin-bottom: var(--module-spacing-3); }
-.module-4 { margin-bottom: var(--module-spacing-4); }
-.module-5 { margin-bottom: var(--module-spacing-5); }
-.module-6 { margin-bottom: var(--module-spacing-6); }
-
-/* * Paragraph Group Padding */
-.group-1 { padding-bottom: var(--group-padding-1); }
-.group-2 { padding-bottom: var(--group-padding-2); }
-.group-3 { padding-bottom: var(--group-padding-3); }
-.group-4 { padding-bottom: var(--group-padding-4); }
-.group-5 { padding-bottom: var(--group-padding-5); }
-.group-6 { padding-bottom: var(--group-padding-6); }
-
-/* * Proportional Paragraph Spacing */
-.paragraph {
-    margin-bottom: calc(1.2em * var(--paragraph-spacing-scale));
-}
-
-/* * Typography classes using CSS variables */
-.type-h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); margin-bottom: var(--h-margin-1); }
-.type-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); margin-bottom: var(--h-margin-2); }
-.type-h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); margin-bottom: var(--h-margin-3); }
-.type-h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); margin-bottom: var(--h-margin-4); }
-.type-h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); margin-bottom: var(--h-margin-5); }
-.type-h6 { font-size: var(--fs-h6); line-height: var(--lh-h6); margin-bottom: var(--h-margin-6); }
-
-.type-p1 { font-size: var(--fs-h1); line-height: var(--lh-p1); }
-.type-p2 { font-size: var(--fs-h2); line-height: var(--lh-p2); }
-.type-p3 { font-size: var(--fs-h3); line-height: var(--lh-p3); }
-.type-p4 { font-size: var(--fs-h4); line-height: var(--lh-p4); }
-.type-p5 { font-size: var(--fs-h5); line-height: var(--lh-p5); }
-.type-p6 { font-size: var(--fs-h6); line-height: var(--lh-p6); }
-
-/* * Semantic utility classes for themes */
-.text-primary { color: var(--color-text-primary); }
-.text-secondary { color: var(--color-text-secondary); }
-.font-normal { font-weight: var(--font-normal); }
-.font-medium { font-weight: var(--font-medium); }
-.font-semibold { font-weight: var(--font-semibold); }
-.font-bold { font-weight: var(--font-bold); }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Inter', sans-serif;
@@ -343,6 +220,43 @@ tbody tr {
     display: none;
 }
 
+/* KPI Responsive Breakpoints */
+/* Large screens - reduce padding slightly */
+@media (max-width: 1400px) {
+    .panel {
+        padding-left: 0.75rem;
+        padding-right: 6rem;
+    }
+    
+    .panel-value {
+        font-size: 45px;
+    }
+}
+
+/* Medium-large screens - further reduce padding */
+@media (max-width: 1200px) {
+    .panel {
+        padding-left: 0.5rem;
+        padding-right: 4rem;
+    }
+    
+    .panel-value {
+        font-size: 42px;
+    }
+}
+
+/* Medium screens - minimum padding, reduce font */
+@media (max-width: 1000px) {
+    .panel {
+        padding-left: 1.5rem; /* Minimum padding */
+        padding-right: 2rem;
+    }
+    
+    .panel-value {
+        font-size: 40px; /* Minimum font size */
+    }
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .notification-panels {
@@ -350,3 +264,7 @@ tbody tr {
         gap: 1rem;
     }
 }
+
+@view-transition {
+    navigation: none;
+   }
