@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize modal functionality
         initializeModal();
         
+        // Update the current date
+        updateCurrentDate();
+        
         console.log('AVHS Bell Schedule System initialized successfully');
     } catch (error) {
         console.error('Error initializing bell schedule system:', error);
@@ -47,22 +50,42 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeModal() {
     // Modal functionality
     function openModal(modal) {
+        console.log('Opening modal:', modal);
         if (modal) {
             modal.style.display = 'block';
-            // Update modal content
-            updateModalContent();
+            document.body.style.overflow = 'hidden';
+            // Update modal content with SOAR-specific data
+            setTimeout(() => {
+                updateModalContent();
+            }, 100);
         }
     }
 
     function closeModal(modal) {
-        if (modal) modal.style.display = 'none';
+        console.log('Closing modal:', modal);
+        console.trace('Modal close called from:');
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
     }
 
     function updateModalContent() {
+        console.log('Updating modal content...');
         const content = document.getElementById('modal-schedule-content');
         
-        if (content && window.bellManager) {
-            content.innerHTML = window.bellManager.generateModalContent();
+        if (content) {
+            try {
+                // Use SOAR-specific modal content function
+                const modalContent = window.generateSOARScheduleModalContent();
+                console.log('SOAR modal content generated:', modalContent);
+                content.innerHTML = modalContent;
+            } catch (error) {
+                console.error('Error generating SOAR modal content:', error);
+                content.innerHTML = '<p>Error loading SOAR schedule content</p>';
+            }
+        } else {
+            console.log('Modal content element not available');
         }
     }
 
@@ -84,7 +107,15 @@ function initializeModal() {
 
     document.querySelectorAll('.fixed').forEach((modal) => {
         modal.addEventListener('click', (event) => {
-            if (event.target === modal) closeModal(modal);
+            // Only close if clicking directly on the modal backdrop
+            if (event.target === modal) {
+                closeModal(modal);
+            }
+        });
+        
+        // Prevent clicks inside modal content from bubbling up
+        modal.addEventListener('click', (event) => {
+            event.stopPropagation();
         });
     });
 }
@@ -227,105 +258,74 @@ function generateCalendarContent() {
         // Add holidays
         if (dates.holidays) {
             dates.holidays.forEach(holiday => {
-                if (holiday.start_date && holiday.start_date !== 'N/A' && holiday.start_date !== '') {
-                    const holidayDate = new Date(holiday.start_date);
-                    if (!isNaN(holidayDate.getTime())) {
-                        allDates.push({
-                            date: holidayDate,
-                            endDate: holiday.end_date ? new Date(holiday.end_date) : null,
-                            type: 'holiday',
-                            name: holiday.name,
-                            description: holiday.name
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(holiday.start_date),
+                    endDate: holiday.end_date ? new Date(holiday.end_date) : null,
+                    type: 'holiday',
+                    name: holiday.name,
+                    description: holiday.name
+                });
             });
         }
         
         // Add non-student days
         if (dates.non_student_days) {
             dates.non_student_days.forEach(day => {
-                if (day.date && day.date !== 'N/A' && day.date !== '') {
-                    const dayDate = new Date(day.date);
-                    if (!isNaN(dayDate.getTime())) {
-                        allDates.push({
-                            date: dayDate,
-                            type: 'non_student',
-                            name: day.description,
-                            description: day.description
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(day.date),
+                    type: 'non_student',
+                    name: day.description,
+                    description: day.description
+                });
             });
         }
         
         // Add back-to-school nights
         if (dates.back_to_school_nights) {
             dates.back_to_school_nights.forEach(event => {
-                if (event.date && event.date !== 'N/A' && event.date !== '') {
-                    const eventDate = new Date(event.date);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            type: 'back_to_school',
-                            name: event.description,
-                            description: event.description
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(event.date),
+                    type: 'back_to_school',
+                    name: event.description,
+                    description: event.description
+                });
             });
         }
         
         // Add end of quarter/semester dates
         if (dates.end_of_quarter_semester_dates) {
             dates.end_of_quarter_semester_dates.forEach(event => {
-                if (event.date && event.date !== 'N/A' && event.date !== '') {
-                    const eventDate = new Date(event.date);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            type: 'end_quarter',
-                            name: event.name || event.description || 'End of Quarter',
-                            description: event.name || event.description || 'End of Quarter'
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(event.date),
+                    type: 'end_quarter',
+                    name: event.name,
+                    description: event.name
+                });
             });
         }
         
         // Add testing dates
         if (dates.testing_dates) {
             dates.testing_dates.forEach(test => {
-                const testDate = test.start_date || test.date;
-                if (testDate && testDate !== 'N/A' && testDate !== '') {
-                    const eventDate = new Date(testDate);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            endDate: test.end_date ? new Date(test.end_date) : null,
-                            type: 'testing',
-                            name: test.test_name || test.description || 'Testing',
-                            description: test.test_name || test.description || 'Testing'
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(test.start_date),
+                    endDate: test.end_date ? new Date(test.end_date) : null,
+                    type: 'testing',
+                    name: test.test_name,
+                    description: test.test_name + (test.note ? ' - ' + test.note : '')
+                });
             });
         }
         
         // Add other minimum days with activities
         if (dates.other_minimum_days_with_activities) {
             dates.other_minimum_days_with_activities.forEach(event => {
-                if (event.date && event.date !== 'N/A' && event.date !== '') {
-                    const eventDate = new Date(event.date);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            type: 'activity',
-                            name: event.description,
-                            description: event.description
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(event.date),
+                    type: 'activity',
+                    name: event.description,
+                    description: event.description
+                });
             });
         }
         
@@ -377,16 +377,16 @@ function generateCalendarContent() {
                         </tr>
                         <tr>
                             <td class="type-p5 py-4 pr-4 font-medium text-left">First Day</td>
-                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.first_day_of_school).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.first_day_of_school).toLocaleDateString()}</td>
                         </tr>
                         <tr>
                             <td class="type-p5 py-4 pr-4 font-medium text-left">Last Day</td>
-                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.last_day_of_school).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.last_day_of_school).toLocaleDateString()}</td>
                         </tr>
-                        ${school.general_academic_info.graduation_date && school.general_academic_info.graduation_date !== 'TBD' && school.general_academic_info.graduation_date !== 'N/A' && school.general_academic_info.graduation_date !== '' ? `
+                        ${school.general_academic_info.graduation_date ? `
                         <tr>
                             <td class="type-p5 py-4 pr-4 font-medium text-left">Graduation</td>
-                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.graduation_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                            <td class="type-p5 p-4 text-left">${school.general_academic_info.graduation_date}</td>
                         </tr>
                         ` : ''}
                     </tbody>
@@ -418,6 +418,7 @@ function generateCalendarContent() {
         
         allDates.forEach(event => {
             const dateStr = event.date.toLocaleDateString('en-US', {
+                weekday: 'long',
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
@@ -425,6 +426,7 @@ function generateCalendarContent() {
             
             const endDateStr = event.endDate ? 
                 ' - ' + event.endDate.toLocaleDateString('en-US', {
+                    weekday: 'long',
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
@@ -537,8 +539,3 @@ function resetSchedule() {
     }
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Update the current date
-    updateCurrentDate();
-});

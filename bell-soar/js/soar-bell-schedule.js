@@ -301,6 +301,7 @@ window.generateSOARCalendarContent = function() {
     
     const formatEventDate = (dateStr) => {
         return new Date(dateStr).toLocaleDateString('en-US', {
+            weekday: 'long',
             year: 'numeric',
             month: 'long',
             day: 'numeric'
@@ -542,37 +543,24 @@ window.generateSOARScheduleModalContent = function() {
 };
 
 // Schedule Modal Functions - Make them global
-window.openScheduleModal = function() {
-    const modal = document.getElementById('scheduleModal');
-    if (modal) {
-        // Generate and populate the modal content
-        const content = document.getElementById('modal-schedule-content');
-        if (content) {
-            content.innerHTML = window.generateSOARScheduleModalContent();
-        }
-        modal.style.display = 'block';
-    }
-};
+// SOAR-specific modal functions removed - using generic modal system from bell-schedule.js
 
-window.closeScheduleModal = function() {
-    const modal = document.getElementById('scheduleModal');
-    if (modal) {
-        modal.style.display = 'none';
-    }
-};
-
-// Function to update SOAR KPI panels
+// Function to update SOAR KPI panels with SIMULATED data
 function updateSOARKPIs(scheduleData, currentTime) {
-    // Find current period and next bell
-    let currentPeriod = null;
-    let nextBell = null;
+    // SIMULATE a school day scenario - pretend it's 10:30 AM during Period 2
+    let simulatedCurrentPeriod = null;
+    let simulatedNextBell = null;
     
-    // Parse current time
-    const currentHour = currentTime.getHours();
-    const currentMinute = currentTime.getMinutes();
-    const currentTimeMinutes = currentHour * 60 + currentMinute;
+    // Create a simulated time during school hours (10:30 AM - middle of Period 2)
+    const simulatedTime = new Date();
+    simulatedTime.setHours(10, 30, 0, 0); // 10:30 AM
     
-    // Find current period
+    // Parse simulated time
+    const simulatedHour = simulatedTime.getHours();
+    const simulatedMinute = simulatedTime.getMinutes();
+    const simulatedTimeMinutes = simulatedHour * 60 + simulatedMinute;
+    
+    // Find simulated current period
     for (let i = 0; i < scheduleData.length; i++) {
         const period = scheduleData[i];
         const [startHour, startMin] = period.start_time.split(':').map(Number);
@@ -580,44 +568,45 @@ function updateSOARKPIs(scheduleData, currentTime) {
         const startTimeMinutes = startHour * 60 + startMin;
         const endTimeMinutes = endHour * 60 + endMin;
         
-        if (currentTimeMinutes >= startTimeMinutes && currentTimeMinutes < endTimeMinutes) {
-            currentPeriod = period;
+        if (simulatedTimeMinutes >= startTimeMinutes && simulatedTimeMinutes < endTimeMinutes) {
+            simulatedCurrentPeriod = period;
             // Next bell is the end of current period
-            nextBell = {
+            simulatedNextBell = {
                 time: period.end_time,
-                countdown: formatCountdown(endTimeMinutes - currentTimeMinutes)
+                countdown: formatCountdown(endTimeMinutes - simulatedTimeMinutes)
             };
             break;
         }
     }
     
     // If no current period, find next period
-    if (!currentPeriod) {
+    if (!simulatedCurrentPeriod) {
         for (let i = 0; i < scheduleData.length; i++) {
             const period = scheduleData[i];
             const [startHour, startMin] = period.start_time.split(':').map(Number);
             const startTimeMinutes = startHour * 60 + startMin;
             
-            if (currentTimeMinutes < startTimeMinutes) {
-                nextBell = {
+            if (simulatedTimeMinutes < startTimeMinutes) {
+                simulatedNextBell = {
                     time: period.start_time,
-                    countdown: formatCountdown(startTimeMinutes - currentTimeMinutes)
+                    countdown: formatCountdown(startTimeMinutes - simulatedTimeMinutes)
                 };
                 break;
             }
         }
     }
     
-    // Update KPI panels
+    // Update KPI panels with SIMULATED data
     const currentPeriodElement = document.getElementById('current-period-kpi');
     if (currentPeriodElement) {
-        const periodNumber = currentPeriod ? currentPeriod.period_name.replace(/[^\d]/g, '') || '0' : '0';
+        const periodNumber = simulatedCurrentPeriod ? simulatedCurrentPeriod.period_name.replace(/[^\d]/g, '') || '0' : '0';
         currentPeriodElement.textContent = periodNumber;
     }
     
     const currentTimeElement = document.getElementById('current-time');
     if (currentTimeElement) {
-        const timeString = currentTime.toLocaleTimeString('en-US', { 
+        // Show simulated time instead of real time
+        const timeString = simulatedTime.toLocaleTimeString('en-US', { 
             hour12: false, 
             hour: '2-digit', 
             minute: '2-digit', 
@@ -627,8 +616,8 @@ function updateSOARKPIs(scheduleData, currentTime) {
     }
     
     const nextBellElement = document.getElementById('next-bell');
-    if (nextBellElement && nextBell) {
-        nextBellElement.textContent = `${nextBell.time} / ${nextBell.countdown}`;
+    if (nextBellElement && simulatedNextBell) {
+        nextBellElement.textContent = `${simulatedNextBell.time} / ${simulatedNextBell.countdown}`;
     } else if (nextBellElement) {
         nextBellElement.textContent = 'After Hours';
     }
@@ -648,6 +637,16 @@ function formatCountdown(minutes) {
 // School Hours Test Function - Make it global
 window.testSchoolHours = function() {
     console.log('Testing regular day schedule for SOAR debugging');
+    
+    // Set override on the bell manager to prevent auto-update from overriding
+    if (window.bellManager) {
+        window.bellManager.scheduleTypeOverride = 'monday_wednesday';
+        console.log('Set schedule type override for School Hours:', 'monday_wednesday');
+        
+        // Stop auto-update to prevent it from overriding our display
+        window.bellManager.stopAutoUpdate();
+        console.log('Stopped auto-update for School Hours testing');
+    }
     
     // Force a regular day schedule (Monday/Wednesday schedule for SOAR)
     const scheduleData = soarSchedules.bell_schedules.monday_wednesday_schedule;
@@ -698,6 +697,117 @@ window.testSchoolHours = function() {
     const activeButton = document.querySelector('button[onclick="testSchoolHours()"]');
     if (activeButton) {
         activeButton.classList.add('ring-2', 'ring-blue-500');
+    }
+};
+
+// SOAR-specific test functions
+window.testSOARSchedule = function(scheduleType) {
+    console.log(`Testing SOAR ${scheduleType} schedule`);
+    
+    // Set override on the bell manager to prevent auto-update from overriding
+    if (window.bellManager) {
+        window.bellManager.scheduleTypeOverride = scheduleType;
+        console.log('Set schedule type override:', scheduleType);
+        
+        // Stop auto-update to prevent it from overriding our display
+        window.bellManager.stopAutoUpdate();
+        console.log('Stopped auto-update for testing');
+    }
+    
+    let scheduleData;
+    let scheduleName;
+    
+    switch(scheduleType) {
+        case 'monday_wednesday':
+            scheduleData = soarSchedules.bell_schedules.monday_wednesday_schedule;
+            scheduleName = 'Monday / Wednesday Schedule';
+            break;
+        case 'tuesday_thursday':
+            scheduleData = soarSchedules.bell_schedules.tuesday_thursday_schedule;
+            scheduleName = 'Tuesday / Thursday Schedule';
+            break;
+        case 'friday':
+            scheduleData = soarSchedules.bell_schedules.friday_schedule;
+            scheduleName = 'Friday Schedule';
+            break;
+        case 'after_hours':
+            scheduleData = soarSchedules.bell_schedules.after_hours;
+            scheduleName = 'After Hours';
+            break;
+        default:
+            console.error('Unknown SOAR schedule type:', scheduleType);
+            return;
+    }
+    
+    // Update the schedule type display
+    const scheduleDisplay = document.getElementById('schedule-type-display');
+    if (scheduleDisplay) {
+        scheduleDisplay.textContent = scheduleName;
+    }
+    
+    // Update the table
+    const tbody = document.getElementById('schedule-table-body');
+    const scheduleModule = tbody?.closest('.module-3');
+    
+    if (tbody) {
+        tbody.innerHTML = '';
+        
+        // Always show schedule table
+        if (scheduleModule) {
+            scheduleModule.style.display = 'block';
+        }
+        
+        scheduleData.forEach((period, index) => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-100';
+            
+            // For after hours, show "After Hours" status for all periods
+            const statusText = scheduleType === 'after_hours' ? 'After Hours' : 'Upcoming';
+            const statusClass = scheduleType === 'after_hours' ? 'text-red-500' : 'text-gray-400';
+            
+            row.innerHTML = `
+                <td class="type-p5 p-4">${period.period_name}</td>
+                <td class="type-p5 p-4">${period.start_time} - ${period.end_time}</td>
+                <td class="type-p5 p-4">${period.duration_minutes} min</td>
+                <td class="type-p5 p-4"><span class="${statusClass}">${statusText}</span></td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+    
+    // Update KPI panels
+    const currentTime = new Date();
+    updateSOARKPIs(scheduleData, currentTime);
+    
+    // Update button states
+    const buttons = document.querySelectorAll('button[onclick^="testSOARSchedule"], button[onclick^="resetSOARSchedule"]');
+    buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
+    
+    const activeButton = document.querySelector(`button[onclick="testSOARSchedule('${scheduleType}')"]`);
+    if (activeButton) {
+        activeButton.classList.add('ring-2', 'ring-blue-500');
+    }
+};
+
+window.resetSOARSchedule = function() {
+    console.log('Resetting SOAR schedule to current day');
+    
+    // Clear any overrides
+    if (window.bellManager) {
+        window.bellManager.dateOverride = null;
+        window.bellManager.scheduleTypeOverride = null;
+        
+        // Refresh the dashboard
+        window.bellManager.updateDashboard();
+    }
+    
+    // Update button states
+    const buttons = document.querySelectorAll('button[onclick^="testSOARSchedule"], button[onclick^="resetSOARSchedule"]');
+    buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
+    
+    const resetButton = document.querySelector('button[onclick="resetSOARSchedule()"]');
+    if (resetButton) {
+        resetButton.classList.add('ring-2', 'ring-blue-500');
     }
 };
 

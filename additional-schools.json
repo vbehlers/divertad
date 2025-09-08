@@ -2,30 +2,30 @@ Please find below the requested information for the specified schools, formatted
 
 ```json
 [
-  {
+{
     "school_name": "Littlerock High School",
     "school_code": "LRHS",
-    "display_info": {
+  "display_info": {
       "page_title": "Bell Schedule - Littlerock High School",
       "modal_title": "Complete Bell Schedule - Littlerock High School",
       "calendar_title": "Academic Calendar - Littlerock High School"
-    },
-    "general_academic_info": {
+  },
+  "general_academic_info": {
       "academic_year": "2025-2026",
       "first_day_of_school": "Not explicitly stated in sources, but bell schedules begin August 2025",
       "last_day_of_school": "2026-06-04",
       "graduation_date": "June - 3 (specific day not confirmed for 2026)",
       "sb328_compliance_note": "California's SB328 requires public high schools to start no earlier than 8:30 am. Littlerock High School's Period 0 begins at 7:45 AM, and Period 1 at 8:45 AM."
-    },
-    "campus_details": [
-      {
-        "campus_name": "Main Campus",
+  },
+  "campus_details": [
+    {
+      "campus_name": "Main Campus",
         "address": "176 Holston Drive, Lancaster, CA 93535",
         "phone": "(661) 948-7655"
-      }
-    ],
-    "bell_schedules": {
-      "regular_day": [
+    }
+  ],
+  "bell_schedules": {
+    "regular_day": [
         { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
         { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:42", "duration_minutes": 57 },
         { "period_name": "Break", "start_time": "09:42", "end_time": "09:52", "duration_minutes": 10 },
@@ -164,8 +164,8 @@ Please find below the requested information for the specified schools, formatted
         { "period_name": "Period 4", "start_time": "12:37", "end_time": "13:34", "duration_minutes": 57 },
         { "period_name": "Period 5", "start_time": "13:40", "end_time": "14:37", "duration_minutes": 57 },
         { "period_name": "Period 6", "start_time": "14:43", "end_time": "15:40", "duration_minutes": 57 }
-      ],
-      "flex_day": [
+    ],
+    "flex_day": [
         { "period_name": "First Bell", "start_time": "07:40", "end_time": "N/A", "duration_minutes": "N/A" },
         { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
         { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:34", "duration_minutes": 49 },
@@ -252,8 +252,8 @@ Please find below the requested information for the specified schools, formatted
         { "period_name": "4B Lunch", "start_time": "12:50", "end_time": "13:20", "duration_minutes": 30 },
         { "period_name": "Period 5", "start_time": "13:06", "end_time": "13:55", "duration_minutes": 49 },
         { "period_name": "Period 6", "start_time": "14:01", "end_time": "14:50", "duration_minutes": 49 }
-      ],
-      "minimum_day": [
+    ],
+    "minimum_day": [
         { "period_name": "Period 0", "start_time": "07:45", "end_time": "08:39", "duration_minutes": 54 },
         { "period_name": "Period 1", "start_time": "08:45", "end_time": "09:22", "duration_minutes": 37 },
         { "period_name": "Snack", "start_time": "09:22", "end_time": "09:32", "duration_minutes": 10 },

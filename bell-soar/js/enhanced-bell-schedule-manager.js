@@ -280,9 +280,9 @@ class EnhancedBellScheduleManager {
 
             // Current date
             currentDate: now.toLocaleDateString('en-US', {
+                weekday: 'long',
                 month: 'long',
-                day: 'numeric',
-                year: 'numeric'
+                day: 'numeric'
             }),
 
             // Schedule type
@@ -448,6 +448,7 @@ class EnhancedBellScheduleManager {
             if (currentDateHeader) {
                 const now = new Date();
                 const options = { 
+                    weekday: 'long', 
                     year: 'numeric', 
                     month: 'long', 
                     day: 'numeric' 

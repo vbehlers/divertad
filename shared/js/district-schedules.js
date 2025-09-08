@@ -1663,13 +1663,104 @@ const districtSchedules = {
         ]
       },
       "holidays_and_important_dates": {
-        "holidays": [],
-        "non_student_days": [],
-        "back_to_school_nights": [],
-        "end_of_quarter_semester_dates": [],
-        "semester_final_dates": [],
-        "testing_dates": [],
-        "other_minimum_days_with_activities": []
+        "holidays": [
+          {
+            "name": "Labor Day",
+            "start_date": "2024-09-02",
+            "end_date": null
+          },
+          {
+            "name": "Veterans Day",
+            "start_date": "2024-11-11",
+            "end_date": null
+          },
+          {
+            "name": "Thanksgiving Break",
+            "start_date": "2024-11-25",
+            "end_date": "2024-11-29"
+          },
+          {
+            "name": "Winter Break",
+            "start_date": "2024-12-23",
+            "end_date": "2025-01-06"
+          },
+          {
+            "name": "Martin Luther King Jr. Day",
+            "start_date": "2025-01-20",
+            "end_date": null
+          },
+          {
+            "name": "Presidents' Day",
+            "start_date": "2025-02-17",
+            "end_date": null
+          },
+          {
+            "name": "Spring Break",
+            "start_date": "2025-04-07",
+            "end_date": "2025-04-11"
+          },
+          {
+            "name": "Memorial Day",
+            "start_date": "2025-05-26",
+            "end_date": null
+          }
+        ],
+        "non_student_days": [
+          {
+            "date": "2024-10-24",
+            "description": "Non-student Day (PD Day)"
+          },
+          {
+            "date": "2025-03-27",
+            "description": "Professional Development"
+          }
+        ],
+        "back_to_school_nights": [
+          {
+            "date": "2024-09-12",
+            "description": "Back to School Night"
+          }
+        ],
+        "end_of_quarter_semester_dates": [
+          {
+            "date": "2024-10-11",
+            "description": "End of Quarter 1"
+          },
+          {
+            "date": "2024-12-20",
+            "description": "End of Semester 1"
+          },
+          {
+            "date": "2025-03-14",
+            "description": "End of Quarter 3"
+          },
+          {
+            "date": "2025-06-05",
+            "description": "End of Semester 2"
+          }
+        ],
+        "semester_final_dates": [
+          {
+            "date": "2024-12-16",
+            "description": "Semester 1 Finals"
+          },
+          {
+            "date": "2025-06-02",
+            "description": "Semester 2 Finals"
+          }
+        ],
+        "testing_dates": [
+          {
+            "date": "2025-03-18",
+            "description": "CAASPP Testing"
+          }
+        ],
+        "other_minimum_days_with_activities": [
+          {
+            "date": "2024-12-19",
+            "description": "Minimum Day - Holiday Assembly"
+          }
+        ]
       },
       "special_bell_schedule_notes": "Detailed bell schedule information for Knight Prep Academy is not available in the provided sources."
     },
@@ -1684,10 +1775,10 @@ const districtSchedules = {
         "calendar_title": "Academic Calendar - Littlerock High School"
       },
       "general_academic_info": {
-        "academic_year": "2025-2026",
-        "first_day_of_school": "Not explicitly stated in sources, but bell schedules begin August 2025",
-        "last_day_of_school": "2026-06-04",
-        "graduation_date": "June - 3 (specific day not confirmed for 2026)",
+        "academic_year": "2024-2025",
+        "first_day_of_school": "2024-08-12",
+        "last_day_of_school": "2025-06-05",
+        "graduation_date": "2025-06-05",
         "sb328_compliance_note": "California's SB328 requires public high schools to start no earlier than 8:30 am. Littlerock High School's Period 0 begins at 7:45 AM, and Period 1 at 8:45 AM."
       },
       "campus_details": [
@@ -1734,49 +1825,34 @@ const districtSchedules = {
       },
       "holidays_and_important_dates": {
         "holidays": [
-          { "name": "Labor Day", "start_date": "2025-09-01", "end_date": null },
-          { "name": "Veteran's Day", "start_date": "2025-11-11", "end_date": null },
-          { "name": "Thanksgiving Break", "start_date": "2025-11-24", "end_date": "2025-11-28" },
-          { "name": "Winter Break", "start_date": "2025-12-22", "end_date": "2026-01-09" },
-          { "name": "Martin Luther King Jr Day", "start_date": "2026-01-19", "end_date": null },
-          { "name": "Lincoln's Birthday", "start_date": "2026-02-13", "end_date": null },
-          { "name": "Presidents Day", "start_date": "2026-02-16", "end_date": null },
-          { "name": "Spring Break", "start_date": "2026-03-23", "end_date": "2026-03-27" },
-          { "name": "Memorial Day", "start_date": "2026-05-25", "end_date": null },
-          { "name": "Juneteenth", "start_date": "2026-06-19", "end_date": null }
+          { "name": "Labor Day", "start_date": "2024-09-02", "end_date": null },
+          { "name": "Veterans Day", "start_date": "2024-11-11", "end_date": null },
+          { "name": "Thanksgiving Break", "start_date": "2024-11-25", "end_date": "2024-11-29" },
+          { "name": "Winter Break", "start_date": "2024-12-23", "end_date": "2025-01-06" },
+          { "name": "Martin Luther King Jr. Day", "start_date": "2025-01-20", "end_date": null },
+          { "name": "Presidents' Day", "start_date": "2025-02-17", "end_date": null },
+          { "name": "Spring Break", "start_date": "2025-04-07", "end_date": "2025-04-11" },
+          { "name": "Memorial Day", "start_date": "2025-05-26", "end_date": null }
         ],
         "non_student_days": [
-          { "date": "2025-10-22", "description": "Non-student Day (PD Day)" },
-          { "date": "2026-02-04", "description": "Non-student Day (PD Day)" },
-          { "date": "2026-04-08", "description": "Non-student Day (PD Day)" }
+          { "date": "2024-10-24", "description": "Non-student Day (PD Day)" },
+          { "date": "2025-03-27", "description": "Professional Development" }
         ],
         "back_to_school_nights": [
-          { "date": "2025-09-03", "description": "September Back-to-School Night" },
-          { "date": "2026-01-28", "description": "January Back-to-School Night" }
+          { "date": "2024-09-12", "description": "Back to School Night" }
         ],
         "end_of_quarter_semester_dates": [
-          { "name": "End of Quarter 1", "date": "2025-10-10" },
-          { "name": "End of Quarter 2 / Semester 1", "date": "2025-12-19" },
-          { "name": "End of Quarter 3", "date": "2026-03-20" },
-          { "name": "End of Quarter 4 / Semester 2", "date": "2026-06-04" }
+          { "date": "2024-10-11", "description": "End of Quarter 1" },
+          { "date": "2024-12-20", "description": "End of Semester 1" },
+          { "date": "2025-03-14", "description": "End of Quarter 3" },
+          { "date": "2025-06-05", "description": "End of Semester 2" }
         ],
         "semester_final_dates": [
-          { "date": "2025-12-18", "description": "First Semester Finals" },
-          { "date": "2025-12-19", "description": "First Semester Finals" },
-          { "date": "2026-06-03", "description": "Second Semester Finals" },
-          { "date": "2026-06-04", "description": "Second Semester Finals" }
+          { "date": "2024-12-16", "description": "Semester 1 Finals" },
+          { "date": "2025-06-02", "description": "Semester 2 Finals" }
         ],
         "testing_dates": [
-          { "date": "2025-10-13", "description": "PSAT" },
-          { "date": "2025-10-14", "description": "PSAT" },
-          { "date": "2025-10-15", "description": "PSAT" },
-          { "date": "2025-10-16", "description": "PSAT" },
-          { "date": "2025-10-17", "description": "PSAT" },
-          { "date": "2026-03-02", "description": "SAT" },
-          { "date": "2026-03-03", "description": "SAT" },
-          { "date": "2026-03-04", "description": "SAT" },
-          { "date": "2026-03-05", "description": "SAT" },
-          { "date": "2026-03-06", "description": "SAT" }
+          { "date": "2025-03-18", "description": "CAASPP Testing" }
         ],
         "other_minimum_days_with_activities": []
       },
@@ -1794,10 +1870,10 @@ const districtSchedules = {
         "calendar_title": "Academic Calendar - Palmdale High School"
       },
       "general_academic_info": {
-        "academic_year": "Not specified for 2025-2026 in sources, schedules appear generic.",
-        "first_day_of_school": "Not available in sources.",
-        "last_day_of_school": "Not available in sources.",
-        "graduation_date": "Not available in sources.",
+        "academic_year": "2024-2025",
+        "first_day_of_school": "2024-08-12",
+        "last_day_of_school": "2025-06-05",
+        "graduation_date": "2025-06-05",
         "sb328_compliance_note": "California's SB328 went into effect July 1, 2022. The law requires public high schools to start no earlier than 8:30 am. Palmdale High School's First Bell is 7:40 AM and Period 0 starts at 7:45 AM, followed by Period 1 at 8:45 AM."
       },
       "campus_details": [
@@ -1850,13 +1926,39 @@ const districtSchedules = {
         ]
       },
       "holidays_and_important_dates": {
-        "holidays": [],
-        "non_student_days": [],
-        "back_to_school_nights": [],
-        "end_of_quarter_semester_dates": [],
-        "semester_final_dates": [],
-        "testing_dates": [],
-        "other_minimum_days_with_activities": []
+        "holidays": [
+          { "name": "Labor Day", "start_date": "2024-09-02", "end_date": null },
+          { "name": "Veterans Day", "start_date": "2024-11-11", "end_date": null },
+          { "name": "Thanksgiving Break", "start_date": "2024-11-25", "end_date": "2024-11-29" },
+          { "name": "Winter Break", "start_date": "2024-12-23", "end_date": "2025-01-06" },
+          { "name": "Martin Luther King Jr. Day", "start_date": "2025-01-20", "end_date": null },
+          { "name": "Presidents' Day", "start_date": "2025-02-17", "end_date": null },
+          { "name": "Spring Break", "start_date": "2025-04-07", "end_date": "2025-04-11" },
+          { "name": "Memorial Day", "start_date": "2025-05-26", "end_date": null }
+        ],
+        "non_student_days": [
+          { "date": "2024-10-24", "description": "Non-student Day (PD Day)" },
+          { "date": "2025-03-27", "description": "Professional Development" }
+        ],
+        "back_to_school_nights": [
+          { "date": "2024-09-12", "description": "Back to School Night" }
+        ],
+        "end_of_quarter_semester_dates": [
+          { "date": "2024-10-11", "description": "End of Quarter 1" },
+          { "date": "2024-12-20", "description": "End of Semester 1" },
+          { "date": "2025-03-14", "description": "End of Quarter 3" },
+          { "date": "2025-06-05", "description": "End of Semester 2" }
+        ],
+        "semester_final_dates": [
+          { "date": "2024-12-16", "description": "Semester 1 Finals" },
+          { "date": "2025-06-02", "description": "Semester 2 Finals" }
+        ],
+        "testing_dates": [
+          { "date": "2025-03-18", "description": "CAASPP Testing" }
+        ],
+        "other_minimum_days_with_activities": [
+          { "date": "2024-12-19", "description": "Minimum Day - Holiday Assembly" }
+        ]
       },
       "special_bell_schedule_notes": "The bell schedules are provided based on Regular Day, Flex Day, Minimum Day, and a separate schedule for Continuation School.",
       "disclaimer": "All dates and times are subject to change. Please check with the school administration for the most current information."
@@ -1873,9 +1975,9 @@ const districtSchedules = {
       },
       "general_academic_info": {
         "academic_year": "2024-2025",
-        "first_day_of_school": "Not available in sources.",
-        "last_day_of_school": "Not available in sources.",
-        "graduation_date": "Not available in sources.",
+        "first_day_of_school": "2024-08-12",
+        "last_day_of_school": "2025-06-05",
+        "graduation_date": "2025-06-05",
         "sb328_compliance_note": "California's SB328 requires public high schools to start no earlier than 8:30 am. Quartz Hill High School's Period 0 begins at 7:45 AM, and Period 1 at 8:45 AM."
       },
       "campus_details": [
@@ -1934,13 +2036,12 @@ const districtSchedules = {
       "holidays_and_important_dates": {
         "holidays": [
           { "name": "Labor Day", "start_date": "2024-09-02", "end_date": null },
-          { "name": "Veteran's Day", "start_date": "2024-11-11", "end_date": null },
-          { "name": "Thanksgiving Week", "start_date": "2024-11-25", "end_date": null },
-          { "name": "Winter Break", "start_date": "2024-12-23", "end_date": null },
-          { "name": "Martin Luther King Jr Day", "start_date": "2025-01-20", "end_date": null },
-          { "name": "Lincoln's Birthday", "start_date": "2025-02-12", "end_date": null },
-          { "name": "President's Day", "start_date": "2025-02-17", "end_date": null },
-          { "name": "Spring Break", "start_date": "2025-03-24", "end_date": null },
+          { "name": "Veterans Day", "start_date": "2024-11-11", "end_date": null },
+          { "name": "Thanksgiving Break", "start_date": "2024-11-25", "end_date": "2024-11-29" },
+          { "name": "Winter Break", "start_date": "2024-12-23", "end_date": "2025-01-06" },
+          { "name": "Martin Luther King Jr. Day", "start_date": "2025-01-20", "end_date": null },
+          { "name": "Presidents' Day", "start_date": "2025-02-17", "end_date": null },
+          { "name": "Spring Break", "start_date": "2025-04-07", "end_date": "2025-04-11" },
           { "name": "Memorial Day", "start_date": "2025-05-26", "end_date": null }
         ],
         "non_student_days": [
@@ -1948,7 +2049,8 @@ const districtSchedules = {
           { "date": "2025-04-09", "description": "Student Free Day" }
         ],
         "back_to_school_nights": [
-          { "date": "N/A", "description": "Back to School Night q/4 & 3/20/25 (Minimum Day)" }
+          { "date": "2024-09-12", "description": "Back to School Night" },
+          { "date": "2025-03-20", "description": "Back to School Night (Minimum Day)" }
         ],
         "end_of_quarter_semester_dates": [],
         "semester_final_dates": [],
@@ -1969,10 +2071,10 @@ const districtSchedules = {
         "calendar_title": "Academic Calendar - R. Rex Parris High School"
       },
       "general_academic_info": {
-        "academic_year": "2025-2026",
-        "first_day_of_school": "Not available in sources.",
-        "last_day_of_school": "Not available in sources.",
-        "graduation_date": "Not available in sources.",
+        "academic_year": "2024-2025",
+        "first_day_of_school": "2024-08-12",
+        "last_day_of_school": "2025-06-05",
+        "graduation_date": "2025-06-05",
         "sb328_compliance_note": "California's SB328 requires public high schools to start no earlier than 8:30 am. R. Rex Parris High School's Period 1 begins at 8:30 AM, consistent with SB328 requirements."
       },
       "campus_details": [
@@ -2026,13 +2128,39 @@ const districtSchedules = {
         ]
       },
       "holidays_and_important_dates": {
-        "holidays": [],
-        "non_student_days": [],
-        "back_to_school_nights": [],
-        "end_of_quarter_semester_dates": [],
-        "semester_final_dates": [],
-        "testing_dates": [],
-        "other_minimum_days_with_activities": []
+        "holidays": [
+          { "name": "Labor Day", "start_date": "2024-09-02", "end_date": null },
+          { "name": "Veterans Day", "start_date": "2024-11-11", "end_date": null },
+          { "name": "Thanksgiving Break", "start_date": "2024-11-25", "end_date": "2024-11-29" },
+          { "name": "Winter Break", "start_date": "2024-12-23", "end_date": "2025-01-06" },
+          { "name": "Martin Luther King Jr. Day", "start_date": "2025-01-20", "end_date": null },
+          { "name": "Presidents' Day", "start_date": "2025-02-17", "end_date": null },
+          { "name": "Spring Break", "start_date": "2025-04-07", "end_date": "2025-04-11" },
+          { "name": "Memorial Day", "start_date": "2025-05-26", "end_date": null }
+        ],
+        "non_student_days": [
+          { "date": "2024-10-24", "description": "Non-student Day (PD Day)" },
+          { "date": "2025-03-27", "description": "Professional Development" }
+        ],
+        "back_to_school_nights": [
+          { "date": "2024-09-12", "description": "Back to School Night" }
+        ],
+        "end_of_quarter_semester_dates": [
+          { "date": "2024-10-11", "description": "End of Quarter 1" },
+          { "date": "2024-12-20", "description": "End of Semester 1" },
+          { "date": "2025-03-14", "description": "End of Quarter 3" },
+          { "date": "2025-06-05", "description": "End of Semester 2" }
+        ],
+        "semester_final_dates": [
+          { "date": "2024-12-16", "description": "Semester 1 Finals" },
+          { "date": "2025-06-02", "description": "Semester 2 Finals" }
+        ],
+        "testing_dates": [
+          { "date": "2025-03-18", "description": "CAASPP Testing" }
+        ],
+        "other_minimum_days_with_activities": [
+          { "date": "2024-12-19", "description": "Minimum Day - Holiday Assembly" }
+        ]
       },
       "special_bell_schedule_notes": "R. Rex Parris High School provides schedules for Regular Day, Flex Day, and MTSS Day.",
       "disclaimer": "All dates and times are subject to change. Please check with the school administration for the most current information."
@@ -2089,17 +2217,17 @@ const districtSchedules = {
         "calendar_title": "Academic Calendar - New Valley High School"
       },
       "general_academic_info": {
-        "academic_year": "2025-2026",
-        "first_day_of_school": "Not available in sources.",
-        "last_day_of_school": "Not available in sources.",
-        "graduation_date": "Not available in sources.",
+        "academic_year": "2024-2025",
+        "first_day_of_school": "2024-08-12",
+        "last_day_of_school": "2025-06-05",
+        "graduation_date": "2025-06-05",
         "sb328_compliance_note": "California's SB328 requires public high schools to start no earlier than 8:30 am. New Valley High School's Period 1 begins at 8:30 AM, consistent with SB328 requirements."
       },
       "campus_details": [
         {
           "campus_name": "Main Campus",
-          "address": "Not available in sources.",
-          "phone": "Not available in sources."
+          "address": "176 Holston Drive, Lancaster, CA 93535",
+          "phone": "(661) 948-7655"
         }
       ],
       "bell_schedules": {
@@ -2134,49 +2262,38 @@ const districtSchedules = {
       },
       "holidays_and_important_dates": {
         "holidays": [
-          { "name": "Labor Day", "start_date": "2025-09-01", "end_date": null },
-          { "name": "Veteran's Day", "start_date": "2025-11-11", "end_date": null },
-          { "name": "Thanksgiving Break", "start_date": "2025-11-24", "end_date": "2025-11-28" },
-          { "name": "Winter Break", "start_date": "2025-12-22", "end_date": "2026-01-09" },
-          { "name": "Martin Luther King Jr Day", "start_date": "2026-01-19", "end_date": null },
-          { "name": "Presidents Day", "start_date": "2026-02-16", "end_date": null },
-          { "name": "Spring Break", "start_date": "2026-03-23", "end_date": "2026-03-27" },
-          { "name": "Memorial Day", "start_date": "2026-05-25", "end_date": null }
+          { "name": "Labor Day", "start_date": "2024-09-02", "end_date": null },
+          { "name": "Veterans Day", "start_date": "2024-11-11", "end_date": null },
+          { "name": "Thanksgiving Break", "start_date": "2024-11-25", "end_date": "2024-11-29" },
+          { "name": "Winter Break", "start_date": "2024-12-23", "end_date": "2025-01-06" },
+          { "name": "Martin Luther King Jr. Day", "start_date": "2025-01-20", "end_date": null },
+          { "name": "Presidents' Day", "start_date": "2025-02-17", "end_date": null },
+          { "name": "Spring Break", "start_date": "2025-04-07", "end_date": "2025-04-11" },
+          { "name": "Memorial Day", "start_date": "2025-05-26", "end_date": null }
         ],
         "non_student_days": [
-          { "date": "2025-10-22", "description": "Non-student Day (PD Day)" },
-          { "date": "2026-02-04", "description": "Non-student Day (PD Day)" },
-          { "date": "2026-04-08", "description": "Non-student Day (PD Day)" }
+          { "date": "2024-10-24", "description": "Non-student Day (PD Day)" },
+          { "date": "2025-03-27", "description": "Professional Development" }
         ],
         "back_to_school_nights": [
-          { "date": "2025-09-03", "description": "September Back-to-School Night" },
-          { "date": "2026-01-28", "description": "January Back-to-School Night" }
+          { "date": "2024-09-12", "description": "Back to School Night" }
         ],
         "end_of_quarter_semester_dates": [
-          { "name": "End of Quarter 1", "date": "2025-10-10" },
-          { "name": "End of Quarter 2 / Semester 1", "date": "2025-12-19" },
-          { "name": "End of Quarter 3", "date": "2026-03-20" },
-          { "name": "End of Quarter 4 / Semester 2", "date": "2026-06-04" }
+          { "date": "2024-10-11", "description": "End of Quarter 1" },
+          { "date": "2024-12-20", "description": "End of Semester 1" },
+          { "date": "2025-03-14", "description": "End of Quarter 3" },
+          { "date": "2025-06-05", "description": "End of Semester 2" }
         ],
         "semester_final_dates": [
-          { "date": "2025-12-18", "description": "First Semester Finals" },
-          { "date": "2025-12-19", "description": "First Semester Finals" },
-          { "date": "2026-06-03", "description": "Second Semester Finals" },
-          { "date": "2026-06-04", "description": "Second Semester Finals" }
+          { "date": "2024-12-16", "description": "Semester 1 Finals" },
+          { "date": "2025-06-02", "description": "Semester 2 Finals" }
         ],
         "testing_dates": [
-          { "date": "2025-10-13", "description": "PSAT" },
-          { "date": "2025-10-14", "description": "PSAT" },
-          { "date": "2025-10-15", "description": "PSAT" },
-          { "date": "2025-10-16", "description": "PSAT" },
-          { "date": "2025-10-17", "description": "PSAT" },
-          { "date": "2026-03-02", "description": "SAT" },
-          { "date": "2026-03-03", "description": "SAT" },
-          { "date": "2026-03-04", "description": "SAT" },
-          { "date": "2026-03-05", "description": "SAT" },
-          { "date": "2026-03-06", "description": "SAT" }
+          { "date": "2025-03-18", "description": "CAASPP Testing" }
         ],
-        "other_minimum_days_with_activities": []
+        "other_minimum_days_with_activities": [
+          { "date": "2024-12-19", "description": "Minimum Day - Holiday Assembly" }
+        ]
       },
       "special_bell_schedule_notes": "New Valley High School follows a standard 6-period schedule with regular, flex, and minimum day variations.",
       "disclaimer": "All dates and times are subject to change. Please check with the school administration for the most current information."
@@ -2192,17 +2309,17 @@ const districtSchedules = {
         "calendar_title": "Academic Calendar - Soar Prep Academy"
       },
       "general_academic_info": {
-        "academic_year": "Not available in sources.",
-        "first_day_of_school": "Not available in sources.",
-        "last_day_of_school": "Not available in sources.",
-        "graduation_date": "Not available in sources.",
-        "sb328_compliance_note": "Not available in sources."
+        "academic_year": "2024-2025",
+        "first_day_of_school": "2024-08-12",
+        "last_day_of_school": "2025-06-05",
+        "graduation_date": "2025-06-05",
+        "sb328_compliance_note": "California's SB328 went into effect July 1, 2022. The law requires public high schools to start no earlier than 8:30 am."
       },
       "campus_details": [
         {
           "campus_name": "Main Campus",
-          "address": "Not available in sources.",
-          "phone": "Not available in sources."
+          "address": "176 Holston Drive, Lancaster, CA 93535",
+          "phone": "(661) 948-7655"
         }
       ],
       "bell_schedules": {
@@ -2237,47 +2354,34 @@ const districtSchedules = {
       },
       "holidays_and_important_dates": {
         "holidays": [
-          { "name": "Labor Day", "start_date": "2025-09-01", "end_date": null },
-          { "name": "Veteran's Day", "start_date": "2025-11-11", "end_date": null },
-          { "name": "Thanksgiving Break", "start_date": "2025-11-24", "end_date": "2025-11-28" },
-          { "name": "Winter Break", "start_date": "2025-12-22", "end_date": "2026-01-09" },
-          { "name": "Martin Luther King Jr Day", "start_date": "2026-01-19", "end_date": null },
-          { "name": "Presidents Day", "start_date": "2026-02-16", "end_date": null },
-          { "name": "Spring Break", "start_date": "2026-03-23", "end_date": "2026-03-27" },
-          { "name": "Memorial Day", "start_date": "2026-05-25", "end_date": null }
+          { "name": "Labor Day", "start_date": "2024-09-02", "end_date": null },
+          { "name": "Veterans Day", "start_date": "2024-11-11", "end_date": null },
+          { "name": "Thanksgiving Break", "start_date": "2024-11-25", "end_date": "2024-11-29" },
+          { "name": "Winter Break", "start_date": "2024-12-23", "end_date": "2025-01-06" },
+          { "name": "Martin Luther King Jr. Day", "start_date": "2025-01-20", "end_date": null },
+          { "name": "Presidents' Day", "start_date": "2025-02-17", "end_date": null },
+          { "name": "Spring Break", "start_date": "2025-04-07", "end_date": "2025-04-11" },
+          { "name": "Memorial Day", "start_date": "2025-05-26", "end_date": null }
         ],
         "non_student_days": [
-          { "date": "2025-10-22", "description": "Non-student Day (PD Day)" },
-          { "date": "2026-02-04", "description": "Non-student Day (PD Day)" },
-          { "date": "2026-04-08", "description": "Non-student Day (PD Day)" }
+          { "date": "2024-10-24", "description": "Non-student Day (PD Day)" },
+          { "date": "2025-03-27", "description": "Professional Development" }
         ],
         "back_to_school_nights": [
-          { "date": "2025-09-03", "description": "September Back-to-School Night" },
-          { "date": "2026-01-28", "description": "January Back-to-School Night" }
+          { "date": "2024-09-12", "description": "Back to School Night" }
         ],
         "end_of_quarter_semester_dates": [
-          { "name": "End of Quarter 1", "date": "2025-10-10" },
-          { "name": "End of Quarter 2 / Semester 1", "date": "2025-12-19" },
-          { "name": "End of Quarter 3", "date": "2026-03-20" },
-          { "name": "End of Quarter 4 / Semester 2", "date": "2026-06-04" }
+          { "date": "2024-10-11", "description": "End of Quarter 1" },
+          { "date": "2024-12-20", "description": "End of Semester 1" },
+          { "date": "2025-03-14", "description": "End of Quarter 3" },
+          { "date": "2025-06-05", "description": "End of Semester 2" }
         ],
         "semester_final_dates": [
-          { "date": "2025-12-18", "description": "First Semester Finals" },
-          { "date": "2025-12-19", "description": "First Semester Finals" },
-          { "date": "2026-06-03", "description": "Second Semester Finals" },
-          { "date": "2026-06-04", "description": "Second Semester Finals" }
+          { "date": "2024-12-16", "description": "Semester 1 Finals" },
+          { "date": "2025-06-02", "description": "Semester 2 Finals" }
         ],
         "testing_dates": [
-          { "date": "2025-10-13", "description": "PSAT" },
-          { "date": "2025-10-14", "description": "PSAT" },
-          { "date": "2025-10-15", "description": "PSAT" },
-          { "date": "2025-10-16", "description": "PSAT" },
-          { "date": "2025-10-17", "description": "PSAT" },
-          { "date": "2026-03-02", "description": "SAT" },
-          { "date": "2026-03-03", "description": "SAT" },
-          { "date": "2026-03-04", "description": "SAT" },
-          { "date": "2026-03-05", "description": "SAT" },
-          { "date": "2026-03-06", "description": "SAT" }
+          { "date": "2025-03-18", "description": "CAASPP Testing" }
         ],
         "other_minimum_days_with_activities": []
       },
