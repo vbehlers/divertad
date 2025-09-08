@@ -20,16 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Initialize the enhanced manager - use school code from window or default to AVHS
         const schoolCode = window.BELL_SCHOOL_CODE || 'AVHS';
-        console.log('Initializing with school code:', schoolCode);
-        console.log('Available schools:', districtSchedules.schools.map(s => s.school_code));
-        
         const bellManager = new EnhancedBellScheduleManager(districtSchedules, schoolCode);
         console.log('Manager created:', bellManager);
-        console.log('Current school:', bellManager.currentSchool);
-        
-        // Test KPI data immediately
-        const testKPI = bellManager.getKPIData();
-        console.log('Test KPI data:', testKPI);
         
         // Start auto-updating
         bellManager.startAutoUpdate();
@@ -145,10 +137,7 @@ function testAfterHours() {
 
 function testSchoolHours() {
     if (window.bellManager) {
-        console.log('Testing regular day schedule for debugging');
-        
-        // Force a regular day schedule (override any weekend/holiday logic)
-        window.bellManager.scheduleTypeOverride = 'regular_day';
+        console.log('Testing school hours scenario');
         
         // Set a time that's during school hours (e.g., 10:30 AM - between Period 2 and 3)
         const schoolHoursDate = new Date();
@@ -160,7 +149,7 @@ function testSchoolHours() {
         
         // Debug: Check what the current period is
         const kpiData = window.bellManager.getKPIData();
-        console.log('Regular day KPI data:', kpiData);
+        console.log('School hours KPI data:', kpiData);
         console.log('Current period:', kpiData.currentPeriod);
         
         // Show feedback
@@ -199,9 +188,7 @@ function openCalendarModal() {
         const schoolName = document.getElementById('modal-school-name');
         
         // Set school name
-        if (schoolName) {
-            schoolName.textContent = window.bellManager.currentSchool.school_name;
-        }
+        schoolName.textContent = window.bellManager.currentSchool.school_name;
         
         // Generate calendar content
         content.innerHTML = generateCalendarContent();
@@ -231,105 +218,74 @@ function generateCalendarContent() {
         // Add holidays
         if (dates.holidays) {
             dates.holidays.forEach(holiday => {
-                if (holiday.start_date && holiday.start_date !== 'N/A' && holiday.start_date !== '') {
-                    const holidayDate = new Date(holiday.start_date);
-                    if (!isNaN(holidayDate.getTime())) {
-                        allDates.push({
-                            date: holidayDate,
-                            endDate: holiday.end_date ? new Date(holiday.end_date) : null,
-                            type: 'holiday',
-                            name: holiday.name,
-                            description: holiday.name
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(holiday.start_date),
+                    endDate: holiday.end_date ? new Date(holiday.end_date) : null,
+                    type: 'holiday',
+                    name: holiday.name,
+                    description: holiday.name
+                });
             });
         }
         
         // Add non-student days
         if (dates.non_student_days) {
             dates.non_student_days.forEach(day => {
-                if (day.date && day.date !== 'N/A' && day.date !== '') {
-                    const dayDate = new Date(day.date);
-                    if (!isNaN(dayDate.getTime())) {
-                        allDates.push({
-                            date: dayDate,
-                            type: 'non_student',
-                            name: day.description,
-                            description: day.description
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(day.date),
+                    type: 'non_student',
+                    name: day.description,
+                    description: day.description
+                });
             });
         }
         
         // Add back-to-school nights
         if (dates.back_to_school_nights) {
             dates.back_to_school_nights.forEach(event => {
-                if (event.date && event.date !== 'N/A' && event.date !== '') {
-                    const eventDate = new Date(event.date);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            type: 'back_to_school',
-                            name: event.description,
-                            description: event.description
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(event.date),
+                    type: 'back_to_school',
+                    name: event.description,
+                    description: event.description
+                });
             });
         }
         
         // Add end of quarter/semester dates
         if (dates.end_of_quarter_semester_dates) {
             dates.end_of_quarter_semester_dates.forEach(event => {
-                if (event.date && event.date !== 'N/A' && event.date !== '') {
-                    const eventDate = new Date(event.date);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            type: 'end_quarter',
-                            name: event.name || event.description || 'End of Quarter',
-                            description: event.name || event.description || 'End of Quarter'
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(event.date),
+                    type: 'end_quarter',
+                    name: event.name,
+                    description: event.name
+                });
             });
         }
         
         // Add testing dates
         if (dates.testing_dates) {
             dates.testing_dates.forEach(test => {
-                const testDate = test.start_date || test.date;
-                if (testDate && testDate !== 'N/A' && testDate !== '') {
-                    const eventDate = new Date(testDate);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            endDate: test.end_date ? new Date(test.end_date) : null,
-                            type: 'testing',
-                            name: test.test_name || test.description || 'Testing',
-                            description: test.test_name || test.description || 'Testing'
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(test.start_date),
+                    endDate: test.end_date ? new Date(test.end_date) : null,
+                    type: 'testing',
+                    name: test.test_name,
+                    description: test.test_name + (test.note ? ' - ' + test.note : '')
+                });
             });
         }
         
         // Add other minimum days with activities
         if (dates.other_minimum_days_with_activities) {
             dates.other_minimum_days_with_activities.forEach(event => {
-                if (event.date && event.date !== 'N/A' && event.date !== '') {
-                    const eventDate = new Date(event.date);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            type: 'activity',
-                            name: event.description,
-                            description: event.description
-                        });
-                    }
-                }
+                allDates.push({
+                    date: new Date(event.date),
+                    type: 'activity',
+                    name: event.description,
+                    description: event.description
+                });
             });
         }
         
@@ -381,16 +337,16 @@ function generateCalendarContent() {
                         </tr>
                         <tr>
                             <td class="type-p5 py-4 pr-4 font-medium text-left">First Day</td>
-                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.first_day_of_school).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.first_day_of_school).toLocaleDateString()}</td>
                         </tr>
                         <tr>
                             <td class="type-p5 py-4 pr-4 font-medium text-left">Last Day</td>
-                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.last_day_of_school).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.last_day_of_school).toLocaleDateString()}</td>
                         </tr>
-                        ${school.general_academic_info.graduation_date && school.general_academic_info.graduation_date !== 'TBD' && school.general_academic_info.graduation_date !== 'N/A' && school.general_academic_info.graduation_date !== '' ? `
+                        ${school.general_academic_info.graduation_date ? `
                         <tr>
                             <td class="type-p5 py-4 pr-4 font-medium text-left">Graduation</td>
-                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.graduation_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                            <td class="type-p5 p-4 text-left">${school.general_academic_info.graduation_date}</td>
                         </tr>
                         ` : ''}
                     </tbody>
@@ -422,6 +378,7 @@ function generateCalendarContent() {
         
         allDates.forEach(event => {
             const dateStr = event.date.toLocaleDateString('en-US', {
+                weekday: 'long',
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
@@ -429,6 +386,7 @@ function generateCalendarContent() {
             
             const endDateStr = event.endDate ? 
                 ' - ' + event.endDate.toLocaleDateString('en-US', {
+                    weekday: 'long',
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
@@ -474,75 +432,3 @@ function generateCalendarContent() {
     
     return html;
 }
-
-// Update current date header dynamically
-function updateCurrentDate() {
-    const currentDateHeader = document.getElementById('current-date-header');
-    if (currentDateHeader) {
-        const now = new Date();
-        const options = { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        };
-        currentDateHeader.textContent = now.toLocaleDateString('en-US', options);
-    }
-}
-
-
-// Schedule Modal Functions
-function openScheduleModal() {
-    const modal = document.getElementById('scheduleModal');
-    if (modal) {
-        modal.classList.remove('hidden');
-    }
-}
-
-function closeScheduleModal() {
-    const modal = document.getElementById('scheduleModal');
-    if (modal) {
-        modal.classList.add('hidden');
-    }
-}
-
-// Test Schedule Functions
-function testSchedule(scheduleType) {
-    console.log('Testing schedule type:', scheduleType);
-    if (window.bellManager) {
-        window.bellManager.setScheduleTypeOverride(scheduleType);
-        window.bellManager.updateDashboard();
-    } else {
-        console.error('Bell manager not available');
-    }
-}
-
-function testAfterHours() {
-    console.log('Testing after hours');
-    if (window.bellManager) {
-        // Set a time override to after school hours
-        const afterHours = new Date();
-        afterHours.setHours(18, 0, 0, 0); // 6:00 PM
-        window.bellManager.setDateOverride(afterHours);
-        window.bellManager.updateDashboard();
-    } else {
-        console.error('Bell manager not available');
-    }
-}
-
-function resetSchedule() {
-    console.log('Resetting schedule');
-    if (window.bellManager) {
-        window.bellManager.setDateOverride(null);
-        window.bellManager.setScheduleTypeOverride(null);
-        window.bellManager.updateDashboard();
-    } else {
-        console.error('Bell manager not available');
-    }
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Update the current date
-    updateCurrentDate();
-});

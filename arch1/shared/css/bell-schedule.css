@@ -1,0 +1,346 @@
+/* Base font settings */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+
+html {
+    font-size: var(--base-font-size);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/*
+ * Global style tokens (CSS Custom Properties) for easy updates.
+*/
+:root {
+    /* Base Font Size Token */
+    --base-font-size: 16px;
+
+    /* Color Tokens */
+    --color-text-default: #111827;
+    --color-text-secondary: #4b5563;
+    --color-text-primary: #0051d2;
+
+    /* Font Weight Tokens */
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+
+    /* Font Size Tokens (in rem) */
+    --fs-h1: 4.3rem;
+    --fs-h2: 2.25rem;
+    --fs-h3: 1.8rem;
+    --fs-h4: 1.3rem;
+    --fs-h5: 1rem;
+    --fs-h6: 0.875rem;
+
+    /* Line Height Tokens (in rem) */
+    --lh-h1: 4.3rem;
+    --lh-h2: 2.25rem;
+    --lh-h3: 1.8rem;
+    --lh-h4: 1.3rem;
+    --lh-h5: 1rem;
+    --lh-h6: 0.875rem;
+
+    /* Line Height Tokens (in rem) */
+    --lh-p1: 5.1rem;
+    --lh-p2: 2.925rem;
+    --lh-p3: 2.3rem;
+    --lh-p4: 1.8rem;
+    --lh-p5: 1.513rem;
+    --lh-p6: 1.3rem;
+
+    /* Heading Bottom Margin Tokens (in rem) */
+    --h-margin-1: 5.75rem;
+    --h-margin-2: 1.25rem;
+    --h-margin-3: 1.0rem;
+    --h-margin-4: 0.6rem;
+    --h-margin-5: 0.5rem;
+    --h-margin-6: 0.5rem;
+
+    /* Module Spacing Tokens (in rem) */
+    --module-spacing-1: 4rem;
+    --module-spacing-2: 5.9rem;
+    --module-spacing-3: 1.5rem;
+    --module-spacing-4: 0rem;
+    --module-spacing-5: 1.2rem;
+    --module-spacing-6: 0.8rem;
+
+    /* Paragraph Group Padding Tokens (in rem) */
+    --group-padding-1: 6.8rem;
+    --group-padding-2: 4.5rem;
+    --group-padding-3: 2.3rem;
+    --group-padding-4: 2.2rem;
+    --group-padding-5: 1.5rem;
+    --group-padding-6: 0.533rem;
+
+    /* Proportional Paragraph Spacing Token */
+    --paragraph-spacing-scale: 0.4;
+}
+
+/* * Hierarchical Module Spacing */
+.module-1 { margin-bottom: var(--module-spacing-1); }
+.module-2 { margin-bottom: var(--module-spacing-2); }
+.module-3 { margin-bottom: var(--module-spacing-3); }
+.module-4 { margin-bottom: var(--module-spacing-4); }
+.module-5 { margin-bottom: var(--module-spacing-5); }
+.module-6 { margin-bottom: var(--module-spacing-6); }
+
+/* * Paragraph Group Padding */
+.group-1 { padding-bottom: var(--group-padding-1); }
+.group-2 { padding-bottom: var(--group-padding-2); }
+.group-3 { padding-bottom: var(--group-padding-3); }
+.group-4 { padding-bottom: var(--group-padding-4); }
+.group-5 { padding-bottom: var(--group-padding-5); }
+.group-6 { padding-bottom: var(--group-padding-6); }
+
+/* * Proportional Paragraph Spacing */
+.paragraph {
+    margin-bottom: calc(1.2em * var(--paragraph-spacing-scale));
+}
+
+/* * Typography classes using CSS variables */
+.type-h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); margin-bottom: var(--h-margin-1); }
+.type-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); margin-bottom: var(--h-margin-2); }
+.type-h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); margin-bottom: var(--h-margin-3); }
+.type-h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); margin-bottom: var(--h-margin-4); }
+.type-h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); margin-bottom: var(--h-margin-5); }
+.type-h6 { font-size: var(--fs-h6); line-height: var(--lh-h6); margin-bottom: var(--h-margin-6); }
+
+.type-p1 { font-size: var(--fs-h1); line-height: var(--lh-p1); }
+.type-p2 { font-size: var(--fs-h2); line-height: var(--lh-p2); }
+.type-p3 { font-size: var(--fs-h3); line-height: var(--lh-p3); }
+.type-p4 { font-size: var(--fs-h4); line-height: var(--lh-p4); }
+.type-p5 { font-size: var(--fs-h5); line-height: var(--lh-p5); }
+.type-p6 { font-size: var(--fs-h6); line-height: var(--lh-p6); }
+
+/* * Semantic utility classes for themes */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.font-normal { font-weight: var(--font-normal); }
+.font-medium { font-weight: var(--font-medium); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-bold { font-weight: var(--font-bold); }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Bell Schedule Specific Styles - Updated to match exact image design */
+.notification-header {
+    margin-bottom: 2rem;
+}
+
+.header-dot {
+    display: inline-block;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background-color: #22c55e;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+.notification-panels {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    justify-content: flex-start;
+}
+
+.panel {
+    text-align: left;
+    border-left: 2px solid #e2e8f0;
+    padding-left: 1rem;
+    padding-right: 8rem;
+    margin-left: -16px;
+    margin-top: 10px;
+}
+
+.panel-value {
+    font-size: 50px;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    font-family: 'Roboto', sans-serif;
+    color: #0051d2;
+    line-height: 1;
+}
+
+.panel-label {
+    font-size: 16px;
+    color: #111827;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    padding-left: 8px;
+}
+
+.time-display {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+/* Flashing animation for next period indicator */
+@keyframes flash-next-period {
+    0% { background-color: #fff; }
+    50% { background-color: #ffe5f1; }
+    100% { background-color: #fff; }
+}
+
+.flash-next-period {
+    animation: flash-next-period 1.5s infinite ease-in-out;
+    background-color: #ffe5f1 !important;
+}
+
+/* Style borders around flashing row to complement the flash */
+.flash-next-period {
+    border-top: 3px solid #ff75b3 !important;
+    border-bottom: 3px solid #ff75b3 !important;
+}
+
+/* Smooth transitions for all changes */
+.panel-value,
+.panel-label,
+tbody tr,
+tbody td,
+tbody span {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Smooth indicator animation similar to tabs */
+tbody tr {
+    transition: all 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+}
+
+tbody tr.current-period::before {
+    display: none;
+}
+
+tbody tr:not(.current-period)::before {
+    opacity: 0;
+}
+
+/* Make all border-b elements 3px thick */
+.border-b {
+    border-bottom-width: 3px !important;
+}
+
+/* View Transitions API keyframes for smooth number changes */
+@keyframes vt-fade-in {
+    from { 
+        opacity: 0; 
+        transform: scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+
+@keyframes vt-fade-out {
+    from { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+    to { 
+        opacity: 0; 
+        transform: scale(0.95); 
+    }
+}
+
+/* Material Symbols styling */
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+}
+
+/* Sleeping emoji - static */
+.sleeping-emoji {
+    display: inline-block;
+}
+
+/* Apply View Transitions to specific elements */
+.panel-value {
+    view-transition-name: panel-value;
+}
+
+#current-period-header {
+    view-transition-name: period-header;
+}
+
+/* View Transitions for period status indicators */
+tbody tr {
+    /* Remove duplicate view-transition-name - will be set dynamically per row */
+}
+
+tbody tr.current-period {
+    view-transition-name: current-period-row;
+}
+
+tbody tr.flash-next-period {
+    view-transition-name: next-period-row;
+}
+
+/* Smooth transitions for period status changes */
+tbody tr {
+    transition: all 0.3s ease-in-out;
+}
+
+tbody tr.current-period {
+    border-left: 4px solid #0051d2;
+    transition: border-left 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+tbody tr.flash-next-period {
+    transition: background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+}
+
+/* Modal scrolling fixes */
+.fixed {
+    overflow-y: auto;
+}
+
+.fixed .h-full {
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* Add padding at bottom of modal content for proper scrolling */
+.max-w-\[1400px\] {
+    padding-bottom: 4rem;
+}
+
+/* Calendar modal table borders */
+#calendar-modal table th,
+#calendar-modal table td {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Schedule modal table borders */
+#scheduleModal table th,
+#scheduleModal table td {
+    border-bottom: 1px solid #e5e7eb !important;
+}
+
+/* Current period indicator */
+tbody tr.current-period::before {
+    display: none;
+}
+
+tbody tr {
+    position: relative;
+    transition: all 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .notification-panels {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

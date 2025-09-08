@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AVHS</title>
+    <title>RRPHS</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=home" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -64,19 +64,19 @@
                             
                             <!-- Current Period Panel (KPI #1) -->
                             <div class="panel">
-                                <div class="panel-value" id="current-period-kpi">0</div>
+                                <div class="panel-value" id="current-period-kpi" style="view-transition-name: rrphs-current-period;">0</div>
                                 <div class="panel-label">Current Period</div>
                             </div>
 
                             <!-- Current Time Panel -->
                             <div class="panel">
-                                <div class="panel-value" id="current-time">8:38:01</div>
+                                <div class="panel-value" id="current-time" style="view-transition-name: rrphs-current-time;">8:38:01</div>
                                 <div class="panel-label">Current Time</div>
                             </div>
 
                             <!-- Next Bell Panel -->
                             <div class="panel">
-                                <div class="panel-value" id="next-bell">10:49 / 116:23m</div>
+                                <div class="panel-value" id="next-bell" style="view-transition-name: rrphs-next-bell;">10:49 / 116:23m</div>
                                 <div class="panel-label">Next Bell</div>
                             </div>
                         </div>
@@ -166,8 +166,7 @@
     <script src="../shared/js/bell-schedule.js"></script>
     <script>
         // Override the school code for this specific page
-        window.BELL_SCHOOL_CODE = 'AVHS';
-        
+        window.BELL_SCHOOL_CODE = 'RRPHS';
     </script>
 
     <!-- Calendar Modal -->
