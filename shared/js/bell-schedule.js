@@ -253,7 +253,9 @@ function timeToMinutes(timeString) {
 // Function to update table status dynamically
 function updateTableStatus(currentPeriod, now) {
     const periodRows = document.querySelectorAll('tbody tr');
-    const currentTime = now.getHours() * 60 + now.getMinutes();
+    // Always use real time for status updates, not test time
+    const realNow = new Date();
+    const currentTime = realNow.getHours() * 60 + realNow.getMinutes();
     
     console.log('Updating table status. Found', periodRows.length, 'rows');
     
