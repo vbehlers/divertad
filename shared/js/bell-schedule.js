@@ -14,22 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     try {
-        console.log('Starting initialization...');
-        console.log('districtSchedules:', districtSchedules);
-        console.log('EnhancedBellScheduleManager:', EnhancedBellScheduleManager);
-        
         // Initialize the enhanced manager - use school code from window or default to AVHS
         const schoolCode = window.BELL_SCHOOL_CODE || 'AVHS';
-        console.log('Initializing with school code:', schoolCode);
-        console.log('Available schools:', districtSchedules.schools.map(s => s.school_code));
         
         const bellManager = new EnhancedBellScheduleManager(districtSchedules, schoolCode);
-        console.log('Manager created:', bellManager);
-        console.log('Current school:', bellManager.currentSchool);
-        
-        // Test KPI data immediately
-        const testKPI = bellManager.getKPIData();
-        console.log('Test KPI data:', testKPI);
         
         // Start auto-updating
         bellManager.startAutoUpdate();
@@ -40,10 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize modal functionality
         initializeModal();
         
-        console.log('AVHS Bell Schedule System initialized successfully');
+        console.log('Bell Schedule System initialized successfully');
     } catch (error) {
         console.error('Error initializing bell schedule system:', error);
-        console.error('Error stack:', error.stack);
         document.body.innerHTML = '<div style="padding: 20px; color: red;">Error initializing bell schedule system: ' + error.message + '</div>';
     }
 });
@@ -53,13 +40,17 @@ function initializeModal() {
     function openModal(modal) {
         if (modal) {
             modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
             // Update modal content
             updateModalContent();
         }
     }
 
     function closeModal(modal) {
-        if (modal) modal.style.display = 'none';
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
     }
 
     function updateModalContent() {
@@ -127,11 +118,6 @@ function testAfterHours() {
         // Force update
         window.bellManager.updateDashboard();
         
-        // Debug: Check what the current period is
-        const kpiData = window.bellManager.getKPIData();
-        console.log('After hours KPI data:', kpiData);
-        console.log('Current period:', kpiData.currentPeriod);
-        
         // Show feedback
         const buttons = document.querySelectorAll('button[onclick^="test"]');
         buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
@@ -145,23 +131,23 @@ function testAfterHours() {
 
 function testSchoolHours() {
     if (window.bellManager) {
-        console.log('Testing regular day schedule for debugging');
+        console.log('Testing school hours scenario');
         
         // Force a regular day schedule (override any weekend/holiday logic)
         window.bellManager.scheduleTypeOverride = 'regular_day';
         
-        // Set a time that's during school hours (e.g., 10:30 AM - between Period 2 and 3)
-        const schoolHoursDate = new Date();
-        schoolHoursDate.setHours(10, 30, 0, 0); // 10:30 AM
-        window.bellManager.dateOverride = schoolHoursDate;
+        // Create a dynamic override that starts at 11:30 AM and continues ticking
+        const baseTime = new Date();
+        baseTime.setHours(11, 30, 0, 0); // 11:30 AM
+        const realTime = new Date();
+        const timeOffset = baseTime.getTime() - realTime.getTime();
+        
+        // Store the offset so we can create dynamic dates
+        window.bellManager.timeOffset = timeOffset;
+        window.bellManager.dateOverride = null; // Clear static override
         
         // Force update
         window.bellManager.updateDashboard();
-        
-        // Debug: Check what the current period is
-        const kpiData = window.bellManager.getKPIData();
-        console.log('Regular day KPI data:', kpiData);
-        console.log('Current period:', kpiData.currentPeriod);
         
         // Show feedback
         const buttons = document.querySelectorAll('button[onclick^="test"]');
@@ -181,6 +167,7 @@ function resetSchedule() {
         // Clear overrides
         window.bellManager.scheduleTypeOverride = null;
         window.bellManager.dateOverride = null;
+        window.bellManager.timeOffset = null;
         
         // Force update
         window.bellManager.updateDashboard();
@@ -206,7 +193,7 @@ function openCalendarModal() {
         // Generate calendar content
         content.innerHTML = generateCalendarContent();
         
-        // Show modal (same as schedule modal)
+        // Show modal
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
     }
@@ -487,57 +474,6 @@ function updateCurrentDate() {
             day: 'numeric' 
         };
         currentDateHeader.textContent = now.toLocaleDateString('en-US', options);
-    }
-}
-
-
-// Schedule Modal Functions
-function openScheduleModal() {
-    const modal = document.getElementById('scheduleModal');
-    if (modal) {
-        modal.classList.remove('hidden');
-    }
-}
-
-function closeScheduleModal() {
-    const modal = document.getElementById('scheduleModal');
-    if (modal) {
-        modal.classList.add('hidden');
-    }
-}
-
-// Test Schedule Functions
-function testSchedule(scheduleType) {
-    console.log('Testing schedule type:', scheduleType);
-    if (window.bellManager) {
-        window.bellManager.setScheduleTypeOverride(scheduleType);
-        window.bellManager.updateDashboard();
-    } else {
-        console.error('Bell manager not available');
-    }
-}
-
-function testAfterHours() {
-    console.log('Testing after hours');
-    if (window.bellManager) {
-        // Set a time override to after school hours
-        const afterHours = new Date();
-        afterHours.setHours(18, 0, 0, 0); // 6:00 PM
-        window.bellManager.setDateOverride(afterHours);
-        window.bellManager.updateDashboard();
-    } else {
-        console.error('Bell manager not available');
-    }
-}
-
-function resetSchedule() {
-    console.log('Resetting schedule');
-    if (window.bellManager) {
-        window.bellManager.setDateOverride(null);
-        window.bellManager.setScheduleTypeOverride(null);
-        window.bellManager.updateDashboard();
-    } else {
-        console.error('Bell manager not available');
     }
 }
 

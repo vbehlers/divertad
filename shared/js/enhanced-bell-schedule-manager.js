@@ -1,6 +1,6 @@
 /**
- * Enhanced Bell Schedule Manager with KPI Integration
- * Integrates with existing bell-schedule-notification.html
+ * Enhanced Bell Schedule Manager
+ * Simple, working bell schedule system
  */
 
 class EnhancedBellScheduleManager {
@@ -9,7 +9,6 @@ class EnhancedBellScheduleManager {
         this.schoolCode = schoolCode;
         this.currentSchool = this.getSchoolByCode(schoolCode);
         
-        // Validate that we found the school
         if (!this.currentSchool) {
             throw new Error(`School with code '${schoolCode}' not found in district data`);
         }
@@ -20,29 +19,16 @@ class EnhancedBellScheduleManager {
         // Override settings
         this.dateOverride = null;
         this.scheduleTypeOverride = null;
-        this.specialEventsOverride = null;
         
-        // Dynamic date management
-        this.dynamicMinimumDays = [];
-        this.dynamicFlexDays = [];
-        this.dynamicHolidays = [];
-        
-        // Update page titles after school is set
         this.updatePageTitles();
     }
 
-    /**
-     * Get school data by school code
-     */
     getSchoolByCode(schoolCode) {
         return this.districtData.schools.find(school => 
             school.school_code === schoolCode
         );
     }
 
-    /**
-     * Switch to a different school
-     */
     switchSchool(schoolCode) {
         this.schoolCode = schoolCode;
         this.currentSchool = this.getSchoolByCode(schoolCode);
@@ -50,53 +36,27 @@ class EnhancedBellScheduleManager {
         this.updateDashboard();
     }
 
-    /**
-     * Set date override for testing
-     */
     setDateOverride(date) {
         this.dateOverride = date;
     }
 
-    /**
-     * Clear date override
-     */
     clearDateOverride() {
         this.dateOverride = null;
     }
 
-    /**
-     * Set schedule type override
-     */
     setScheduleTypeOverride(scheduleType) {
         this.scheduleTypeOverride = scheduleType;
     }
 
-    /**
-     * Clear schedule type override
-     */
     clearScheduleTypeOverride() {
         this.scheduleTypeOverride = null;
     }
 
-    /**
-     * Set special events count override
-     */
-    setSpecialEventsCount(count) {
-        this.specialEventsOverride = count;
-    }
-
-    /**
-     * Clear all overrides
-     */
     clearAllOverrides() {
         this.dateOverride = null;
         this.scheduleTypeOverride = null;
-        this.specialEventsOverride = null;
     }
 
-    /**
-     * Get the appropriate schedule for a given date
-     */
     getScheduleForDate(date = null) {
         const targetDate = this.dateOverride || date || new Date();
         const dayOfWeek = targetDate.getDay();
@@ -131,16 +91,13 @@ class EnhancedBellScheduleManager {
         };
     }
 
-    /**
-     * Get schedule by type
-     */
     getScheduleByType(scheduleType) {
         const schedule = this.currentSchool.bell_schedules?.[scheduleType];
         if (schedule) {
             return {
                 type: scheduleType,
                 name: this.getScheduleTypeName(scheduleType),
-                periods: schedule, // schedule is already an array
+                periods: schedule,
                 isSchoolDay: true,
                 isOverride: true
             };
@@ -148,59 +105,29 @@ class EnhancedBellScheduleManager {
         return null;
     }
 
-    /**
-     * Get SOAR High School schedule based on day of week
-     */
-    getSOARScheduleForDay(dayOfWeek) {
-        switch (dayOfWeek) {
-            case 1: // Monday
-            case 3: // Wednesday
-                return {
-                    type: 'monday_wednesday_schedule',
-                    name: 'Monday / Wednesday Schedule',
-                    periods: this.currentSchool.bell_schedules?.monday_wednesday_schedule || [],
-                    isSchoolDay: true
-                };
-            case 2: // Tuesday
-            case 4: // Thursday
-                return {
-                    type: 'tuesday_thursday_schedule',
-                    name: 'Tuesday / Thursday Schedule',
-                    periods: this.currentSchool.bell_schedules?.tuesday_thursday_schedule || [],
-                    isSchoolDay: true
-                };
-            case 5: // Friday
-                return {
-                    type: 'friday_schedule',
-                    name: 'Friday Schedule',
-                    periods: this.currentSchool.bell_schedules?.friday_schedule || [],
-                    isSchoolDay: true
-                };
-            default:
-                return {
-                    type: 'weekend',
-                    name: 'Weekend',
-                    periods: [],
-                    isSchoolDay: false
-                };
-        }
+    getScheduleTypeName(scheduleType) {
+        const names = {
+            'regular_day': 'Regular Day',
+            'flex_day': 'Flex Day',
+            'minimum_day': 'Minimum Day',
+            'mtss_day': 'MTSS Day',
+            'weekend': 'Weekend',
+            'holiday': 'Holiday',
+            'non_student_day': 'Non-Student Day'
+        };
+        return names[scheduleType] || scheduleType;
     }
 
-    /**
-     * Get KPI data for the dashboard
-     */
     getKPIData() {
-        const now = this.dateOverride || new Date();
-        // TEMPORARY: Subtract 4 hours for testing
-        now.setHours(now.getHours() - 4);
+        const now = this.dateOverride || (this.timeOffset ? new Date(Date.now() + this.timeOffset) : new Date());
         const todaySchedule = this.getScheduleForDate(now);
         this.currentSchedule = todaySchedule;
 
         const kpiData = {
-            // Current time (always real time for display)
-            currentTime: new Date().toLocaleTimeString('en-US', {
-                hour12: false,
-                hour: '2-digit',
+            // Current time (use override if available)
+            currentTime: now.toLocaleTimeString('en-US', {
+                hour12: true,
+                hour: 'numeric',
                 minute: '2-digit',
                 second: '2-digit'
             }),
@@ -222,9 +149,6 @@ class EnhancedBellScheduleManager {
             // Next bell
             nextBell: this.getNextBell(todaySchedule),
 
-            // Special events count
-            specialEvents: this.getSpecialEventsCount(now),
-
             // School day status
             isSchoolDay: todaySchedule.isSchoolDay,
 
@@ -236,9 +160,6 @@ class EnhancedBellScheduleManager {
         return kpiData;
     }
 
-    /**
-     * Get current period information
-     */
     getCurrentPeriod(schedule) {
         if (!schedule || !schedule.periods || schedule.periods.length === 0) {
             return {
@@ -248,11 +169,10 @@ class EnhancedBellScheduleManager {
             };
         }
 
-        const now = new Date(); // Always use real current time for period calculation
-        // TEMPORARY: Subtract 4 hours for testing
-        now.setHours(now.getHours() - 4);
+        const now = this.dateOverride || (this.timeOffset ? new Date(Date.now() + this.timeOffset) : new Date());
         const currentTime = now.getHours() * 60 + now.getMinutes();
         
+
         for (let i = 0; i < schedule.periods.length; i++) {
             const period = schedule.periods[i];
             const startTime = this.timeToMinutes(period.start_time);
@@ -291,9 +211,6 @@ class EnhancedBellScheduleManager {
         };
     }
 
-    /**
-     * Get next bell information
-     */
     getNextBell(schedule) {
         if (!schedule || !schedule.periods || schedule.periods.length === 0) {
             return {
@@ -303,9 +220,7 @@ class EnhancedBellScheduleManager {
             };
         }
 
-        const now = new Date(); // Always use real current time for next bell calculation
-        // TEMPORARY: Subtract 4 hours for testing
-        now.setHours(now.getHours() - 4);
+        const now = this.dateOverride || (this.timeOffset ? new Date(Date.now() + this.timeOffset) : new Date());
         const currentTime = now.getHours() * 60 + now.getMinutes();
 
         // Find the next period that starts after current time
@@ -342,35 +257,6 @@ class EnhancedBellScheduleManager {
         };
     }
 
-    /**
-     * Get special events count for today
-     */
-    getSpecialEventsCount(date) {
-        if (this.specialEventsOverride !== null) {
-            return this.specialEventsOverride;
-        }
-
-        const dateString = date.toISOString().split('T')[0];
-        let count = 0;
-
-        // Count back-to-school nights
-        if (this.isBackToSchoolNight(date)) count++;
-
-        // Count activity days
-        if (this.isActivityDay(date)) count++;
-
-        // Count minimum days
-        if (this.isMinimumDay(date)) count++;
-
-        // Count flex days
-        if (this.isFlexDay(date)) count++;
-
-        return count;
-    }
-
-    /**
-     * Update page titles and headers with school-specific content
-     */
     updatePageTitles() {
         const displayInfo = this.currentSchool.display_info;
         if (displayInfo) {
@@ -409,12 +295,8 @@ class EnhancedBellScheduleManager {
         }
     }
 
-    /**
-     * Update the dashboard with current KPI data
-     */
     updateDashboard() {
         const kpiData = this.getKPIData();
-        
 
         // Update current time
         this.updateElement('current-time', kpiData.currentTime);
@@ -439,9 +321,6 @@ class EnhancedBellScheduleManager {
         this.updateScheduleTable(this.currentSchedule);
     }
 
-    /**
-     * Update element with View Transitions API support
-     */
     updateElement(elementId, newContent) {
         const element = document.getElementById(elementId);
         if (!element) return;
@@ -453,7 +332,7 @@ class EnhancedBellScheduleManager {
         const currentContent = isHTML ? element.innerHTML : element.textContent;
         if (currentContent === newContent) return;
 
-        // Disable View Transitions to prevent layout shifts
+        // Update without View Transitions to prevent layout shifts
         if (isHTML) {
             element.innerHTML = newContent;
         } else {
@@ -461,9 +340,6 @@ class EnhancedBellScheduleManager {
         }
     }
 
-    /**
-     * Update the schedule table with current schedule
-     */
     updateScheduleTable(schedule) {
         const tbody = document.getElementById('schedule-table-body');
         const scheduleModule = tbody?.closest('.module-3');
@@ -486,19 +362,9 @@ class EnhancedBellScheduleManager {
             scheduleModule.style.display = 'block';
         }
 
-        // Use View Transitions for smooth updates
-        if ('startViewTransition' in document) {
-            document.startViewTransition(() => {
-                this.updateScheduleTableContent(tbody, schedule);
-            });
-        } else {
-            this.updateScheduleTableContent(tbody, schedule);
-        }
+        this.updateScheduleTableContent(tbody, schedule);
     }
 
-    /**
-     * Update the schedule table content (helper method)
-     */
     updateScheduleTableContent(tbody, schedule) {
         // Clear existing rows
         tbody.innerHTML = '';
@@ -528,18 +394,14 @@ class EnhancedBellScheduleManager {
         });
     }
 
-    /**
-     * Get period status for table display - handles overlapping periods
-     */
     getPeriodStatus(period, index) {
-        // Use the same time calculation as getCurrentPeriod
-        const now = new Date();
-        // TEMPORARY: Subtract 4 hours for testing
-        now.setHours(now.getHours() - 4);
+        const now = this.dateOverride || (this.timeOffset ? new Date(Date.now() + this.timeOffset) : new Date());
         const currentTime = now.getHours() * 60 + now.getMinutes();
         const startTime = this.timeToMinutes(period.start_time);
         const endTime = this.timeToMinutes(period.end_time);
         
+        console.log(`${period.period_name}: current=${currentTime} (${now.getHours()}:${now.getMinutes()}), start=${startTime} (${period.start_time}), end=${endTime} (${period.end_time})`);
+
         // Handle overlapping periods - check if current time is within this period
         if (currentTime >= startTime && currentTime < endTime) {
             return { class: 'text-primary', text: 'Current' };
@@ -558,9 +420,6 @@ class EnhancedBellScheduleManager {
         }
     }
 
-    /**
-     * Generate modal content for full schedule view
-     */
     generateModalContent() {
         let content = '';
         
@@ -611,33 +470,8 @@ class EnhancedBellScheduleManager {
         return content;
     }
 
-    /**
-     * Get schedule type name
-     */
-    getScheduleTypeName(scheduleType) {
-        const names = {
-            'monday_wednesday_schedule': 'Monday / Wednesday Schedule',
-            'tuesday_thursday_schedule': 'Tuesday / Thursday Schedule',
-            'friday_schedule': 'Friday Schedule',
-            'regular_day': 'Regular Day',
-            'flex_day': 'Flex Day',
-            'minimum_day': 'Minimum Day',
-            'mtss_day': 'MTSS Day',
-            'weekend': 'Weekend',
-            'holiday': 'Holiday',
-            'non_student_day': 'Non-Student Day'
-        };
-        return names[scheduleType] || scheduleType;
-    }
-
-    /**
-     * Get schedule description
-     */
     getScheduleDescription(scheduleType) {
         const descriptions = {
-            'monday_wednesday_schedule': 'Extended periods for Monday and Wednesday classes.',
-            'tuesday_thursday_schedule': 'Extended periods for Tuesday and Thursday classes with STAR Hour.',
-            'friday_schedule': 'Shorter periods covering all classes on Friday.',
             'regular_day': 'Standard daily schedule with all periods and normal timing.',
             'flex_day': 'Modified schedule with extended periods and flexible time blocks.',
             'minimum_day': 'Shortened schedule with reduced class times and early dismissal.',
@@ -649,27 +483,6 @@ class EnhancedBellScheduleManager {
         return descriptions[scheduleType] || 'Standard schedule format.';
     }
 
-    /**
-     * Get period notes
-     */
-    getPeriodNotes(periodName) {
-        if (periodName.includes('Period')) {
-            return periodName;
-        } else if (periodName === 'Break') {
-            return 'Break Period';
-        } else if (periodName === 'Lunch') {
-            return 'Lunch Break';
-        } else if (periodName === 'STAR Hour') {
-            return 'Student Time and Resources';
-        } else if (periodName === 'MTSS') {
-            return 'Multi-Tiered System of Supports';
-        }
-        return periodName;
-    }
-
-    /**
-     * Start auto-updating the dashboard
-     */
     startAutoUpdate(interval = 1000) {
         this.updateInterval = setInterval(() => {
             this.updateDashboard();
@@ -679,9 +492,6 @@ class EnhancedBellScheduleManager {
         this.updateDashboard();
     }
 
-    /**
-     * Stop auto-updating
-     */
     stopAutoUpdate() {
         if (this.updateInterval) {
             clearInterval(this.updateInterval);
@@ -689,30 +499,6 @@ class EnhancedBellScheduleManager {
         }
     }
 
-    /**
-     * Add minimum day
-     */
-    addMinimumDay(date, reason = '') {
-        this.dynamicMinimumDays.push({ date, reason });
-    }
-
-    /**
-     * Add flex day
-     */
-    addFlexDay(date, reason = '') {
-        this.dynamicFlexDays.push({ date, reason });
-    }
-
-    /**
-     * Add holiday
-     */
-    addHoliday(date, name) {
-        this.dynamicHolidays.push({ date, name });
-    }
-
-    /**
-     * Export schedule data
-     */
     exportScheduleData() {
         return {
             currentSchool: this.currentSchool,
@@ -720,13 +506,7 @@ class EnhancedBellScheduleManager {
             kpiData: this.getKPIData(),
             overrides: {
                 dateOverride: this.dateOverride,
-                scheduleTypeOverride: this.scheduleTypeOverride,
-                specialEventsOverride: this.specialEventsOverride
-            },
-            dynamicDates: {
-                minimumDays: this.dynamicMinimumDays,
-                flexDays: this.dynamicFlexDays,
-                holidays: this.dynamicHolidays
+                scheduleTypeOverride: this.scheduleTypeOverride
             }
         };
     }
@@ -735,100 +515,6 @@ class EnhancedBellScheduleManager {
     timeToMinutes(timeString) {
         const [hours, minutes] = timeString.split(':').map(Number);
         return hours * 60 + minutes;
-    }
-
-    isHoliday(date) {
-        const dateString = date.toISOString().split('T')[0];
-        
-        // Check dynamic holidays first
-        if (this.dynamicHolidays.some(holiday => holiday.date === dateString)) {
-            return true;
-        }
-        
-        // Check static holidays
-        return this.currentSchool.holidays_and_important_dates.holidays.some(holiday => {
-            if (holiday.end_date) {
-                return dateString >= holiday.start_date && dateString <= holiday.end_date;
-            }
-            return dateString === holiday.start_date;
-        });
-    }
-
-    getHolidayName(date) {
-        const dateString = date.toISOString().split('T')[0];
-        
-        // Check dynamic holidays first
-        const dynamicHoliday = this.dynamicHolidays.find(holiday => holiday.date === dateString);
-        if (dynamicHoliday) {
-            return dynamicHoliday.name;
-        }
-        
-        // Check static holidays
-        const holiday = this.currentSchool.holidays_and_important_dates.holidays.find(holiday => {
-            if (holiday.end_date) {
-                return dateString >= holiday.start_date && dateString <= holiday.end_date;
-            }
-            return dateString === holiday.start_date;
-        });
-        return holiday ? holiday.name : '';
-    }
-
-    isNonStudentDay(date) {
-        const dateString = date.toISOString().split('T')[0];
-        return this.currentSchool.holidays_and_important_dates.non_student_days.some(day => 
-            day.date === dateString
-        );
-    }
-
-    getNonStudentDayDescription(date) {
-        const dateString = date.toISOString().split('T')[0];
-        const day = this.currentSchool.holidays_and_important_dates.non_student_days.find(day => 
-            day.date === dateString
-        );
-        return day ? day.description : '';
-    }
-
-    isMinimumDay(date) {
-        const dateString = date.toISOString().split('T')[0];
-        
-        // Check dynamic minimum days first
-        if (this.dynamicMinimumDays.some(day => day.date === dateString)) {
-            return true;
-        }
-        
-        // Add your static minimum day logic here
-        return false;
-    }
-
-    isBackToSchoolNight(date) {
-        const dateString = date.toISOString().split('T')[0];
-        return this.currentSchool.holidays_and_important_dates.back_to_school_nights.some(event => 
-            event.date === dateString
-        );
-    }
-
-    isActivityDay(date) {
-        const dateString = date.toISOString().split('T')[0];
-        return this.currentSchool.holidays_and_important_dates.other_minimum_days_with_activities?.some(event => 
-            event.date === dateString
-        ) || false;
-    }
-
-    isFlexDay(date) {
-        const dateString = date.toISOString().split('T')[0];
-        
-        // Check dynamic flex days first
-        if (this.dynamicFlexDays.some(day => day.date === dateString)) {
-            return true;
-        }
-        
-        // Add your static flex day logic here
-        return false;
-    }
-
-    getSpecialScheduleForDate(date) {
-        // Add SOAR special schedule logic here
-        return null;
     }
 }
 
