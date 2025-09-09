@@ -205,6 +205,12 @@ function closeCalendarModal() {
     document.body.style.overflow = 'auto';
 }
 
+function closeScheduleModal() {
+    const modal = document.getElementById('scheduleModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
 function generateCalendarContent() {
     if (!window.bellManager) return '<p>Error: Bell manager not available</p>';
     
