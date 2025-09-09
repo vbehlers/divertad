@@ -1,5 +1,5 @@
 // Initialize the enhanced bell schedule system
-document.addEventListener('DOMContentLoaded', function() {
+function initializeBellSchedule() {
     // Check if required data is available
     if (typeof districtSchedules === 'undefined') {
         console.error('districtSchedules not loaded');
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error initializing bell schedule system:', error);
         document.body.innerHTML = '<div style="padding: 20px; color: red;">Error initializing bell schedule system: ' + error.message + '</div>';
     }
-});
+}
 
 function initializeModal() {
     // Modal functionality
@@ -488,3 +488,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update the current date
     updateCurrentDate();
 });
+
+// Initialize bell schedule system after includes are loaded
+document.addEventListener('includes:loaded', function() {
+    initializeBellSchedule();
+});
+
+// Fallback: Initialize immediately if includes are already loaded
+if (document.readyState === 'loading') {
+    // DOM is still loading, wait for includes:loaded event
+} else {
+    // DOM is already loaded, check if includes are loaded
+    setTimeout(() => {
+        if (document.querySelector('[data-include]') && document.querySelector('[data-include]').innerHTML.trim() === '') {
+            // Includes not loaded yet, wait for event
+        } else {
+            // Includes are loaded, initialize now
+            initializeBellSchedule();
+        }
+    }, 100);
+}
