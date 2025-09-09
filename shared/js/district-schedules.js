@@ -635,8 +635,8 @@ const districtSchedules = {
           },
           {
             "period_name": "Period 4B",
-            "start_time": "12:20",
-            "end_time": "1:10",
+            "start_time": "12:50",
+            "end_time": "1:40",
             "duration_minutes": 50
           },
           {
@@ -647,14 +647,14 @@ const districtSchedules = {
           },
           {
             "period_name": "Period 5",
-            "start_time": "1:25",
-            "end_time": "2:15",
+            "start_time": "1:45",
+            "end_time": "2:35",
             "duration_minutes": 50
           },
           {
             "period_name": "Period 6",
-            "start_time": "2:20",
-            "end_time": "3:10",
+            "start_time": "2:40",
+            "end_time": "3:30",
             "duration_minutes": 50
           }
         ],

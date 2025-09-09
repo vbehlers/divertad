@@ -1,5 +1,7 @@
 // Initialize the enhanced bell schedule system
 function initializeBellSchedule() {
+    console.log('Initializing bell schedule system...');
+    
     // Check if required data is available
     if (typeof districtSchedules === 'undefined') {
         console.error('districtSchedules not loaded');
@@ -16,11 +18,14 @@ function initializeBellSchedule() {
     try {
         // Initialize the enhanced manager - use school code from window or default to AVHS
         const schoolCode = window.BELL_SCHOOL_CODE || 'AVHS';
+        console.log('Using school code:', schoolCode);
         
         const bellManager = new EnhancedBellScheduleManager(districtSchedules, schoolCode);
+        console.log('Bell manager created successfully');
         
         // Start auto-updating
         bellManager.startAutoUpdate();
+        console.log('Auto-update started');
         
         // Make it globally available
         window.bellManager = bellManager;
@@ -31,6 +36,7 @@ function initializeBellSchedule() {
         console.log('Bell Schedule System initialized successfully');
     } catch (error) {
         console.error('Error initializing bell schedule system:', error);
+        console.error('Error stack:', error.stack);
         document.body.innerHTML = '<div style="padding: 20px; color: red;">Error initializing bell schedule system: ' + error.message + '</div>';
     }
 }
@@ -489,22 +495,17 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCurrentDate();
 });
 
-// Initialize bell schedule system after includes are loaded
-document.addEventListener('includes:loaded', function() {
-    initializeBellSchedule();
+// Initialize bell schedule system when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for all scripts to load
+    setTimeout(() => {
+        initializeBellSchedule();
+    }, 100);
 });
 
-// Fallback: Initialize immediately if includes are already loaded
-if (document.readyState === 'loading') {
-    // DOM is still loading, wait for includes:loaded event
-} else {
-    // DOM is already loaded, check if includes are loaded
+// Fallback: Initialize immediately if DOM is already loaded
+if (document.readyState !== 'loading') {
     setTimeout(() => {
-        if (document.querySelector('[data-include]') && document.querySelector('[data-include]').innerHTML.trim() === '') {
-            // Includes not loaded yet, wait for event
-        } else {
-            // Includes are loaded, initialize now
-            initializeBellSchedule();
-        }
+        initializeBellSchedule();
     }, 100);
 }

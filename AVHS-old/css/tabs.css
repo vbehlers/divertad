@@ -1,0 +1,78 @@
+/* Unified timing and improved motion for tabs */
+:root {
+  --tab-transition-duration: 380ms;
+  --tab-transition-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+/* Disable the default page/root cross-fade so only tabs animate */
+::view-transition-group(root),
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+/* Keyframes used for all view transitions (Y-scale) */
+@keyframes vt-scale-y-in {
+  from { opacity: 0.85; transform: scaleY(0.94); }
+  to   { opacity: 1;    transform: scaleY(1); }
+}
+@keyframes vt-scale-y-out {
+  from { opacity: 1;    transform: scaleY(1); }
+  to   { opacity: 0.85; transform: scaleY(0.94); }
+}
+
+/* Group scope so layout changes animate together */
+.vt-page-scope { view-transition-name: vt-page-scope; }
+::view-transition-old(vt-page-scope) {
+  animation-duration: var(--tab-transition-duration);
+  animation-timing-function: var(--tab-transition-ease);
+  animation-name: vt-scale-y-out;
+  transform-origin: top;
+}
+::view-transition-new(vt-page-scope) {
+  animation-duration: var(--tab-transition-duration);
+  animation-timing-function: var(--tab-transition-ease);
+  animation-name: vt-scale-y-in;
+  transform-origin: top;
+}
+
+/* Default names for non-scripted environments (JS overwrites with unique names) */
+.active-tab-indicator { view-transition-name: active-tab-indicator; }
+.tab-panel { view-transition-name: tab-content; }
+
+/* Note: The JS assigns unique view-transition names per group (e.g. tab-content-3),
+   and injects matching ::view-transition-* rules with the unified timing and keyframes. */
+
+/* Constrain animations to the tab component's box */
+.tabs-component {
+  position: relative;
+}
+.tabs-component nav { position: relative; }
+
+/* Smooth color transitions on tab buttons */
+.tab-button {
+  transition: color var(--tab-transition-duration) var(--tab-transition-ease),
+              background-color var(--tab-transition-duration) var(--tab-transition-ease);
+}
+
+/* Fallback (no View Transitions support): animate via classes */
+.tab-panel.vt-anim-in {
+  animation: vt-scale-y-in var(--tab-transition-duration) var(--tab-transition-ease);
+  transform-origin: top;
+}
+.tab-panel.vt-anim-out {
+  animation: vt-scale-y-out var(--tab-transition-duration) var(--tab-transition-ease);
+  transform-origin: top;
+}
+.vt-page-scope.vt-anim-in {
+  animation: vt-scale-y-in var(--tab-transition-duration) var(--tab-transition-ease);
+  transform-origin: top;
+}
+.vt-page-scope.vt-anim-out {
+  animation: vt-scale-y-out var(--tab-transition-duration) var(--tab-transition-ease);
+  transform-origin: top;
+}

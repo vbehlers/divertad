@@ -395,7 +395,7 @@ class EnhancedBellScheduleManager {
     }
 
     getPeriodStatus(period, index) {
-        const now = new Date();
+        const now = this.dateOverride || (this.timeOffset ? new Date(Date.now() + this.timeOffset) : new Date());
         const currentTime = now.getHours() * 60 + now.getMinutes();
         const startTime = this.timeToMinutes(period.start_time);
         const endTime = this.timeToMinutes(period.end_time);

@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bell Schedule Notification System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Base font settings */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        html {
+            font-size: var(--base-font-size);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /*
+         * Global style tokens (CSS Custom Properties) for easy updates.
+        */
+        :root {
+            /* Base Font Size Token */
+            --base-font-size: 16px;
+
+            /* Color Tokens */
+            --color-text-default: #111827;
+            --color-text-secondary: #4b5563;
+            --color-text-primary: #0051d2;
+
+            /* Font Weight Tokens */
+            --font-normal: 400;
+            --font-medium: 500;
+            --font-semibold: 600;
+            --font-bold: 700;
+
+            /* Font Size Tokens (in rem) */
+            --fs-h1: 4.3rem;
+            --fs-h2: 2.25rem;
+            --fs-h3: 1.8rem;
+            --fs-h4: 1.3rem;
+            --fs-h5: 1rem;
+            --fs-h6: 0.875rem;
+
+            /* Line Height Tokens (in rem) */
+            --lh-h1: 4.3rem;
+            --lh-h2: 2.25rem;
+            --lh-h3: 1.8rem;
+            --lh-h4: 1.3rem;
+            --lh-h5: 1rem;
+            --lh-h6: 0.875rem;
+
+            /* Line Height Tokens (in rem) */
+            --lh-p1: 5.1rem;
+            --lh-p2: 2.925rem;
+            --lh-p3: 2.3rem;
+            --lh-p4: 1.8rem;
+            --lh-p5: 1.513rem;
+            --lh-p6: 1.3rem;
+
+            /* Heading Bottom Margin Tokens (in rem) */
+            --h-margin-1: 5.75rem;
+            --h-margin-2: 1.25rem;
+            --h-margin-3: 1.0rem;
+            --h-margin-4: 0.6rem;
+            --h-margin-5: 0.5rem;
+            --h-margin-6: 0.5rem;
+
+            /* Module Spacing Tokens (in rem) */
+            --module-spacing-1: 4rem;
+            --module-spacing-2: 5.9rem;
+            --module-spacing-3: 1.5rem;
+            --module-spacing-4: 0rem;
+            --module-spacing-5: 1.2rem;
+            --module-spacing-6: 0.8rem;
+
+            /* Paragraph Group Padding Tokens (in rem) */
+            --group-padding-1: 6.8rem;
+            --group-padding-2: 4.5rem;
+            --group-padding-3: 2.3rem;
+            --group-padding-4: 2.2rem;
+            --group-padding-5: 1.5rem;
+            --group-padding-6: 0.533rem;
+
+            /* Proportional Paragraph Spacing Token */
+            --paragraph-spacing-scale: 0.4;
+        }
+
+        /* * Hierarchical Module Spacing */
+        .module-1 { margin-bottom: var(--module-spacing-1); }
+        .module-2 { margin-bottom: var(--module-spacing-2); }
+        .module-3 { margin-bottom: var(--module-spacing-3); }
+        .module-4 { margin-bottom: var(--module-spacing-4); }
+        .module-5 { margin-bottom: var(--module-spacing-5); }
+        .module-6 { margin-bottom: var(--module-spacing-6); }
+
+        /* * Paragraph Group Padding */
+        .group-1 { padding-bottom: var(--group-padding-1); }
+        .group-2 { padding-bottom: var(--group-padding-2); }
+        .group-3 { padding-bottom: var(--group-padding-3); }
+        .group-4 { padding-bottom: var(--group-padding-4); }
+        .group-5 { padding-bottom: var(--group-padding-5); }
+        .group-6 { padding-bottom: var(--group-padding-6); }
+        
+        /* * Proportional Paragraph Spacing */
+        .paragraph {
+            margin-bottom: calc(1.2em * var(--paragraph-spacing-scale));
+        }
+
+        /* * Typography classes using CSS variables */
+        .type-h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); margin-bottom: var(--h-margin-1); }
+        .type-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); margin-bottom: var(--h-margin-2); }
+        .type-h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); margin-bottom: var(--h-margin-3); }
+        .type-h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); margin-bottom: var(--h-margin-4); }
+        .type-h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); margin-bottom: var(--h-margin-5); }
+        .type-h6 { font-size: var(--fs-h6); line-height: var(--lh-h6); margin-bottom: var(--h-margin-6); }
+
+        .type-p1 { font-size: var(--fs-h1); line-height: var(--lh-p1); }
+        .type-p2 { font-size: var(--fs-h2); line-height: var(--lh-p2); }
+        .type-p3 { font-size: var(--fs-h3); line-height: var(--lh-p3); }
+        .type-p4 { font-size: var(--fs-h4); line-height: var(--lh-p4); }
+        .type-p5 { font-size: var(--fs-h5); line-height: var(--lh-p5); }
+        .type-p6 { font-size: var(--fs-h6); line-height: var(--lh-p6); }
+
+        /* * Semantic utility classes for themes */
+        .text-primary { color: var(--color-text-primary); }
+        .text-secondary { color: var(--color-text-secondary); }
+        .font-normal { font-weight: var(--font-normal); }
+        .font-medium { font-weight: var(--font-medium); }
+        .font-semibold { font-weight: var(--font-semibold); }
+        .font-bold { font-weight: var(--font-bold); }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Bell Schedule Specific Styles - Updated to match exact image design */
+        .notification-header {
+            margin-bottom: 2rem;
+        }
+
+        .header-dot {
+            display: inline-block;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background-color: #22c55e;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .notification-panels {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            justify-content: flex-start;
+        }
+
+        .panel {
+            text-align: left;
+            border-left: 2px solid #e2e8f0;
+            padding-left: 1rem;
+            padding-right: 8rem;
+            margin-left: -16px;
+            margin-top: 10px;
+        }
+
+        .panel-value {
+            font-size: 50px;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            font-family: 'Roboto', sans-serif;
+            color: #0051d2;
+            line-height: 1;
+        }
+
+        .panel-label {
+            font-size: 16px;
+            color: #111827;
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+            padding-left: 8px;
+        }
+
+        .time-display {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+        }
+
+        /* Flashing animation for next period indicator */
+        @keyframes flash-next-period {
+            0% { background-color: #fff; }
+            50% { background-color: #ffe5f1; }
+            100% { background-color: #fff; }
+        }
+
+        .flash-next-period {
+            animation: flash-next-period 1.5s infinite ease-in-out;
+            background-color: #ffe5f1 !important;
+        }
+
+        /* Style borders around flashing row to complement the flash */
+        .flash-next-period {
+            border-top: 3px solid #ff75b3 !important;
+            border-bottom: 3px solid #ff75b3 !important;
+        }
+
+        /* Smooth transitions for all changes */
+        .panel-value,
+        .panel-label,
+        tbody tr,
+        tbody td,
+        tbody span {
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Smooth indicator animation similar to tabs */
+        tbody tr {
+            transition: all 380ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        tbody tr.current-period {
+            border-left: 4px solid #0051d2;
+            transition: border-left 380ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Make all border-b elements 3px thick */
+        .border-b {
+            border-bottom-width: 3px !important;
+        }
+
+        /* View Transitions API keyframes for smooth number changes */
+        @keyframes vt-fade-in {
+            from { 
+                opacity: 0; 
+                transform: scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+        }
+
+        @keyframes vt-fade-out {
+            from { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+            to { 
+                opacity: 0; 
+                transform: scale(0.95); 
+            }
+        }
+
+        /* Apply View Transitions to specific elements */
+        .panel-value {
+            view-transition-name: panel-value;
+        }
+
+        #current-period-header {
+            view-transition-name: period-header;
+        }
+
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .notification-panels {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="w-full max-w-[1500px] px-4 md:px-6 lg:px-8 mx-auto">
+        
+        <!-- Start Module 1 -->
+        <div class="module-1">
+            
+            <!-- Start Module 2 - Bell Schedule Notifications -->
+            <div class="module-2 vt-page-scope">
+
+                <!-- Start Module 3 -->
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal">
+                            Tuesday, March 19: <span id="current-period-header" class="text-primary">Period 2</span>
+                        </h3>
+                        
+                        <!-- Schedule Type -->
+                        <div class="notification-header">
+                            <div class="text-left">
+                                <div class="text-base font-normal text-gray-900 mt-1">Regular Schedule</div>
+                            </div>
+                        </div>
+
+                        <!-- Three Panel Notification System -->
+                        <div class="notification-panels">
+                            
+                            <!-- Current Time Panel -->
+                            <div class="panel">
+                                <div class="panel-value" id="current-time">8:38:01</div>
+                                <div class="panel-label">Current Time</div>
+                            </div>
+
+                            <!-- Next Bell Panel -->
+                            <div class="panel">
+                                <div class="panel-value" id="next-bell">10:49 / 116:23m</div>
+                                <div class="panel-label">Next Bell</div>
+                            </div>
+
+                            <!-- Special Events Panel -->
+                            <div class="panel">
+                                <div class="panel-value" id="special-events">0</div>
+                                <div class="panel-label">Special Events</div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- End Module 3 -->
+
+                <!-- Start Module 3 -->
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b-3 border-gray-200">
+                                        <th class="type-h5 text-primary font-normal py-4 pr-4 w-1/6">Period</th>
+                                        <th class="type-h5 text-primary font-normal p-4 w-1/3">Time</th>
+                                        <th class="type-h5 text-primary font-normal p-4 w-1/6">Duration</th>
+                                        <th class="type-h5 text-primary font-normal p-4 w-1/6">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="type-p5 p-4">0</td>
+                                        <td class="type-p5 p-4">7:45 - 8:39</td>
+                                        <td class="type-p5 p-4">54 min</td>
+                                        <td class="type-p5 p-4"><span class="text-gray-400">Completed</span></td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="type-p5 p-4">1</td>
+                                        <td class="type-p5 p-4">8:45 - 9:42</td>
+                                        <td class="type-p5 p-4">57 min</td>
+                                        <td class="type-p5 p-4"><span class="text-gray-400">Completed</span></td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="type-p5 p-4">Break</td>
+                                        <td class="type-p5 p-4">9:42 - 9:52</td>
+                                        <td class="type-p5 p-4">10 min</td>
+                                        <td class="type-p5 p-4"><span class="text-gray-400">Completed</span></td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="type-p5 p-4">2</td>
+                                        <td class="type-p5 p-4">9:52 - 10:49</td>
+                                        <td class="type-p5 p-4">57 min</td>
+                                        <td class="type-p5 p-4"><span class="text-gray-400">Upcoming</span></td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="type-p5 p-4">3</td>
+                                        <td class="type-p5 p-4">10:54 - 11:51</td>
+                                        <td class="type-p5 p-4">57 min</td>
+                                        <td class="type-p5 p-4"><span class="text-gray-400">Upcoming</span></td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="type-p5 p-4">Lunch</td>
+                                        <td class="type-p5 p-4">11:51 - 12:21</td>
+                                        <td class="type-p5 p-4">30 min</td>
+                                        <td class="type-p5 p-4"><span class="text-gray-400">Upcoming</span></td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="type-p5 p-4">4</td>
+                                        <td class="type-p5 p-4">12:26 - 1:23</td>
+                                        <td class="type-p5 p-4">57 min</td>
+                                        <td class="type-p5 p-4"><span class="text-gray-400">Upcoming</span></td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="type-p5 p-4">5</td>
+                                        <td class="type-p5 p-4">1:28 - 2:25</td>
+                                        <td class="type-p5 p-4">57 min</td>
+                                        <td class="type-p5 p-4"><span class="text-gray-400">Upcoming</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="type-p5 p-4">6</td>
+                                        <td class="type-p5 p-4">2:30 - 3:27</td>
+                                        <td class="type-p5 p-4">57 min</td>
+                                        <td class="type-p5 p-4"><span class="text-gray-400">Upcoming</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Module 3 -->
+
+                <!-- Start Module 3 -->
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <div class="flex justify-start">
+                            <button data-modal-target="#scheduleModal" class="bg-blue-600 hover:bg-blue-700 text-white font-normal py-3 px-6 rounded-lg transition-colors">
+                                View Full Schedule
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Module 3 -->
+
+            </div>
+            <!-- End Module 2 -->
+
+        </div>
+        <!-- End Module 1 -->
+        
+    </div>
+
+    <!-- Full Schedule Modal -->
+    <div id="scheduleModal" class="fixed inset-0 bg-white z-50" style="display: none;">
+        <!-- Sticky Header - Full Width -->
+        <header class="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-10 lg:px-10 py-6 z-20 shadow-sm">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-medium text-gray-800 font-sans">Complete Bell Schedule</h2>
+                <button data-modal-close id="closeModalIconBtn" class="text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+    
+        <!-- Scrollable Content Container -->
+        <div class="h-full overflow-y-auto pt-0">
+            <!-- Content - Centered with max-width 1000px -->
+            <div class="max-w-[1000px] mx-auto px-4 md:px-10 lg:px-10 py-8 font-sans">
+            <!-- Regular Schedule Section -->
+            <div class="mb-12">
+                <div class="mb-6">
+                    <h3 class="type-h3 font-normal text-primary">Regular Schedule</h3>
+                    <p class="type-p5 text-gray-600 mt-2">Standard daily schedule with all periods and normal timing.</p>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b-3 border-gray-200">
+                                <th class="type-h5 text-primary font-normal py-4 pr-4 w-1/6">Period</th>
+                                <th class="type-h5 text-primary font-normal p-4 w-1/3">Time</th>
+                                <th class="type-h5 text-primary font-normal p-4 w-1/6">Duration</th>
+                                <th class="type-h5 text-primary font-normal p-4 w-1/6">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">0</td>
+                                <td class="type-p5 p-4">7:45 - 8:39</td>
+                                <td class="type-p5 p-4">54 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Zero Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">1</td>
+                                <td class="type-p5 p-4">8:45 - 9:42</td>
+                                <td class="type-p5 p-4">57 min</td>
+                                <td class="type-p5 p-4 text-gray-500">First Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">Break</td>
+                                <td class="type-p5 p-4">9:42 - 9:52</td>
+                                <td class="type-p5 p-4">10 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Morning Break</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">2</td>
+                                <td class="type-p5 p-4">9:52 - 10:49</td>
+                                <td class="type-p5 p-4">57 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Second Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">3</td>
+                                <td class="type-p5 p-4">10:54 - 11:51</td>
+                                <td class="type-p5 p-4">57 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Third Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">Lunch</td>
+                                <td class="type-p5 p-4">11:51 - 12:21</td>
+                                <td class="type-p5 p-4">30 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Lunch Break</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">4</td>
+                                <td class="type-p5 p-4">12:26 - 1:23</td>
+                                <td class="type-p5 p-4">57 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Fourth Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">5</td>
+                                <td class="type-p5 p-4">1:28 - 2:25</td>
+                                <td class="type-p5 p-4">57 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Fifth Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">6</td>
+                                <td class="type-p5 p-4">2:30 - 3:27</td>
+                                <td class="type-p5 p-4">57 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Sixth Period</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Flex Schedule Section -->
+            <div class="mb-12">
+                <div class="mb-6">
+                    <h3 class="type-h3 font-normal text-primary">Flex Schedule</h3>
+                    <p class="type-p5 text-gray-600 mt-2">Modified schedule with extended periods and flexible time blocks.</p>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b-3 border-gray-200">
+                                <th class="type-h5 text-primary font-normal py-4 pr-4 w-1/6">Period</th>
+                                <th class="type-h5 text-primary font-normal p-4 w-1/3">Time</th>
+                                <th class="type-h5 text-primary font-normal p-4 w-1/6">Duration</th>
+                                <th class="type-h5 text-primary font-normal p-4 w-1/6">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">1</td>
+                                <td class="type-p5 p-4">8:45 - 10:15</td>
+                                <td class="type-p5 p-4">90 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Extended Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">Break</td>
+                                <td class="type-p5 p-4">10:15 - 10:25</td>
+                                <td class="type-p5 p-4">10 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Morning Break</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">2</td>
+                                <td class="type-p5 p-4">10:25 - 11:55</td>
+                                <td class="type-p5 p-4">90 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Extended Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">Lunch</td>
+                                <td class="type-p5 p-4">11:55 - 12:25</td>
+                                <td class="type-p5 p-4">30 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Lunch Break</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">3</td>
+                                <td class="type-p5 p-4">12:30 - 2:00</td>
+                                <td class="type-p5 p-4">90 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Extended Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">4</td>
+                                <td class="type-p5 p-4">2:05 - 3:35</td>
+                                <td class="type-p5 p-4">90 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Extended Period</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Minimum Schedule Section -->
+            <div class="mb-12">
+                <div class="mb-6">
+                    <h3 class="type-h3 font-normal text-primary">Minimum Schedule</h3>
+                    <p class="type-p5 text-gray-600 mt-2">Shortened schedule with reduced class times and early dismissal.</p>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b-3 border-gray-200">
+                                <th class="type-h5 text-primary font-normal py-4 pr-4 w-1/6">Period</th>
+                                <th class="type-h5 text-primary font-normal p-4 w-1/3">Time</th>
+                                <th class="type-h5 text-primary font-normal p-4 w-1/6">Duration</th>
+                                <th class="type-h5 text-primary font-normal p-4 w-1/6">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">1</td>
+                                <td class="type-p5 p-4">8:45 - 9:15</td>
+                                <td class="type-p5 p-4">30 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Shortened Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">2</td>
+                                <td class="type-p5 p-4">9:20 - 9:50</td>
+                                <td class="type-p5 p-4">30 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Shortened Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">3</td>
+                                <td class="type-p5 p-4">9:55 - 10:25</td>
+                                <td class="type-p5 p-4">30 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Shortened Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">4</td>
+                                <td class="type-p5 p-4">10:30 - 11:00</td>
+                                <td class="type-p5 p-4">30 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Shortened Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">5</td>
+                                <td class="type-p5 p-4">11:05 - 11:35</td>
+                                <td class="type-p5 p-4">30 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Shortened Period</td>
+                            </tr>
+                            <tr class="border-b-3 border-gray-100">
+                                <td class="type-p5 p-4">6</td>
+                                <td class="type-p5 p-4">11:40 - 12:10</td>
+                                <td class="type-p5 p-4">30 min</td>
+                                <td class="type-p5 p-4 text-gray-500">Shortened Period</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Bottom margin for scrolling -->
+            <div class="h-20"></div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if View Transitions API is supported
+        if ('startViewTransition' in document) {
+            console.log('View Transitions API supported!');
+        } else {
+            console.log('View Transitions API not supported, using fallback transitions');
+        }
+
+        // Disable auto view transitions to prevent weird scrolling effects
+        if ('startViewTransition' in document) {
+            document.documentElement.style.viewTransitionName = 'none';
+        }
+
+        // Real-time clock and countdown functionality
+        function updateTime() {
+            const now = new Date();
+            
+            // Update current time with View Transitions API
+            const currentTimeElement = document.getElementById('current-time');
+            const newTimeText = now.toLocaleTimeString('en-US', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            if ('startViewTransition' in document) {
+                document.startViewTransition(() => {
+                    currentTimeElement.textContent = newTimeText;
+                });
+            } else {
+                currentTimeElement.textContent = newTimeText;
+            }
+
+            // Calculate current period based on time
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            let currentPeriod = 'Outside School Hours';
+            
+            // Debug: Log current time for verification
+            console.log('=== UPDATE TIME FUNCTION START ===');
+            console.log('Current time in minutes:', currentTime, 'Current time:', now.toLocaleTimeString());
+            console.log('Current hours:', now.getHours(), 'Current minutes:', now.getMinutes());
+            
+            if (currentTime >= 7*60 + 45 && currentTime < 8*60 + 39) {
+                currentPeriod = 'Period 0';
+            } else if (currentTime >= 8*60 + 45 && currentTime < 9*60 + 42) {
+                currentPeriod = 'Period 1';
+            } else if (currentTime >= 9*60 + 42 && currentTime < 9*60 + 52) {
+                currentPeriod = 'Break';
+            } else if (currentTime >= 9*60 + 52 && currentTime < 10*60 + 49) {
+                currentPeriod = 'Period 2';
+            } else if (currentTime >= 10*60 + 54 && currentTime < 11*60 + 51) {
+                currentPeriod = 'Period 3';
+            } else if (currentTime >= 11*60 + 51 && currentTime < 12*60 + 21) {
+                currentPeriod = 'Lunch';
+            } else if (currentTime >= 12*60 + 26 && currentTime < 13*60 + 23) {
+                currentPeriod = 'Period 4';
+            } else if (currentTime >= 13*60 + 28 && currentTime < 14*60 + 25) {
+                currentPeriod = 'Period 5';
+            } else if (currentTime >= 14*60 + 30 && currentTime < 15*60 + 27) {
+                currentPeriod = 'Period 6';
+            }
+            
+            // Update current period header with View Transitions API
+            const periodHeaderElement = document.getElementById('current-period-header');
+            if ('startViewTransition' in document) {
+                document.startViewTransition(() => {
+                    periodHeaderElement.textContent = currentPeriod;
+                });
+            } else {
+                periodHeaderElement.textContent = currentPeriod;
+            }
+
+            // Calculate time until next bell dynamically
+            let nextBellTime = '';
+            let timeUntilNext = 0;
+            
+            // Debug: Log current time for troubleshooting
+            console.log('=== NEXT BELL CALCULATION START ===');
+            console.log('Current time in minutes:', currentTime, 'Current time:', now.toLocaleTimeString());
+            
+            if (currentTime < 7*60 + 45) {
+                // Before school starts
+                nextBellTime = '7:45';
+                timeUntilNext = (7*60 + 45) - currentTime;
+                console.log('Before school, next bell at 7:45, time until:', timeUntilNext);
+            } else if (currentTime < 8*60 + 39) {
+                nextBellTime = '8:39';
+                timeUntilNext = (8*60 + 39) - currentTime;
+                console.log('Period 0, next bell at 8:39, time until:', timeUntilNext);
+            } else if (currentTime < 8*60 + 45) {
+                nextBellTime = '8:45';
+                timeUntilNext = (8*60 + 45) - currentTime;
+                console.log('Between periods, next bell at 8:45, time until:', timeUntilNext);
+            } else if (currentTime < 9*60 + 42) {
+                nextBellTime = '9:42';
+                timeUntilNext = (9*60 + 42) - currentTime;
+                console.log('Period 1, next bell at 9:42, time until:', timeUntilNext);
+            } else if (currentTime < 9*60 + 52) {
+                nextBellTime = '9:52';
+                timeUntilNext = (9*60 + 52) - currentTime;
+                console.log('Break, next bell at 9:52, time until:', timeUntilNext);
+            } else if (currentTime < 10*60 + 49) {
+                nextBellTime = '10:49';
+                timeUntilNext = (10*60 + 49) - currentTime;
+                console.log('Period 2, next bell at 10:49, time until:', timeUntilNext);
+            } else if (currentTime < 10*60 + 54) {
+                nextBellTime = '10:54';
+                timeUntilNext = (10*60 + 54) - currentTime;
+                console.log('Between periods, next bell at 10:54, time until:', timeUntilNext);
+            } else if (currentTime < 11*60 + 51) {
+                nextBellTime = '11:51';
+                timeUntilNext = (11*60 + 51) - currentTime;
+                console.log('Period 3, next bell at 11:51, time until:', timeUntilNext);
+            } else if (currentTime < 12*60 + 21) {
+                nextBellTime = '12:21';
+                timeUntilNext = (12*60 + 21) - currentTime;
+                console.log('Lunch, next bell at 12:21, time until:', timeUntilNext);
+            } else if (currentTime < 12*60 + 26) {
+                nextBellTime = '12:26';
+                timeUntilNext = (12*60 + 26) - currentTime;
+                console.log('Between periods, next bell at 12:26, time until:', timeUntilNext);
+            } else if (currentTime < 13*60 + 23) {
+                nextBellTime = '1:23';
+                timeUntilNext = (13*60 + 23) - currentTime;
+                console.log('Period 4, next bell at 1:23, time until:', timeUntilNext);
+            } else if (currentTime < 13*60 + 28) {
+                nextBellTime = '1:28';
+                timeUntilNext = (13*60 + 28) - currentTime;
+                console.log('Between periods, next bell at 1:28, time until:', timeUntilNext);
+            } else if (currentTime < 14*60 + 25) {
+                nextBellTime = '2:25';
+                timeUntilNext = (14*60 + 25) - currentTime;
+                console.log('Period 5, next bell at 2:25, time until:', timeUntilNext);
+            } else if (currentTime < 14*60 + 30) {
+                nextBellTime = '2:30';
+                timeUntilNext = (14*60 + 30) - currentTime;
+                console.log('Between periods, next bell at 2:30, time until:', timeUntilNext);
+            } else if (currentTime < 15*60 + 27) {
+                nextBellTime = '3:27';
+                timeUntilNext = (15*60 + 27) - currentTime;
+                console.log('Period 6, next bell at 3:27, time until:', timeUntilNext);
+            } else {
+                // After school ends
+                nextBellTime = 'Tomorrow';
+                timeUntilNext = 0;
+                console.log('After school hours');
+            }
+            
+            if (timeUntilNext > 0) {
+                const minutes = Math.floor(timeUntilNext / 60);
+                const seconds = timeUntilNext % 60;
+                
+                // Debug: Log countdown calculation
+                console.log('Next bell:', nextBellTime, 'Minutes until:', minutes, 'Seconds until:', seconds);
+                console.log('timeUntilNext in total seconds:', timeUntilNext);
+                console.log('Calculated minutes:', minutes, 'Calculated seconds:', seconds);
+                
+                // Update next bell display with View Transitions API
+                const nextBellElement = document.getElementById('next-bell');
+                if (nextBellElement) {
+                    const newText = `${nextBellTime} / ${minutes}:${seconds.toString().padStart(2, '0')}m`;
+                    if ('startViewTransition' in document) {
+                        document.startViewTransition(() => {
+                            nextBellElement.textContent = newText;
+                        });
+                    } else {
+                        nextBellElement.textContent = newText;
+                    }
+                    console.log('Updated next bell element with:', newText);
+                } else {
+                    console.error('Could not find next-bell element!');
+                }
+            } else {
+                const nextBellElement = document.getElementById('next-bell');
+                if (nextBellElement) {
+                    nextBellElement.textContent = `${nextBellTime} / --:--m`;
+                } else {
+                    console.error('Could not find next-bell element!');
+                }
+            }
+            
+            // Update table status dynamically
+            updateTableStatus(currentPeriod, currentTime);
+        }
+
+
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call
+
+        // Function to update table status dynamically
+        function updateTableStatus(currentPeriod, currentTime) {
+            const periodRows = document.querySelectorAll('tbody tr');
+            
+            periodRows.forEach((row) => {
+                // Remove existing status classes
+                row.classList.remove('current-period', 'flash-next-period');
+                
+                const statusCell = row.querySelector('td:last-child span');
+                if (statusCell) {
+                    statusCell.className = 'text-gray-400';
+                    statusCell.textContent = 'Upcoming';
+                }
+                
+                // Get period info from first column
+                const periodCell = row.querySelector('td:first-child');
+                if (!periodCell) return;
+                
+                const periodText = periodCell.textContent.trim();
+                let periodStart = 0;
+                let periodEnd = 0;
+                
+                // Determine period times based on period number/text
+                if (periodText === '0') {
+                    periodStart = 7*60 + 45;
+                    periodEnd = 8*60 + 39;
+                } else if (periodText === '1') {
+                    periodStart = 8*60 + 45;
+                    periodEnd = 9*60 + 42;
+                } else if (periodText === 'Break') {
+                    periodStart = 9*60 + 42;
+                    periodEnd = 9*60 + 52;
+                } else if (periodText === '2') {
+                    periodStart = 9*60 + 52;
+                    periodEnd = 10*60 + 49;
+                } else if (periodText === '3') {
+                    periodStart = 10*60 + 54;
+                    periodEnd = 11*60 + 51;
+                } else if (periodText === 'Lunch') {
+                    periodStart = 11*60 + 51;
+                    periodEnd = 12*60 + 21;
+                } else if (periodText === '4') {
+                    periodStart = 12*60 + 26;
+                    periodEnd = 13*60 + 23;
+                } else if (periodText === '5') {
+                    periodStart = 13*60 + 28;
+                    periodEnd = 14*60 + 25;
+                } else if (periodText === '6') {
+                    periodStart = 14*60 + 30;
+                    periodEnd = 15*60 + 27;
+                }
+                
+                // Check if this period is current, completed, or upcoming
+                if (periodStart > 0 && periodEnd > 0) {
+                    if (currentTime >= periodStart && currentTime < periodEnd) {
+                        // Current period - indicator stays here until period actually ends
+                        row.classList.add('current-period');
+                        if (statusCell) {
+                            statusCell.className = 'text-primary';
+                            statusCell.textContent = 'Current';
+                        }
+                    } else if (currentTime >= periodEnd) {
+                        // Completed period - only after the period has actually ended
+                        if (statusCell) {
+                            statusCell.className = 'text-gray-400';
+                            statusCell.textContent = 'Completed';
+                        }
+                    } else {
+                        // Upcoming period - check if it's within 5 minutes of starting
+                        const timeUntilPeriod = periodStart - currentTime;
+                        console.log('Period:', periodText, 'Time until start:', timeUntilPeriod, 'minutes');
+                        if (timeUntilPeriod <= 5 && timeUntilPeriod > 0) {
+                            // Next period within 5 minutes - add flashing
+                            row.classList.add('flash-next-period');
+                            if (statusCell) {
+                                statusCell.textContent = 'Starting Soon';
+                            }
+                            console.log('FLASHING ACTIVATED for period:', periodText, 'Time until:', timeUntilPeriod, 'minutes');
+                        }
+                    }
+                }
+            });
+        }
+
+        // Add interactive period highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial table status update
+            updateTableStatus('Period 2', 9*60 + 52); // Default for demo
+        });
+
+        // Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            function openModal(modal) {
+                if (modal) modal.style.display = 'block';
+            }
+
+            function closeModal(modal) {
+                if (modal) modal.style.display = 'none';
+            }
+
+            function bindModalEvents() {
+                // Bind openers
+                document.querySelectorAll('[data-modal-target]').forEach((btn) => {
+                    if (btn.dataset.modalBound === 'true') return;
+                    btn.dataset.modalBound = 'true';
+                    btn.addEventListener('click', () => {
+                        const sel = btn.getAttribute('data-modal-target');
+                        const modal = sel ? document.querySelector(sel) : null;
+                        openModal(modal);
+                    });
+                });
+
+                // Bind closers
+                document.querySelectorAll('[data-modal-close]').forEach((btn) => {
+                    if (btn.dataset.modalBound === 'true') return;
+                    btn.dataset.modalBound = 'true';
+                    btn.addEventListener('click', () => {
+                        const modal = btn.closest('.fixed');
+                        closeModal(modal);
+                    });
+                });
+
+                // Bind overlay click-to-close
+                document.querySelectorAll('.fixed').forEach((modal) => {
+                    if (modal.dataset.modalBound === 'true') return;
+                    modal.dataset.modalBound = 'true';
+                    modal.addEventListener('click', (event) => {
+                        if (event.target === modal) closeModal(modal);
+                    });
+                });
+            }
+
+            // Initial bind
+            bindModalEvents();
+        });
+    </script>
+</body>
+</html>
