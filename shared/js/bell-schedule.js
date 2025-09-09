@@ -1,477 +1,661 @@
-// Initialize the enhanced bell schedule system
-function initializeBellSchedule() {
+// Bell Schedule System - Working version based on AVHS-old
+// This replaces the broken external system with working logic
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
     console.log('Initializing bell schedule system...');
     
-    // Check if required data is available
-    if (typeof districtSchedules === 'undefined') {
-        console.error('districtSchedules not loaded');
-        document.body.innerHTML = '<div style="padding: 20px; color: red;">Error: District schedules data not loaded. Please check the JavaScript files.</div>';
+    // Check if View Transitions API is supported
+    if ('startViewTransition' in document) {
+        console.log('View Transitions API supported!');
+    } else {
+        console.log('View Transitions API not supported, using fallback transitions');
+    }
+
+    // Disable auto view transitions to prevent weird scrolling effects
+    if ('startViewTransition' in document) {
+        document.documentElement.style.viewTransitionName = 'none';
+    }
+
+    // Wait a bit for districtSchedules to load
+    setTimeout(() => {
+        if (typeof districtSchedules === 'undefined') {
+            console.error('districtSchedules not loaded');
+            return;
+        }
+        
+        // Start the system
+        startBellScheduleSystem();
+    }, 100);
+});
+
+// Real-time clock and countdown functionality
+function updateTime() {
+    const now = window.testTimeOverride || new Date();
+    
+    // Update current time with View Transitions API
+    const currentTimeElement = document.getElementById('current-time');
+    if (currentTimeElement) {
+        const newTimeText = now.toLocaleTimeString('en-US', {
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+        
+        if ('startViewTransition' in document) {
+            document.startViewTransition(() => {
+                currentTimeElement.textContent = newTimeText;
+            });
+        } else {
+            currentTimeElement.textContent = newTimeText;
+        }
+    }
+
+    // Get school data and current period
+    const schoolCode = window.BELL_SCHOOL_CODE || 'AVHS';
+    console.log('Using school code:', schoolCode);
+    const school = getSchoolByCode(schoolCode);
+    
+    if (!school) {
+        console.error('School not found:', schoolCode);
         return;
     }
     
-    if (typeof EnhancedBellScheduleManager === 'undefined') {
-        console.error('EnhancedBellScheduleManager not loaded');
-        document.body.innerHTML = '<div style="padding: 20px; color: red;">Error: Enhanced Bell Schedule Manager not loaded. Please check the JavaScript files.</div>';
-        return;
+    console.log('Found school:', school.school_name);
+
+    // Get current schedule
+    const schedule = getCurrentSchedule(school);
+    const currentPeriod = getCurrentPeriod(schedule, now);
+    const nextBell = getNextBell(schedule, now);
+
+    // Update current period KPI
+    const currentPeriodElement = document.getElementById('current-period-kpi');
+    if (currentPeriodElement) {
+        const periodNumber = currentPeriod.name.replace(/[^\d]/g, '') || '0';
+        if ('startViewTransition' in document) {
+            document.startViewTransition(() => {
+                currentPeriodElement.textContent = periodNumber;
+            });
+        } else {
+            currentPeriodElement.textContent = periodNumber;
+        }
+    }
+
+    // Update next bell
+    const nextBellElement = document.getElementById('next-bell');
+    if (nextBellElement) {
+        // Check if countdown contains HTML
+        const countdownText = nextBell.countdown.includes('<') ? 'After Hours' : nextBell.countdown;
+        const newText = `${nextBell.time} / ${countdownText}`;
+        if ('startViewTransition' in document) {
+            document.startViewTransition(() => {
+                nextBellElement.textContent = newText;
+            });
+        } else {
+            nextBellElement.textContent = newText;
+        }
     }
     
-    try {
-        // Initialize the enhanced manager - use school code from window or default to AVHS
-        const schoolCode = window.BELL_SCHOOL_CODE || 'AVHS';
-        console.log('Using school code:', schoolCode);
-        
-        const bellManager = new EnhancedBellScheduleManager(districtSchedules, schoolCode);
-        console.log('Bell manager created successfully');
-        
-        // Start auto-updating
-        bellManager.startAutoUpdate();
-        console.log('Auto-update started');
-        
-        // Make it globally available
-        window.bellManager = bellManager;
-        
-        // Initialize modal functionality
-        initializeModal();
-        
-        console.log('Bell Schedule System initialized successfully');
-    } catch (error) {
-        console.error('Error initializing bell schedule system:', error);
-        console.error('Error stack:', error.stack);
-        document.body.innerHTML = '<div style="padding: 20px; color: red;">Error initializing bell schedule system: ' + error.message + '</div>';
-    }
+    // Update table status dynamically
+    updateTableStatus(currentPeriod, now);
 }
 
+// Helper function to get school by code
+function getSchoolByCode(schoolCode) {
+    if (typeof districtSchedules === 'undefined') {
+        console.error('districtSchedules not loaded');
+        return null;
+    }
+    return districtSchedules.schools.find(school => school.school_code === schoolCode);
+}
+
+// Helper function to get current schedule
+function getCurrentSchedule(school) {
+    const now = window.testTimeOverride || new Date();
+    const dayOfWeek = now.getDay();
+    
+    // Check for test schedule override first
+    if (window.testScheduleType) {
+        const schedule = school.bell_schedules?.[window.testScheduleType];
+        if (schedule) {
+            return {
+                type: window.testScheduleType,
+                name: getScheduleTypeName(window.testScheduleType),
+                periods: schedule,
+                isSchoolDay: true,
+                isTest: true
+            };
+        }
+    }
+    
+    // Check for weekends first
+    if (dayOfWeek === 0 || dayOfWeek === 6) { // Sunday or Saturday
+        return {
+            type: 'weekend',
+            name: 'Weekend',
+            periods: [],
+            isSchoolDay: false
+        };
+    }
+    
+    // Default to regular day for weekdays
+    return {
+        type: 'regular_day',
+        name: 'Regular Day',
+        periods: school.bell_schedules?.regular_day || [],
+        isSchoolDay: true
+    };
+}
+
+// Helper function to get current period
+function getCurrentPeriod(schedule, now) {
+    if (!schedule || !schedule.periods || schedule.periods.length === 0) {
+        return {
+            name: 'No Active Period',
+            status: 'outside_hours',
+            timeRemaining: 0
+        };
+    }
+
+    const currentTime = now.getHours() * 60 + now.getMinutes();
+    
+    for (let i = 0; i < schedule.periods.length; i++) {
+        const period = schedule.periods[i];
+        const startTime = timeToMinutes(period.start_time);
+        const endTime = timeToMinutes(period.end_time);
+
+        if (currentTime >= startTime && currentTime < endTime) {
+            return {
+                name: period.period_name,
+                status: 'active',
+                timeRemaining: endTime - currentTime,
+                startTime: period.start_time,
+                endTime: period.end_time,
+                duration: period.duration_minutes
+            };
+        }
+    }
+
+    // Check if we're outside school hours entirely
+    const firstPeriod = schedule.periods[0];
+    const lastPeriod = schedule.periods[schedule.periods.length - 1];
+    const schoolStart = timeToMinutes(firstPeriod.start_time);
+    const schoolEnd = timeToMinutes(lastPeriod.end_time);
+    
+    if (currentTime < schoolStart || currentTime > schoolEnd) {
+        return {
+            name: 'No Active Period',
+            status: 'outside_hours',
+            timeRemaining: 0
+        };
+    }
+    
+    return {
+        name: 'Between Periods',
+        status: 'between_periods',
+        timeRemaining: 0
+    };
+}
+
+// Helper function to get next bell
+function getNextBell(schedule, now) {
+    if (!schedule || !schedule.periods || schedule.periods.length === 0) {
+        return {
+            time: 'After Hours',
+            countdown: 'School Day Complete',
+            period: 'School Day Complete'
+        };
+    }
+
+    const currentTime = now.getHours() * 60 + now.getMinutes();
+
+    // Find the next period that starts after current time
+    for (let i = 0; i < schedule.periods.length; i++) {
+        const period = schedule.periods[i];
+        const startTime = timeToMinutes(period.start_time);
+
+        if (startTime > currentTime) {
+            const timeUntil = startTime - currentTime;
+            const hours = Math.floor(timeUntil / 60);
+            const minutes = timeUntil % 60;
+            
+            let countdown = '';
+            if (hours > 0) {
+                countdown = `${hours}:${minutes.toString().padStart(2, '0')}m`;
+            } else {
+                countdown = `${minutes}:00m`;
+            }
+            
+            return {
+                time: period.start_time,
+                countdown: countdown,
+                period: period.period_name,
+                timeUntil: timeUntil
+            };
+        }
+    }
+
+    // If no future periods found, we're after school hours
+    return {
+        time: 'After Hours',
+        countdown: 'School Day Complete',
+        period: 'School Day Complete'
+    };
+}
+
+// Helper function to convert time string to minutes
+function timeToMinutes(timeString) {
+    const [hours, minutes] = timeString.split(':').map(Number);
+    return hours * 60 + minutes;
+}
+
+// Function to update table status dynamically
+function updateTableStatus(currentPeriod, now) {
+    const periodRows = document.querySelectorAll('tbody tr');
+    const currentTime = now.getHours() * 60 + now.getMinutes();
+    
+    console.log('Updating table status. Found', periodRows.length, 'rows');
+    
+    periodRows.forEach((row) => {
+        // Remove existing status classes
+        row.classList.remove('current-period', 'flash-next-period');
+        
+        const statusCell = row.querySelector('td:last-child span');
+        if (statusCell) {
+            statusCell.className = 'text-gray-400';
+            statusCell.textContent = 'Upcoming';
+        }
+        
+        // Get period info from first column
+        const periodCell = row.querySelector('td:first-child');
+        if (!periodCell) return;
+        
+        const periodText = periodCell.textContent.trim();
+        
+        // Get school data to find period times
+        const schoolCode = window.BELL_SCHOOL_CODE || 'AVHS';
+        const school = getSchoolByCode(schoolCode);
+        if (!school) return;
+        
+        const schedule = getCurrentSchedule(school);
+        if (!schedule || !schedule.periods) return;
+        
+        // Find the period in the schedule
+        const period = schedule.periods.find(p => p.period_name === periodText);
+        if (!period) return;
+        
+        const startTime = timeToMinutes(period.start_time);
+        const endTime = timeToMinutes(period.end_time);
+        
+        // Check if this period is current, completed, or upcoming
+        if (currentTime >= startTime && currentTime < endTime) {
+            // Current period
+            row.classList.add('current-period');
+            if (statusCell) {
+                statusCell.className = 'text-primary';
+                statusCell.textContent = 'Current';
+            }
+        } else if (currentTime >= endTime) {
+            // Completed period
+            if (statusCell) {
+                statusCell.className = 'text-gray-400';
+                statusCell.textContent = 'Completed';
+            }
+        } else {
+            // Upcoming period - check if it's within 5 minutes of starting
+            const timeUntilPeriod = startTime - currentTime;
+            if (timeUntilPeriod <= 5 && timeUntilPeriod > 0) {
+                // Next period within 5 minutes - add flashing
+                row.classList.add('flash-next-period');
+                if (statusCell) {
+                    statusCell.textContent = 'Starting Soon';
+                }
+            }
+        }
+    });
+}
+
+// Start the bell schedule system
+function startBellScheduleSystem() {
+    console.log('Starting bell schedule system...');
+    
+    // Populate the schedule table
+    populateScheduleTable();
+    
+    // Update time every second
+    setInterval(updateTime, 1000);
+    updateTime(); // Initial call
+    
+    // Initialize modal functionality
+    initializeModal();
+    
+    // Update current date
+    updateCurrentDate();
+    
+    console.log('Bell schedule system started successfully');
+}
+
+// Function to populate the schedule table
+function populateScheduleTable() {
+    const schoolCode = window.BELL_SCHOOL_CODE || 'AVHS';
+    const school = getSchoolByCode(schoolCode);
+    
+    if (!school) {
+        console.error('School not found for table population:', schoolCode);
+        return;
+    }
+    
+    const schedule = getCurrentSchedule(school);
+    const tbody = document.getElementById('schedule-table-body');
+    
+    if (!tbody) {
+        console.error('Schedule table body not found');
+        return;
+    }
+    
+    if (!schedule || !schedule.periods || schedule.periods.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center p-4">No schedule available</td></tr>';
+        return;
+    }
+    
+    // Clear existing rows
+    tbody.innerHTML = '';
+    
+    // Add new rows
+    schedule.periods.forEach((period, index) => {
+        const row = document.createElement('tr');
+        row.className = 'border-b border-gray-100';
+        
+        row.innerHTML = `
+            <td class="type-p5 p-4">${period.period_name}</td>
+            <td class="type-p5 p-4">${period.start_time} - ${period.end_time}</td>
+            <td class="type-p5 p-4">${period.duration_minutes} min</td>
+            <td class="type-p5 p-4"><span class="text-gray-400">Upcoming</span></td>
+        `;
+        
+        tbody.appendChild(row);
+    });
+    
+    console.log('Populated schedule table with', schedule.periods.length, 'periods');
+}
+
+// Function to generate modal content
+function generateModalContent() {
+    const schoolCode = window.BELL_SCHOOL_CODE || 'AVHS';
+    const school = getSchoolByCode(schoolCode);
+    
+    if (!school || !school.bell_schedules) {
+        return '<p>No schedule data available</p>';
+    }
+    
+    let content = '';
+    
+    // Generate content for each schedule type
+    Object.keys(school.bell_schedules).forEach(scheduleType => {
+        const schedule = school.bell_schedules[scheduleType];
+        if (schedule && schedule.length > 0) {
+            content += `
+                <div class="mb-12">
+                    <div class="mb-6">
+                        <h3 class="type-h3 font-normal text-primary">${getScheduleTypeName(scheduleType)}</h3>
+                        <p class="type-p5 text-gray-600 mt-2">${getScheduleDescription(scheduleType)}</p>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b-3 border-gray-200">
+                                    <th class="type-h5 text-primary font-normal py-4 pr-4 w-1/6">Period</th>
+                                    <th class="type-h5 text-primary font-normal p-4 w-1/3">Time</th>
+                                    <th class="type-h5 text-primary font-normal p-4 w-1/6">Duration</th>
+                                    <th class="type-h5 text-primary font-normal p-4 w-1/6">Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
+            
+            schedule.forEach(period => {
+                content += `
+                    <tr class="border-b-3 border-gray-100">
+                        <td class="type-p5 p-4">${period.period_name}</td>
+                        <td class="type-p5 p-4">${period.start_time} - ${period.end_time}</td>
+                        <td class="type-p5 p-4">${period.duration_minutes} min</td>
+                        <td class="type-p5 p-4 text-gray-500">-</td>
+                    </tr>
+                `;
+            });
+            
+            content += `
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+    });
+    
+    return content;
+}
+
+// Helper function to get schedule type name
+function getScheduleTypeName(scheduleType) {
+    const names = {
+        'regular_day': 'Regular Day',
+        'flex_day': 'Flex Day',
+        'minimum_day': 'Minimum Day',
+        'mtss_day': 'MTSS Day',
+        'weekend': 'Weekend',
+        'holiday': 'Holiday',
+        'non_student_day': 'Non-Student Day'
+    };
+    return names[scheduleType] || scheduleType;
+}
+
+// Helper function to get schedule description
+function getScheduleDescription(scheduleType) {
+    const descriptions = {
+        'regular_day': 'Standard daily schedule with all periods and normal timing.',
+        'flex_day': 'Modified schedule with extended periods and flexible time blocks.',
+        'minimum_day': 'Shortened schedule with reduced class times and early dismissal.',
+        'mtss_day': 'Schedule with Multi-Tiered System of Supports (MTSS) periods.',
+        'weekend': 'No classes scheduled for weekends.',
+        'holiday': 'School is closed for holiday observance.',
+        'non_student_day': 'No classes - professional development or administrative day.'
+    };
+    return descriptions[scheduleType] || 'Standard schedule format.';
+}
+
+// Modal functionality
 function initializeModal() {
-    // Modal functionality
     function openModal(modal) {
         if (modal) {
             modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            // Update modal content
+            // Update modal content when opening
             updateModalContent();
         }
     }
 
     function closeModal(modal) {
-        if (modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+        if (modal) modal.style.display = 'none';
     }
-
+    
     function updateModalContent() {
         const content = document.getElementById('modal-schedule-content');
-        
-        if (content && window.bellManager) {
-            content.innerHTML = window.bellManager.generateModalContent();
+        if (content) {
+            content.innerHTML = generateModalContent();
         }
     }
 
-    // Bind modal events
-    document.querySelectorAll('[data-modal-target]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const sel = btn.getAttribute('data-modal-target');
-            const modal = sel ? document.querySelector(sel) : null;
-            openModal(modal);
+    function bindModalEvents() {
+        // Bind openers
+        document.querySelectorAll('[data-modal-target]').forEach((btn) => {
+            if (btn.dataset.modalBound === 'true') return;
+            btn.dataset.modalBound = 'true';
+            btn.addEventListener('click', () => {
+                const sel = btn.getAttribute('data-modal-target');
+                const modal = sel ? document.querySelector(sel) : null;
+                openModal(modal);
+            });
         });
-    });
 
-    document.querySelectorAll('[data-modal-close]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const modal = btn.closest('.fixed');
-            closeModal(modal);
+        // Bind closers
+        document.querySelectorAll('[data-modal-close]').forEach((btn) => {
+            if (btn.dataset.modalBound === 'true') return;
+            btn.dataset.modalBound = 'true';
+            btn.addEventListener('click', () => {
+                const modal = btn.closest('.fixed');
+                closeModal(modal);
+            });
         });
-    });
 
-    document.querySelectorAll('.fixed').forEach((modal) => {
-        modal.addEventListener('click', (event) => {
-            if (event.target === modal) closeModal(modal);
+        // Bind overlay click-to-close
+        document.querySelectorAll('.fixed').forEach((modal) => {
+            if (modal.dataset.modalBound === 'true') return;
+            modal.dataset.modalBound = 'true';
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) closeModal(modal);
+            });
         });
-    });
+    }
+
+    // Initial bind
+    bindModalEvents();
 }
 
 // Test functions for schedule simulation
 function testSchedule(scheduleType) {
-    if (window.bellManager) {
-        console.log(`Testing ${scheduleType} schedule`);
-        
-        // Set schedule type override
-        window.bellManager.scheduleTypeOverride = scheduleType;
-        
-        // Force update
-        window.bellManager.updateDashboard();
-        
-        // Show feedback
-        const buttons = document.querySelectorAll('button[onclick^="testSchedule"]');
-        buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
-        
-        const activeButton = document.querySelector(`button[onclick="testSchedule('${scheduleType}')"]`);
-        if (activeButton) {
-            activeButton.classList.add('ring-2', 'ring-blue-500');
-        }
+    console.log(`Testing ${scheduleType} schedule`);
+    
+    // Set a global override for testing
+    window.testScheduleType = scheduleType;
+    
+    // Repopulate table with test schedule
+    populateTestScheduleTable(scheduleType);
+    
+    // Show feedback
+    const buttons = document.querySelectorAll('button[onclick^="testSchedule"]');
+    buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
+    
+    const activeButton = document.querySelector(`button[onclick="testSchedule('${scheduleType}')"]`);
+    if (activeButton) {
+        activeButton.classList.add('ring-2', 'ring-blue-500');
     }
 }
 
 function testAfterHours() {
-    if (window.bellManager) {
-        console.log('Testing after hours scenario');
-        
-        // Set a time that's definitely after school hours (e.g., 10:00 PM)
-        const afterHoursDate = new Date();
-        afterHoursDate.setHours(22, 0, 0, 0); // 10:00 PM
-        window.bellManager.dateOverride = afterHoursDate;
-        
-        // Force update
-        window.bellManager.updateDashboard();
-        
-        // Show feedback
-        const buttons = document.querySelectorAll('button[onclick^="test"]');
-        buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
-        
-        const activeButton = document.querySelector('button[onclick="testAfterHours()"]');
-        if (activeButton) {
-            activeButton.classList.add('ring-2', 'ring-blue-500');
-        }
+    console.log('Testing after hours scenario');
+    
+    // Set time to after hours (10 PM)
+    window.testTimeOverride = new Date();
+    window.testTimeOverride.setHours(22, 0, 0, 0);
+    
+    // Show feedback
+    const buttons = document.querySelectorAll('button[onclick^="test"]');
+    buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
+    
+    const activeButton = document.querySelector('button[onclick="testAfterHours()"]');
+    if (activeButton) {
+        activeButton.classList.add('ring-2', 'ring-blue-500');
     }
 }
 
 function testSchoolHours() {
-    if (window.bellManager) {
-        console.log('Testing school hours scenario');
-        
-        // Force a regular day schedule (override any weekend/holiday logic)
-        window.bellManager.scheduleTypeOverride = 'regular_day';
-        
-        // Create a dynamic override that starts at 11:30 AM and continues ticking
-        const baseTime = new Date();
-        baseTime.setHours(11, 30, 0, 0); // 11:30 AM
-        const realTime = new Date();
-        const timeOffset = baseTime.getTime() - realTime.getTime();
-        
-        // Store the offset so we can create dynamic dates
-        window.bellManager.timeOffset = timeOffset;
-        window.bellManager.dateOverride = null; // Clear static override
-        
-        // Force update
-        window.bellManager.updateDashboard();
-        
-        // Show feedback
-        const buttons = document.querySelectorAll('button[onclick^="test"]');
-        buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
-        
-        const activeButton = document.querySelector('button[onclick="testSchoolHours()"]');
-        if (activeButton) {
-            activeButton.classList.add('ring-2', 'ring-blue-500');
-        }
+    console.log('Testing school hours scenario');
+    
+    // Set time to during school hours (11:30 AM)
+    window.testTimeOverride = new Date();
+    window.testTimeOverride.setHours(11, 30, 0, 0);
+    
+    // Show feedback
+    const buttons = document.querySelectorAll('button[onclick^="test"]');
+    buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
+    
+    const activeButton = document.querySelector('button[onclick="testSchoolHours()"]');
+    if (activeButton) {
+        activeButton.classList.add('ring-2', 'ring-blue-500');
     }
 }
 
 function resetSchedule() {
-    if (window.bellManager) {
-        console.log('Resetting to normal schedule');
-        
-        // Clear overrides
-        window.bellManager.scheduleTypeOverride = null;
-        window.bellManager.dateOverride = null;
-        window.bellManager.timeOffset = null;
-        
-        // Force update
-        window.bellManager.updateDashboard();
-        
-        // Remove active styling
-        const buttons = document.querySelectorAll('button[onclick^="test"]');
-        buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
+    console.log('Resetting to normal schedule');
+    
+    // Clear test overrides
+    window.testScheduleType = null;
+    window.testTimeOverride = null;
+    
+    // Repopulate with normal schedule
+    populateScheduleTable();
+    
+    // Remove active styling
+    const buttons = document.querySelectorAll('button[onclick^="test"]');
+    buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
+}
+
+// Function to populate test schedule table
+function populateTestScheduleTable(scheduleType) {
+    const schoolCode = window.BELL_SCHOOL_CODE || 'AVHS';
+    const school = getSchoolByCode(schoolCode);
+    
+    if (!school) {
+        console.error('School not found for test table population:', schoolCode);
+        return;
     }
+    
+    const schedule = school.bell_schedules?.[scheduleType];
+    const tbody = document.getElementById('schedule-table-body');
+    
+    if (!tbody) {
+        console.error('Schedule table body not found');
+        return;
+    }
+    
+    if (!schedule || schedule.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center p-4">No test schedule available</td></tr>';
+        return;
+    }
+    
+    // Clear existing rows
+    tbody.innerHTML = '';
+    
+    // Add new rows
+    schedule.forEach((period, index) => {
+        const row = document.createElement('tr');
+        row.className = 'border-b border-gray-100';
+        
+        row.innerHTML = `
+            <td class="type-p5 p-4">${period.period_name}</td>
+            <td class="type-p5 p-4">${period.start_time} - ${period.end_time}</td>
+            <td class="type-p5 p-4">${period.duration_minutes} min</td>
+            <td class="type-p5 p-4"><span class="text-gray-400">Test Mode</span></td>
+        `;
+        
+        tbody.appendChild(row);
+    });
+    
+    console.log('Populated test schedule table with', schedule.length, 'periods');
 }
 
 // Calendar modal functions
 function openCalendarModal() {
-    if (window.bellManager) {
-        const modal = document.getElementById('calendar-modal');
-        const content = document.getElementById('calendar-content');
-        const schoolName = document.getElementById('modal-school-name');
-        
-        // Set school name
-        if (schoolName) {
-            schoolName.textContent = window.bellManager.currentSchool.school_name;
-        }
-        
-        // Generate calendar content
-        content.innerHTML = generateCalendarContent();
-        
-        // Show modal
+    const modal = document.getElementById('calendar-modal');
+    if (modal) {
         modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
     }
 }
 
 function closeCalendarModal() {
     const modal = document.getElementById('calendar-modal');
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
 function closeScheduleModal() {
     const modal = document.getElementById('scheduleModal');
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-function generateCalendarContent() {
-    if (!window.bellManager) return '<p>Error: Bell manager not available</p>';
-    
-    const school = window.bellManager.currentSchool;
-    const allDates = [];
-    
-    // Collect all dates from different categories
-    if (school.holidays_and_important_dates) {
-        const dates = school.holidays_and_important_dates;
-        
-        // Add holidays
-        if (dates.holidays) {
-            dates.holidays.forEach(holiday => {
-                if (holiday.start_date && holiday.start_date !== 'N/A' && holiday.start_date !== '') {
-                    const holidayDate = new Date(holiday.start_date);
-                    if (!isNaN(holidayDate.getTime())) {
-                        allDates.push({
-                            date: holidayDate,
-                            endDate: holiday.end_date ? new Date(holiday.end_date) : null,
-                            type: 'holiday',
-                            name: holiday.name,
-                            description: holiday.name
-                        });
-                    }
-                }
-            });
-        }
-        
-        // Add non-student days
-        if (dates.non_student_days) {
-            dates.non_student_days.forEach(day => {
-                if (day.date && day.date !== 'N/A' && day.date !== '') {
-                    const dayDate = new Date(day.date);
-                    if (!isNaN(dayDate.getTime())) {
-                        allDates.push({
-                            date: dayDate,
-                            type: 'non_student',
-                            name: day.description,
-                            description: day.description
-                        });
-                    }
-                }
-            });
-        }
-        
-        // Add back-to-school nights
-        if (dates.back_to_school_nights) {
-            dates.back_to_school_nights.forEach(event => {
-                if (event.date && event.date !== 'N/A' && event.date !== '') {
-                    const eventDate = new Date(event.date);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            type: 'back_to_school',
-                            name: event.description,
-                            description: event.description
-                        });
-                    }
-                }
-            });
-        }
-        
-        // Add end of quarter/semester dates
-        if (dates.end_of_quarter_semester_dates) {
-            dates.end_of_quarter_semester_dates.forEach(event => {
-                if (event.date && event.date !== 'N/A' && event.date !== '') {
-                    const eventDate = new Date(event.date);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            type: 'end_quarter',
-                            name: event.name || event.description || 'End of Quarter',
-                            description: event.name || event.description || 'End of Quarter'
-                        });
-                    }
-                }
-            });
-        }
-        
-        // Add testing dates
-        if (dates.testing_dates) {
-            dates.testing_dates.forEach(test => {
-                const testDate = test.start_date || test.date;
-                if (testDate && testDate !== 'N/A' && testDate !== '') {
-                    const eventDate = new Date(testDate);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            endDate: test.end_date ? new Date(test.end_date) : null,
-                            type: 'testing',
-                            name: test.test_name || test.description || 'Testing',
-                            description: test.test_name || test.description || 'Testing'
-                        });
-                    }
-                }
-            });
-        }
-        
-        // Add other minimum days with activities
-        if (dates.other_minimum_days_with_activities) {
-            dates.other_minimum_days_with_activities.forEach(event => {
-                if (event.date && event.date !== 'N/A' && event.date !== '') {
-                    const eventDate = new Date(event.date);
-                    if (!isNaN(eventDate.getTime())) {
-                        allDates.push({
-                            date: eventDate,
-                            type: 'activity',
-                            name: event.description,
-                            description: event.description
-                        });
-                    }
-                }
-            });
-        }
-        
-        // Add flex days (if they exist in the data)
-        if (dates.flex_days) {
-            dates.flex_days.forEach(event => {
-                allDates.push({
-                    date: new Date(event.date),
-                    type: 'flex_day',
-                    name: event.description,
-                    description: event.description
-                });
-            });
-        }
-        
-        // Add minimum days (if they exist in the data)
-        if (dates.minimum_days) {
-            dates.minimum_days.forEach(event => {
-                allDates.push({
-                    date: new Date(event.date),
-                    type: 'minimum_day',
-                    name: event.description,
-                    description: event.description
-                });
-            });
-        }
+    if (modal) {
+        modal.style.display = 'none';
     }
-    
-    // Sort dates chronologically
-    allDates.sort((a, b) => a.date - b.date);
-    
-    // Generate HTML (same styling as schedule modal)
-    let html = '';
-    
-    // Academic year info
-    html += `
-        <div class="mb-12">
-            <div class="mb-6">
-                <h3 class="type-h3 font-normal text-primary">Academic Year Information</h3>
-                <p class="type-p5 text-gray-600 mt-2">Important dates and information for the current academic year.</p>
-            </div>
-            
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <tbody>
-                        <tr>
-                            <td class="type-p5 py-4 pr-4 font-medium text-left">Academic Year</td>
-                            <td class="type-p5 p-4 text-left">${school.general_academic_info.academic_year}</td>
-                        </tr>
-                        <tr>
-                            <td class="type-p5 py-4 pr-4 font-medium text-left">First Day</td>
-                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.first_day_of_school).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
-                        </tr>
-                        <tr>
-                            <td class="type-p5 py-4 pr-4 font-medium text-left">Last Day</td>
-                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.last_day_of_school).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
-                        </tr>
-                        ${school.general_academic_info.graduation_date && school.general_academic_info.graduation_date !== 'TBD' && school.general_academic_info.graduation_date !== 'N/A' && school.general_academic_info.graduation_date !== '' ? `
-                        <tr>
-                            <td class="type-p5 py-4 pr-4 font-medium text-left">Graduation</td>
-                            <td class="type-p5 p-4 text-left">${new Date(school.general_academic_info.graduation_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
-                        </tr>
-                        ` : ''}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    `;
-    
-    // Calendar events
-    html += '<div class="mb-12">';
-    html += '<div class="mb-6">';
-    html += '<h3 class="type-h3 font-normal text-primary">Important Dates & Events</h3>';
-    html += '<p class="type-p5 text-gray-600 mt-2">All holidays, special days, and important events throughout the academic year.</p>';
-    html += '</div>';
-    
-    if (allDates.length === 0) {
-        html += '<p class="type-p5 text-gray-500 italic">No calendar events found.</p>';
-    } else {
-        html += '<div class="overflow-x-auto">';
-        html += '<table class="w-full text-left">';
-        html += '<thead>';
-        html += '<tr>';
-        html += '<th class="type-h5 text-primary font-normal py-4 pr-4 w-1/3 text-left">Date</th>';
-        html += '<th class="type-h5 text-primary font-normal p-4 w-1/3 text-left">Event</th>';
-        html += '<th class="type-h5 text-primary font-normal p-4 w-1/3 text-left">Type</th>';
-        html += '</tr>';
-        html += '</thead>';
-        html += '<tbody>';
-        
-        allDates.forEach(event => {
-            const dateStr = event.date.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            const endDateStr = event.endDate ? 
-                ' - ' + event.endDate.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                }) : '';
-            
-            const typeLabels = {
-                'holiday': 'Holiday',
-                'non_student': 'Non-Student Day',
-                'back_to_school': 'Back to School',
-                'end_quarter': 'End of Quarter',
-                'testing': 'Testing',
-                'activity': 'Activity Day',
-                'flex_day': 'Flex Day',
-                'minimum_day': 'Minimum Day'
-            };
-            
-            const typeColors = {
-                'holiday': 'text-red-600',
-                'non_student': 'text-yellow-600',
-                'back_to_school': 'text-green-600',
-                'end_quarter': 'text-blue-600',
-                'testing': 'text-purple-600',
-                'activity': 'text-orange-600',
-                'flex_day': 'text-indigo-600',
-                'minimum_day': 'text-pink-600'
-            };
-            
-            html += `
-                <tr>
-                    <td class="type-p5 py-4 pr-4 whitespace-nowrap text-left">${dateStr}${endDateStr}</td>
-                    <td class="type-p5 p-4 whitespace-nowrap text-left">${event.name}</td>
-                    <td class="type-p5 p-4 whitespace-nowrap text-left ${typeColors[event.type]}">${typeLabels[event.type]}</td>
-                </tr>
-            `;
-        });
-        
-        html += '</tbody>';
-        html += '</table>';
-        html += '</div>';
-    }
-    
-    html += '</div>';
-    
-    return html;
 }
 
 // Update current date header dynamically
@@ -487,25 +671,4 @@ function updateCurrentDate() {
         };
         currentDateHeader.textContent = now.toLocaleDateString('en-US', options);
     }
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Update the current date
-    updateCurrentDate();
-});
-
-// Initialize bell schedule system when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // Wait a bit for all scripts to load
-    setTimeout(() => {
-        initializeBellSchedule();
-    }, 100);
-});
-
-// Fallback: Initialize immediately if DOM is already loaded
-if (document.readyState !== 'loading') {
-    setTimeout(() => {
-        initializeBellSchedule();
-    }, 100);
 }
