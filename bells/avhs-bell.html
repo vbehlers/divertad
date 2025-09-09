@@ -8,132 +8,355 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=home" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../shared/css/bell-schedule.css">
+    <link rel="stylesheet" href="../AVHS/css/tabs.css">
+    <link rel="stylesheet" href="../AVHS/css/reader-mode.css">
     <link rel="stylesheet" href="../shared/css/avhsd.css">
 
 </head>
 <body class="bg-white">
     <div class="w-full max-w-[1500px] px-4 md:px-6 lg:px-8 mx-auto">
+
+   
+<!-- Start Module 1 -->
+<div class="module-1">
         
-        <!-- Start Module 1 -->
-        <div class="module-1">
-            
-            <!-- Start Module 2 - Bell Schedule Notifications -->
-            <div class="module-2 vt-page-scope">
-
-                <!-- Start Module 3 -->
-                <div class="module-3">
-                    <!-- Heading/Paragraph Group 3 -->
-                    <div class="group-3">
-                        <h3 class="type-h3 font-normal">
-                            <span id="current-date-header">Tuesday, March 19</span>
-                        </h3>
-                        
-                        <!-- Schedule Type -->
-                        <div class="notification-header">
-                            <div class="text-left">
-                                <div class="text-base font-normal text-gray-900 mt-1" id="schedule-type-display">Regular Schedule</div>
-                            </div>
-                        </div>
-
-                        <!-- Test Buttons -->
-                        <div class="mt-4 mb-4">
-                            <div class="flex space-x-2 flex-wrap">
-                                <button onclick="testSchedule('regular_day')" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">
-                                    Test Regular
-                                </button>
-                                <button onclick="testSchedule('flex_day')" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">
-                                    Test Flex
-                                </button>
-                                <button onclick="testSchedule('minimum_day')" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">
-                                    Test Min Day
-                                </button>
-                                <button onclick="testSchedule('OSC Schedule')" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">
-                                    OSC
-                                </button>
-                                <button onclick="testAfterHours()" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">
-                                    Test After Hours
-                                </button>
-                                <button onclick="resetSchedule()" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">
-                                    Reset
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Three Panel Notification System -->
-                        <div class="notification-panels">
+    <!-- Heading/Paragraph Group 1 -->
+    <div class="group-1">
+        <h1 class="type-h1 font-normal text-primary">About</h1>
+        <p class="type-p2 font-normal paragraph">Welcome to Antelope Valley High School, home of the Lopes! We've been a cornerstone of the Lancaster community since 1912, and we're proud of our deep roots in the Antelope Valley. For over a hundred years, we've been dedicated to providing a top-notch education in a place that feels like a home away from home.</p>
+        <p class="type-p2 font-normal paragraph">Here at AVHS, we're more than just a school: we're a family. We believe in building strong relationships and creating a place where every student can discover their passions and potential. Our teachers are dedicated to helping students succeed, not just in the classroom, but in life. We're all about rolling up our sleeves and working together to help our students become creative, critical thinkers, and responsible citizens.</p>
+    </div>
+    
                             
-                            <!-- Current Period Panel (KPI #1) -->
-                            <div class="panel">
-                                <div class="panel-value" id="current-period-kpi">0</div>
-                                <div class="panel-label">Current Period</div>
-                            </div>
-
-                            <!-- Current Time Panel -->
-                            <div class="panel">
-                                <div class="panel-value" id="current-time">8:38:01</div>
-                                <div class="panel-label">Current Time</div>
-                            </div>
-
-                            <!-- Next Bell Panel -->
-                            <div class="panel">
-                                <div class="panel-value" id="next-bell">10:49 / 116:23m</div>
-                                <div class="panel-label">Next Bell</div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- End Module 3 -->
-
-                <!-- Start Module 3 -->
-                <div class="module-3">
-                    <!-- Heading/Paragraph Group 3 -->
-                    <div class="group-3">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="border-b-3 border-gray-200">
-                                        <th class="type-h5 text-primary font-normal py-4 pr-4 w-1/6">Period</th>
-                                        <th class="type-h5 text-primary font-normal p-4 w-1/3">Time</th>
-                                        <th class="type-h5 text-primary font-normal p-4 w-1/6">Duration</th>
-                                        <th class="type-h5 text-primary font-normal p-4 w-1/6">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="schedule-table-body">
-                                    <!-- Dynamic content will be inserted here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Module 3 -->
-
-                <!-- Start Module 3 -->
-                <div class="module-3">
-                    <!-- Heading/Paragraph Group 3 -->
-                    <div class="group-3">
-                        <div class="flex justify-start space-x-4">
-                            <button data-modal-target="#scheduleModal" class="bg-gray-600 hover:bg-gray-700 text-white font-normal py-3 px-6 rounded-lg transition-colors">
-                                View Full Schedule
-                            </button>
-                            <button onclick="openCalendarModal()" class="bg-gray-600 hover:bg-gray-700 text-white font-normal py-3 px-6 rounded-lg transition-colors">
-                                View Calendar
-                            </button>
-                            <button onclick="testSchoolHours()" class="bg-purple-600 hover:bg-purple-700 text-white font-normal py-3 px-6 rounded-lg transition-colors">
-                                School Hours
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Module 3 -->
-
+        <!-- Start Module 2 - Messaging &amp; Notifications -->
+        <div class="module-2 vt-page-scope">
+            <!-- Heading/Paragraph Group 2 -->
+            <div class="group-2">
+                <h2 class="type-h2 font-normal text-primary">Messaging &amp; Notifications</h2>
+                <p class="type-p3 font-normal paragraph">Stay in the loop with everything happening at AVHS. This is your official hub for important announcements, weekly updates, and timely reminders to help you and your student have a great school year.</p>
             </div>
-            <!-- End Module 2 -->
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal">From The Principal</h3>
+                        <p class="type-p4 font-normal paragraph">The halls are buzzing again, and a new year of learning and growth is upon us here in Lancaster. To help set the tone for the months ahead, our Principal has a special welcome message to share. Read on for their thoughts on what makes our Lope community so strong and the exciting opportunities that await our students this year.</p>
+                        <button data-modal-target="#letterModal" class="px-6 py-3 bg-[#0051d2] text-white font-medium rounded-lg shadow-md hover:bg-blue-600 focus:outline-none mt-3">Open Letter</button>
+                    </div>
+                </div>
+
+                    <!-- Start Module 3 -->
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal ">Mission and Vision</h3>
+                    
+                        <div class="module-4">
+                            <div class="group-4">
+                                <h4 class="type-h4 font-normal text-primary">Our Mission</h4>
+                                <p class="type-p4 font-normal paragraph">Antelope Valley High School provides an academically rigorous learning environment that promotes creativity and builds meaningful relationships in order to develop complex critical thinking skills necessary to be successful in the 21st century.</p>
+                            </div>
+                            <div class="group-4">
+                                <h4 class="type-h4 font-normal text-primary">Our Vision</h4>
+                                <p class="type-p4 font-normal paragraph">Students at Antelope Valley High School recognize their capacity to contribute to their community and are prepared to pursue a clear post secondary plan developed throughout high school.</p>
+                            </div>
+                        </div>                                
+                    </div>
+                </div>
+
+                <div class="module-3">
+                    <!-- Heading/Paragraph Group 3 -->
+                    <div class="group-3">
+                        <h3 class="type-h3 font-normal ">Upcoming Events</h3>
+                        <div class="module-4">
+                            <ul class="list-none space-y-2">
+                                <li>
+                                    <p class="type-p4 font-normal text-secondary">September 2nd: FLEX-Advisory Day (2:50 PM Release)</p>
+                                </li>
+                                <li>
+                                    <p class="type-p4 font-normal text-secondary">September 3rd: MINIMUM Day (1:37 PM Release)</p>
+                                </li>
+                                <li>
+                                    <p class="type-p4 font-normal text-secondary">September 3rd: Back to School Night (5:15 PM Start)</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>        
+        </div>
+                 <!-- End Module 2 -->        
+            
+
+        <div class="module-2">
+            <div class="module-3">
+                <div class="group-3">
+                    <h3 class="type-h3 font-normal">
+                        <span id="current-date-header">Tuesday, March 19</span>
+                    </h3>
+                    
+                    <!-- Schedule Type -->
+                    <div class="notification-header">
+                        <div class="text-left">
+                            <div class="text-base font-normal text-gray-900 mt-1" id="schedule-type-display">Regular Schedule</div>
+                        </div>
+                    </div>
+
+                    <!-- Test Buttons -->
+                    <div class="mt-4 mb-4">
+                        <div class="flex space-x-2 flex-wrap">
+                            <button onclick="testSchedule('regular_day')" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">Regular Day</button>
+                            <button onclick="testSchedule('flex_day')" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">Flex Day</button>
+                            <button onclick="testSchedule('minimum_day')" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">Min Day</button>
+                            <button onclick="testSchoolHours()" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">Test School Hours</button>
+                            <button onclick="testAfterHours()" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">Test After Hours</button>
+                            <button onclick="resetSchedule()" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">Now</button>
+                        </div>
+                    </div>
+
+                    <!-- Three Panel Notification System -->
+                    <div class="notification-panels">
+                        
+                        <!-- Current Period Panel (KPI #1) -->
+                        <div class="panel">
+                            <div class="panel-value" id="current-period-kpi">0</div>
+                            <div class="panel-label">Current Period</div>
+                        </div>
+
+                        <!-- Current Time Panel -->
+                        <div class="panel">
+                            <div class="panel-value" id="current-time">8:38:01</div>
+                            <div class="panel-label">Current Time</div>
+                        </div>
+
+                        <!-- Next Bell Panel -->
+                        <div class="panel">
+                            <div class="panel-value" id="next-bell">10:49 / 116:23m</div>
+                            <div class="panel-label">Next Bell</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Module 3 -->
+
+            <!-- Start Module 3 -->
+            <div class="module-3">
+                <!-- Heading/Paragraph Group 3 -->
+                <div class="group-3">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b-3 border-gray-200">
+                                    <th class="type-h5 text-primary font-normal py-4 pr-4 w-1/6">Period</th>
+                                    <th class="type-h5 text-primary font-normal p-4 w-1/3">Time</th>
+                                    <th class="type-h5 text-primary font-normal p-4 w-1/6">Duration</th>
+                                    <th class="type-h5 text-primary font-normal p-4 w-1/6">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schedule-table-body">
+                                <!-- Dynamic content will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- End Module 3 -->
+
+            <!-- Start Module 3 -->
+            <div class="module-3">
+                <!-- Heading/Paragraph Group 3 -->
+                <div class="group-3">
+                    <div class="flex justify-start space-x-4">
+                        <button data-modal-target="#scheduleModal" class="bg-gray-600 hover:bg-gray-700 text-white font-normal py-3 px-6 rounded-lg transition-colors">View Full Schedule</button>
+                        <button onclick="openCalendarModal()" class="bg-gray-600 hover:bg-gray-700 text-white font-normal py-3 px-6 rounded-lg transition-colors">View Calendar</button>
+                        <button onclick="testSchoolHours()" class="bg-purple-600 hover:bg-purple-700 text-white font-normal py-3 px-6 rounded-lg transition-colors">School Hours</button>
+                    </div>
+                </div>
+            </div>
+            <!-- End Module 3 -->
 
         </div>
-        <!-- End Module 1 -->
+        <!-- End Module 2 q-->
+
+        
         
     </div>
+  
+ 
+
+        <!-- Start Module 2 - Rules -->
+        <div class="module-2">
+            <!-- Heading/Paragraph Group 2 -->
+            <h2 class="type-h2 font-normal text-primary">Rules</h2>
+           
+                <!-- Start Module 3 -->
+                <div class="module-3">
+                <!-- Heading/Paragraph Group 3 -->
+                <div class="group-3">
+                    <h3 class="type-h3 font-normal">Dress Code</h3>
+                
+                    <!-- Start Module 4 -->
+                    <div class="module-4">
+
+                        <!-- Heading/Paragraph Group 4 -->
+                        <div class="group-4">
+                            <p class="type-p4 font-normal paragraph">All Highland High School students are required to be visibly wearing their student identification cards in order to enter the school campus, and will adhere to the following guidelines for student dress on campus and at school-related activities off campus.</p>
+                        
+                                    
+                        <!-- Tab 2 Contact & Information -->
+                         
+                            <div class="tabs-scope">
+                               <div data-include="../AVHS/includes/about/tabs-group2.html"></div>
+                            </div>
+                            
+                        <!-- End Tab 2 Contact & Information -->           
+                                
+                                
+                     </div>       
+                    </div>
+                    <!-- End Module 4 -->
+                    </div>
+
+                </div>
+                <!-- End Module 3 -->
+
+
+                <!-- Start Module 3 -->
+                <div class="module-3">
+                <!-- Heading/Paragraph Group 3 -->
+                <div class="group-3">
+                    <h3 class="type-h3 font-normal">School Policies</h3>
+                
+        
+                    <!-- Start Module 4 -->
+                    <div class="module-4">
+
+                        <!-- Heading/Paragraph Group 4 -->
+                        <div class="group-4">
+
+                            <p class="type-p4 font-normal paragraph">Here at Antelope Valley High, we’re about more than just textbooks and tests. We want to create a place where students are challenged to think bigger, get creative, and build real friendships with classmates and teachers. It’s all about rolling up our sleeves together, so our kids learn how to solve the kinds of tough problems they’ll face in the real world.</p>
+                        
+
+                    
+                        <!-- Tab 2 Contact & Information -->
+                        <div data-include="../AVHS/includes/about/tabs-group3.html"></div>
+                        <!-- End Tab 2 Contact & Information -->  
+
+                        </div>
+
+                    <!-- End Module 4 -->
+                    </div>
+
+
+                </div>
+                <!-- End Module 3 -->
+            
+            
+         </div>
+
+
+        <!-- End Module 2 -->               
+
+
+            <!-- Start Module 2 -The Legal Stuff-->
+            <div class="module-2">
+                <!-- Heading/Paragraph Group 2 -->
+                <div class="group-2">
+                    <h2 class="type-h2 font-normal text-primary">The Legal Stuff</h2>
+                
+
+                <!-- Start Module 3 -->
+                    <div class="module-3">
+                        <!-- Heading/Paragraph Group 3 -->
+                        <div class="group-3">
+                            <h3 class="type-h3 font-normal">Safety Message / Plan</h3>
+                            <p class="type-p4 font-normal paragraph">Antelope Valley High School is committed to cultivating a safe and secure, positive school culture that supports all students' personal and academic growth.</p>
+                        </div>
+                    </div>
+                </div>
+
+                    <!-- Start Module 3 -->
+
+                    <div class="module-3">
+                        <!-- Heading/Paragraph Group 3 -->
+                        <div class="group-3">
+                            <h3 class="type-h3 font-normal ">District Links</h3>
+                        
+                
+                            <!-- Start Module 4 -->
+                            <div class="module-4">
+
+                                <!-- Heading/Paragraph Group 4 -->
+                                    <ul class="list-none space-y-2">
+                                        <li>
+                                            <a href="#" class="type-p45 font-normal text-primary">Safety Message</a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.avdistrict.org/about/annual-strategic-plan" class="type-p5 font-normal text-primary">Local Control Accountability Plan (LCAP)</a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.avdistrict.org/about/covid-19-public-notice" class="type-p5 font-normal text-primary">Covid 19 Public Notice</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="type-p5 font-normal text-primary">Experiencing Homelessness</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="type-p5 font-normal text-primary">LCAP Survey</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="type-p45 font-normal text-primary">Title 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="type-p5 font-normal text-primary">Title IX</a>
+                                        </li>
+                                    </ul>                                                             
+                                <!-- End Heading/Paragraph Group 4-->
+
+                            </div>
+                            <!-- End Module 4 -->
+                        </div>
+                    </div>
+
+
+             </div>
+             <!-- End Module 2 -->               
+
+              
+        </div>
+        
+        
+        </div>
+    </div>
+    <!-- End Module 1 -->
+    <div data-include="../AVHS/modals/about.html"></div> 
+        
+    <script src="../AVHS/js/include-html.js"></script>
+    <script src="../AVHS/js/tabs-init.js"></script>
+        
+        
+  
+        
+       <!-- Scrollable Content Container -->
+       <div class="h-full overflow-y-auto pt-0">
+        <!-- Content - Centered with max-width 1000px -->
+        <div class="max-w-[1000px] mx-auto px-4 md:px-10 lg:px-10 py-8 font-sans">
+            <div id="modal-schedule-content">
+                <!-- Dynamic schedule content will be inserted here -->
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Override the school code for this specific page
+    window.BELL_SCHOOL_CODE = 'AVHS';
+    
+</script>
+
+
+
+
+
+
+
 
     <!-- Full Schedule Modal -->
     <div id="scheduleModal" class="fixed inset-0 bg-white z-50" style="display: none;">
@@ -141,21 +364,32 @@
         <header class="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-10 lg:px-10 py-6 z-20 shadow-sm">
             <div class="flex items-center justify-between">
                 <h2 class="text-2xl font-medium text-gray-800 font-sans">Complete Bell Schedule - Loading...</h2>
-                <button data-modal-close id="closeModalIconBtn" class="text-gray-400 hover:text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                <button onclick="closeScheduleModal()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
             </div>
         </header>
-    
-        <!-- Scrollable Content Container -->
-        <div class="h-full overflow-y-auto pt-0">
-            <!-- Content - Centered with max-width 1000px -->
-            <div class="max-w-[1000px] mx-auto px-4 md:px-10 lg:px-10 py-8 font-sans">
-                <div id="modal-schedule-content">
-                    <!-- Dynamic schedule content will be inserted here -->
-                </div>
+        
+        <!-- Modal Content -->
+        <div class="max-w-[1400px] mx-auto px-4 md:px-10 lg:px-10 py-8 font-sans">
+            <div id="modal-schedule-content">
+                <!-- Dynamic schedule content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Modal -->
+    <div id="calendar-modal" class="fixed inset-0 bg-white z-50" style="display: none;">
+        <!-- Sticky Header - Full Width -->
+        <header class="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-10 lg:px-10 py-6 z-20 shadow-sm">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-medium text-gray-800 font-sans">Academic Calendar - Loading...</h2>
+                <button onclick="closeCalendarModal()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+            </div>
+        </header>
+        
+        <!-- Modal Content -->
+        <div class="max-w-[1400px] mx-auto px-4 md:px-10 lg:px-10 py-8 font-sans">
+            <div id="calendar-content">
+                <!-- Calendar content will be generated here -->
             </div>
         </div>
     </div>
@@ -167,32 +401,7 @@
     <script>
         // Override the school code for this specific page
         window.BELL_SCHOOL_CODE = 'AVHS';
-        
     </script>
 
-    <!-- Calendar Modal -->
-    <div id="calendar-modal" class="fixed inset-0 bg-white z-50" style="display: none;">
-        <!-- Sticky Header - Full Width -->
-        <header class="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-10 lg:px-10 py-6 z-20 shadow-sm">
-            <div class="flex items-center justify-between">
-                <h2 class="text-2xl font-medium text-gray-800 font-sans">Academic Calendar - <span id="modal-school-name">Loading...</span></h2>
-                <button onclick="closeCalendarModal()" id="closeCalendarModalIconBtn" class="text-gray-400 hover:text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </header>
-    
-        <!-- Scrollable Content Container -->
-        <div class="h-full overflow-y-auto pt-0">
-            <!-- Content - Centered with max-width 1400px -->
-            <div class="max-w-[1400px] mx-auto px-4 md:px-10 lg:px-10 py-8 font-sans">
-                <div id="calendar-content">
-                    <!-- Calendar content will be generated here -->
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 </html>

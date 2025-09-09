@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bell Schedule - Loading...</title>
+    <title>AVHS</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=home" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../shared/css/bell-schedule.css">
     <link rel="stylesheet" href="../shared/css/avhsd.css">
+
 </head>
 <body class="bg-white">
     <div class="w-full max-w-[1500px] px-4 md:px-6 lg:px-8 mx-auto">
@@ -44,16 +45,17 @@
                                     Flex Day
                                 </button>
                                 <button onclick="testSchedule('minimum_day')" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">
-                                    Test Min Day
+                                    Min Day
                                 </button>
-                                <button onclick="testSchedule('OSC Schedule')" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">
-                                    OSC
+
+                                <button onclick="testSchoolHours()" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">
+                                    Test School Hours
                                 </button>
                                 <button onclick="testAfterHours()" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">
                                     Test After Hours
                                 </button>
                                 <button onclick="resetSchedule()" class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors">
-                                    Reset
+                                    Now
                                 </button>
                             </div>
                         </div>
@@ -165,7 +167,8 @@
     <script src="../shared/js/bell-schedule.js"></script>
     <script>
         // Override the school code for this specific page
-        window.BELL_SCHOOL_CODE = 'SPA';
+        window.BELL_SCHOOL_CODE = 'AVHS';
+        
     </script>
 
     <!-- Calendar Modal -->
